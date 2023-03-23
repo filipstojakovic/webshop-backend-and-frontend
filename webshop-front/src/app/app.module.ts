@@ -7,7 +7,7 @@ import {AppService} from './app.service';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
-import {BaseUrlInterceptorService} from './base-url-interceptor.service';
+import {BaseUrlInterceptorService} from './interceptors/base-url-interceptor.service';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -17,9 +17,6 @@ const routes: Routes = [
 
 let BaseUrlInterceptor;
 
-// @ts-ignore
-// @ts-ignore
-// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,

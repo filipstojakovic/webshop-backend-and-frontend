@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from './../environments/environment.development';
 import {AppService} from './app.service';
 import {Router} from '@angular/router';
 import {finalize} from 'rxjs';

@@ -7,8 +7,6 @@ import org.etf.webshopbackend.security.service.LoginService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
-
 @RequiredArgsConstructor
 @RestController
 public class WhoAmI {

@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {AppService} from '../app.service';
 import {HttpClient} from '@angular/common/http';
+import {GenericCrudService} from '../service/GenericCrudService';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +12,14 @@ import {HttpClient} from '@angular/common/http';
 export class HomeComponent {
   currentUser: any;
   users: any[] = [];
+  public userService: GenericCrudService<User>;
+  public JSON:any;
 
   constructor(private app: AppService, private http: HttpClient) {
+    this.userService = new GenericCrudService<User>("users", http);
+    this.JSON = JSON;
     http.get<any>('user/me').subscribe(res => this.currentUser = JSON.stringify(res));
-    http.get<any[]>('users').subscribe(res => this.users = res);
+    this.userService.getAll().subscribe(res => this.users = res);
   }
 
   authenticated() {

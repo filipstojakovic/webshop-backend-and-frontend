@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import jwt_decode from "jwt-decode";
+import {GenericCrudService} from './service/GenericCrudService';
+import {User} from './model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +22,8 @@ export class AppService {
           this.token = authorizationValue;
           console.log("app.service.ts > authenticate() token: " + authorizationValue);
           if (authorizationValue) {
+            const decoded = jwt_decode(authorizationValue);
+            console.log("app.service.ts > decode token(): " + JSON.stringify(decoded, null, 2));
             this.authenticated = true;
           } else {
             this.authenticated = false;

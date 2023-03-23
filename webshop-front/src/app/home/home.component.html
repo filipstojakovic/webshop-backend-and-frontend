@@ -4,7 +4,7 @@
 </div>
 <div [hidden]="!authenticated()">
   <div *ngFor="let user of users">
-    <p>name: {{user.firstName | uppercase}}</p>
+    <p>name: {{JSON.stringify(user)}}</p>
   </div>
 
 </div>
