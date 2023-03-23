@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    username: root
+    url: jdbc:mysql://localhost/webshop?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=CET
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: 'false'
+  security:
+    user:
+      password: password
+logging:
+  level:
+    root: debug
+  file:
+    path: logs
+
+app:
+  cors:
+    allowedOrigins: http://localhost:4200, http://localhost:8080
+  auth:
+    tokenSecret: ${TOKEN_SECRET:privatluk}
+    tokenExpirationMillis: 86400000

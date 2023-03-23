@@ -1,0 +1,13 @@
+<h1>Greeting</h1>
+<div>
+  current user {{currentUser}}
+</div>
+<div [hidden]="!authenticated()">
+  <div *ngFor="let user of users">
+    <p>name: {{user.firstName | uppercase}}</p>
+  </div>
+
+</div>
+<div [hidden]="authenticated()">
+  <p>Login to see your greeting</p>
+</div>
