@@ -1,0 +1,5 @@
+<mat-form-field appearance="fill" style="width: 100%">
+  <mat-label>{{ label }}</mat-label>
+  <input matInput [formControl]="control" [type]="type" required (keydown)="onKeyDown($event)"/>
+  <mat-error *ngIf="control.invalid">{{ errorMessage }}</mat-error>
+</mat-form-field>

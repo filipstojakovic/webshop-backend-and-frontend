@@ -1,23 +1,60 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppService} from '../app.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {paths} from '../constants/paths';
+import {ToastService} from 'angular-toastify';
+import tokenService from '../service/TokenService';
+
+type LoginData = {
+  username: string;
+  password: string;
+}
 
 @Component({
   selector: 'appService-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  credentials = { username: '', password: '' };
+export class LoginComponent implements OnInit{
 
-  constructor(private appService: AppService, private http: HttpClient, private router: Router) {
+  form!: FormGroup;
+
+  constructor(
+      private fb: FormBuilder,
+      private authService: AppService,
+      private router: Router,
+      private appService: AppService,
+      private http: HttpClient,
+      private toastService: ToastService,
+  ) {
   }
 
-  login() {
-    this.appService.authenticate(this.credentials, () => {
-      this.router.navigateByUrl('/');
+  ngOnInit(): void {
+    tokenService.removeTokenFromStorage();
+    this.form = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
     });
-    return false;
+  }
+
+  async onSubmit() {
+    if (this.form.valid) {
+      try {
+        await this.authService.authenticate(this.form.value as LoginData, () => {
+          this.router.navigateByUrl(paths.HOME, { replaceUrl: true });
+        });
+      } catch (error) {
+        this.toastService.error('Bad credentials');
+      } finally {
+      }
+    }
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.onSubmit();
+    }
   }
 }
