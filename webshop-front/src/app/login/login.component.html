@@ -1,18 +1,27 @@
 <div class="main-grid">
   <form class="login-box" [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Sign in</h2>
-    <mat-form-field appearance="fill">
-      <mat-label>Username</mat-label>
-      <input matInput formControlName="username" required (keydown)="onKeyDown($event)"/>
-      <mat-error *ngIf="(!form.get('username')?.valid)??false">Username is required</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill" style="width: 100%">
-      <mat-label>Password</mat-label>
-      <input matInput formControlName="password" type="password" required (keydown)="onKeyDown($event)"/>
-      <mat-error *ngIf="!form.get('password')?.valid">Password is required</mat-error>
-    </mat-form-field>
-    <app-button>Sign in</app-button>
-    <div class="or"> or </div>
+    <app-input
+        style="width: 100%"
+        label="Username"
+        type="text"
+        errorMessage="Username is required"
+        [required]="true"
+        [control]="$any(form.get('username'))"
+    >
+    </app-input>
+    <app-input
+        style="width: 100%"
+        label="Password"
+        type="password"
+        errorMessage="Password is required"
+        [required]="true"
+        [control]="$any(form.get('password'))"
+    >
+    </app-input>
+
+    <app-button type="submit">Sign in</app-button>
+    <div class="or"> or</div>
     <app-button>Continue as guest</app-button>
   </form>
 </div>

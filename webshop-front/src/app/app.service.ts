@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import jwt_decode from "jwt-decode";
 import {ToastService} from 'angular-toastify';
+import tokenService from './service/TokenService';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class AppService {
   public authenticated = false;
   public token: string | null = null;
 
-  constructor(private http: HttpClient, private toastService: ToastService) {
+  constructor(private http: HttpClient,
+              private toastService: ToastService) {
+    this.token = tokenService.getTokenFromStorage() ?? "";
   }
 
   authenticate(credentials: any, callback: any) {
@@ -23,6 +26,7 @@ export class AppService {
                 console.log("app.service.ts > authenticate() token: " + authorizationValue);
                 if (authorizationValue) {
                   const decoded = jwt_decode(authorizationValue);
+                  tokenService.setTokenInStorage(this.token ?? "");
                   console.log("app.service.ts > decode token(): " + JSON.stringify(decoded, null, 2));
                   this.authenticated = true;
                 } else {

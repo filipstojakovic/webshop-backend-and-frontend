@@ -11,9 +11,16 @@ export class InputComponent {
   @Input() type = "text";
   @Input() label = '';
   @Input() errorMessage = 'Field is required';
+  @Input() required: boolean = false;
+
   @Output() keyDown = new EventEmitter();
 
-  onKeyDown(event: KeyboardEvent): void {
+  displayErrors() {
+    const { touched, errors } = this.control;
+    return (touched && errors) || !this.control.valid;
+  }
+
+  onKeyDown(): void {
     this.keyDown.emit();
   }
 }
