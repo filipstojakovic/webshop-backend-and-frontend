@@ -15,12 +15,13 @@ export class InputComponent {
 
   @Output() keyDown = new EventEmitter();
 
+  onKeyDown(): void {
+    this.keyDown.emit();
+  }
+
   displayErrors() {
     const { touched, errors } = this.control;
     return (touched && errors) || !this.control.valid;
   }
 
-  onKeyDown(): void {
-    this.keyDown.emit();
-  }
 }

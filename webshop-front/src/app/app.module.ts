@@ -2,24 +2,21 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {RouterModule, Routes} from '@angular/router';
-import {AppService} from './app.service';
+import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
-import {HomeComponent} from './home/home.component';
-import {LoginComponent} from './login/login.component';
-import {BaseUrlInterceptorService} from './interceptors/base-url-interceptor.service';
+import {HomeComponent} from './page/home/home.component';
+import {LoginComponent} from './page/login/login.component';
+import {BaseUrlInterceptorService} from './interceptor/base-url-interceptor.service';
 import {AngularToastifyModule, ToastService} from 'angular-toastify';
-import {paths} from './constants/paths';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../material.module';
-import { ButtonComponent } from './components/button/button.component';
-import { InputComponent } from './components/input/input.component';
+import {ButtonComponent} from './components/button/button.component';
+import {InputComponent} from './components/input/input.component';
+import {HeaderComponent} from './components/header/header.component';
+import {LoginService} from './page/login/login.service';
+import {AuthGuard} from './service/auth-guard';
+import {routes} from './routes';
 
-const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: paths.LOGIN },
-  { path: paths.HOME, pathMatch: 'full', component: HomeComponent },
-  { path: paths.LOGIN, pathMatch: 'full', component: LoginComponent }
-];
 
 @NgModule({
   declarations: [
@@ -28,6 +25,7 @@ const routes: Routes = [
     LoginComponent,
     ButtonComponent,
     InputComponent,
+    HeaderComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -40,7 +38,8 @@ const routes: Routes = [
     ReactiveFormsModule,
   ],
   providers: [
-    AppService,
+    AuthGuard,
+    LoginService,
     ToastService,
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true }
   ],

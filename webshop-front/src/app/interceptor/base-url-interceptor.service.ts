@@ -1,8 +1,8 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment.development';
-import {AppService} from '../app.service';
+import {LoginService} from '../page/login/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +10,16 @@ import {AppService} from '../app.service';
 export class BaseUrlInterceptorService implements HttpInterceptor {
   private readonly baseUrl: string;
 
-  constructor(private appService: AppService) {
+  constructor(private loginService: LoginService) {
     this.baseUrl = environment.apiUrl
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let apiReq = null;
-    if (this.appService.token)
+    if (this.loginService.getToken())
       apiReq = request.clone({
         url: `${this.baseUrl}/${request.url}`,
-        headers: request.headers.set('Authorization', this.appService.token!)
+        headers: request.headers.set('Authorization', this.loginService.getToken()!)
       });
     else {
       apiReq = request.clone({

@@ -8,6 +8,7 @@
         errorMessage="Username is required"
         [required]="true"
         [control]="$any(form.get('username'))"
+        (keyDown)="onKeyDown($event)"
     >
     </app-input>
     <app-input
@@ -17,6 +18,7 @@
         errorMessage="Password is required"
         [required]="true"
         [control]="$any(form.get('password'))"
+        (keyDown)="onKeyDown($event)"
     >
     </app-input>
 

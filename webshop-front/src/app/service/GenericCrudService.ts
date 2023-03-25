@@ -1,5 +1,4 @@
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
 
 export class GenericCrudService<T> {
   private readonly path: string;
