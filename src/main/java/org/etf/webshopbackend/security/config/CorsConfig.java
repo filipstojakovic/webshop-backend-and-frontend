@@ -1,4 +1,4 @@
-package org.etf.webshopbackend.security;
+package org.etf.webshopbackend.security.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,14 @@
 package org.etf.webshopbackend.model.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -12,9 +20,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -27,27 +33,27 @@ public class User implements UserDetails {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Size(max = 45)
+  @Size(max = 255)
   @NotNull
   private String username;
 
-  @Size(max = 45)
+  @Size(max = 255)
   @NotNull
   private String password;
 
-  @Size(max = 45)
+  @Size(max = 255)
   @NotNull
   private String firstName;
 
-  @Size(max = 45)
+  @Size(max = 255)
   @NotNull
   private String lastName;
 
-  @Size(max = 45)
+  @Size(max = 255)
   @NotNull
   private String email;
 
-  @Size(max = 45)
+  @Size(max = 255)
   @NotNull
   private String city;
 
@@ -55,13 +61,8 @@ public class User implements UserDetails {
   @NotNull
   private String avatar;
 
-  @NotNull
-  @Column(nullable = false, columnDefinition = "TINYINT(1)")
-  private Boolean isActive;
-
-  @NotNull
-  @Column(nullable = false, columnDefinition = "TINYINT(1)")
-  private Boolean isDeleted;
+  @Column(columnDefinition = "TINYINT")
+  private Byte isDeleted;
 
   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name = "role_id")
@@ -89,6 +90,6 @@ public class User implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return true;
+    return isDeleted != 0;
   }
 }

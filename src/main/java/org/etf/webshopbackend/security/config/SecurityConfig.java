@@ -1,4 +1,4 @@
-package org.etf.webshopbackend.security;
+package org.etf.webshopbackend.security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.etf.webshopbackend.constants.EndpointConstants;
@@ -51,6 +51,8 @@ public class SecurityConfig {
     http.csrf().and().cors().disable();
     http.authorizeHttpRequests().requestMatchers("/**").permitAll();
     http.authorizeHttpRequests().requestMatchers(HttpMethod.POST, "/**").permitAll();
+    http.authorizeHttpRequests().requestMatchers(HttpMethod.GET, "/**").permitAll();
+    http.authorizeHttpRequests().requestMatchers(HttpMethod.DELETE, "/**").permitAll();
     return http.build();
   }
 
