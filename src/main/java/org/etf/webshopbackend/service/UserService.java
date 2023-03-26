@@ -27,6 +27,7 @@ public class UserService {
   private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
 
+  //TODO: filter deleted? read project
   public List<UserResponse> findAll() {
     List<User> users = userRepository.findAll();
     return userMapper.toResponses(users, UserResponse.class);
@@ -48,6 +49,7 @@ public class UserService {
     }
 
     // TODO: check if admin update or user update his own profile
+    // TODO: store image on system, get path
     User user = storeUser(userRequest);
     return userMapper.toResponse(user, UserResponse.class);
   }
