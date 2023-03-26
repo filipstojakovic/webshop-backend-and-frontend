@@ -1,4 +1,7 @@
 <ng-container>
-  <router-outlet></router-outlet>
+  <div style="display: flex; flex-direction:column; height: 100vh">
+    <app-header/>
+    <router-outlet></router-outlet>
+  </div>
   <lib-toastify-toast-container></lib-toastify-toast-container>
 </ng-container>

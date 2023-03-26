@@ -2,13 +2,13 @@ package org.etf.webshopbackend.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-public class NotAuthenticatedException extends HttpException {
+public class UnAuthorizedException extends HttpException {
 
-  public NotAuthenticatedException() {
+  public UnAuthorizedException() {
     super(HttpStatus.UNAUTHORIZED, null);
   }
 
-  public NotAuthenticatedException(Object data) {
+  public UnAuthorizedException(Object data) {
     super(HttpStatus.UNAUTHORIZED, data);
   }
 

@@ -21,7 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @RequiredArgsConstructor
 @Configuration
@@ -104,14 +103,15 @@ public class SecurityConfig {
         .requestMatchers(HttpMethod.POST, EndpointConstants.LOGIN)
         .permitAll();
     http.authorizeHttpRequests()
+        .requestMatchers(HttpMethod.GET, "/user/me")
+        .permitAll();
+    http.authorizeHttpRequests()
         .requestMatchers("/logout")
         .permitAll();
   }
 
   private void userAuthorizationRule(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests()
-        .requestMatchers(HttpMethod.GET, "/user/me")
-        .hasAnyAuthority(RoleEnum.user.toString(), RoleEnum.admin.toString())
         .requestMatchers(HttpMethod.GET, EndpointConstants.USERS)
         .hasAnyAuthority(RoleEnum.user.toString(), RoleEnum.admin.toString())
         .requestMatchers(HttpMethod.POST, EndpointConstants.USERS)

@@ -17,7 +17,6 @@ import {LoginService} from './page/login/login.service';
 import {AuthGuard} from './service/auth-guard';
 import {routes} from './routes';
 
-
 @NgModule({
   declarations: [
     AppComponent,

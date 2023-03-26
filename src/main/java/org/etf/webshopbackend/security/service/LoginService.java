@@ -10,7 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.etf.webshopbackend.exceptions.NotAuthenticatedException;
+import org.etf.webshopbackend.exceptions.UnAuthorizedException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -47,7 +47,7 @@ public class LoginService {
   }
 
   public Long getUserIdFromRequest() {
-    JwtUserDetails jwtUserDetails = getJwtUserDetailsFromRequest().orElseThrow(NotAuthenticatedException::new);
+    JwtUserDetails jwtUserDetails = getJwtUserDetailsFromRequest().orElseThrow(UnAuthorizedException::new);
     return jwtUserDetails.getId();
   }
 }

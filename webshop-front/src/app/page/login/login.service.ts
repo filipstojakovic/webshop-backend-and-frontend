@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import jwt_decode from 'jwt-decode';
 import tokenService from '../../service/TokenService';
 import {HttpClient} from '@angular/common/http';
 import {ToastService} from 'angular-toastify';
@@ -43,11 +42,8 @@ export class LoginService {
   }
 
   logout() {
-    this.http.post('logout', {}).pipe(
-        finalize(() => {
-          tokenService.removeTokenFromStorage();
-          this.router.navigateByUrl('/login');
-        })).subscribe();
+    tokenService.removeTokenFromStorage();
+    this.router.navigateByUrl('/login');
   }
 
 }
