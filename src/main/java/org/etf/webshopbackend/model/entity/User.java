@@ -61,8 +61,8 @@ public class User implements UserDetails {
   @NotNull
   private String avatar;
 
-  @Column(columnDefinition = "TINYINT")
-  private Byte isDeleted;
+  @Column(nullable = false, columnDefinition = "TINYINT(1)")
+  private Boolean isDeleted;
 
   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name = "role_id")
@@ -90,6 +90,6 @@ public class User implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return isDeleted != 0;
+    return !isDeleted;
   }
 }

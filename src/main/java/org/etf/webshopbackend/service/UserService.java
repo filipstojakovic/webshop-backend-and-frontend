@@ -72,9 +72,8 @@ public class UserService {
 
   public UserResponse delete(Long id) {
     User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(User.class, id));
-    int isDeleted = user.getIsDeleted();
-    user.setIsDeleted(isDeleted != 0 ? (byte)0 : (byte)1);
-    user = userRepository.saveAndFlush(user);
+    boolean isDeleted = !user.getIsDeleted();
+    user.setIsDeleted(isDeleted);
     return userMapper.toResponse(user, UserResponse.class);
   }
 }
