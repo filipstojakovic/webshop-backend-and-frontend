@@ -1,4 +1,4 @@
-package org.etf.webshopbackend.mailservice;
+package org.etf.webshopbackend.config;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -8,6 +8,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import org.etf.webshopbackend.service.MailService;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,7 +23,7 @@ public class GmailCredentals {
   public static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws IOException {
     GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
         jsonFactory,
-        new InputStreamReader(Objects.requireNonNull(GMailer.class.getResourceAsStream("/client_secret.json")))
+        new InputStreamReader(Objects.requireNonNull(MailService.class.getResourceAsStream("/client_secret.json")))
     );
 
     GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(

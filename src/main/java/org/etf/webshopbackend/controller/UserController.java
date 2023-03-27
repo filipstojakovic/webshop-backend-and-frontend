@@ -2,7 +2,7 @@ package org.etf.webshopbackend.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.etf.webshopbackend.mailservice.GMailer;
+import org.etf.webshopbackend.service.MailService;
 import org.etf.webshopbackend.model.request.UserRequest;
 import org.etf.webshopbackend.model.response.UserResponse;
 import org.etf.webshopbackend.service.UserService;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("users")
 public class UserController {
 
-  private final GMailer mailService;
+  private final MailService mailService;
   private final UserService userService;
 
   @GetMapping

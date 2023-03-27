@@ -9,4 +9,6 @@ public interface PinRepository extends JpaRepository<Pin, Long> {
 
   Optional<Pin> findByPinAndUser_Id(String pin, Long userId);
 
+  void deleteAllByUser_Id(Long userId);
+
 }
