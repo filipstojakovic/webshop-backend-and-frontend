@@ -12,15 +12,18 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.google.api.services.gmail.GmailScopes.GMAIL_SEND;
 
 public class GmailCredentals {
 
-  public static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory)
-      throws IOException {
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(GMailer.class.getResourceAsStream("/client_secret.json")));
+  public static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws IOException {
+    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
+        jsonFactory,
+        new InputStreamReader(Objects.requireNonNull(GMailer.class.getResourceAsStream("/client_secret.json")))
+    );
 
     GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
         httpTransport, jsonFactory, clientSecrets, Set.of(GMAIL_SEND))

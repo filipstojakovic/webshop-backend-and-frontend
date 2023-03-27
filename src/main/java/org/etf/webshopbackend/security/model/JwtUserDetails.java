@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -23,15 +22,10 @@ public class JwtUserDetails implements UserDetails {
   private Long id;
   private String username;
   private String password;
+  private Boolean isActive;
+  private Boolean isDeleted;
   private String role;
   private Map<String, Object> attributes;
-
-  public JwtUserDetails(final Long id, final String username, final String password, final String role) {
-    this.id = id;
-    this.username = username;
-    this.password = password;
-    this.role = role;
-  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -39,19 +33,7 @@ public class JwtUserDetails implements UserDetails {
   }
 
   public static JwtUserDetails create(User user) {
-
-    return JwtUserDetails.builder()
-        .id(user.getId())
-        .username(user.getUsername())
-        .password(user.getPassword())
-        .role(user.getRole().getName())
-        .build();
-  }
-
-  public static JwtUserDetails create(User user, Map<String, Object> attributes) {
-    JwtUserDetails jwtUserDetails = JwtUserDetails.create(user);
-    jwtUserDetails.setAttributes(attributes);
-    return jwtUserDetails;
+    return JwtUserDetails.builder().id(user.getId()).username(user.getUsername()).password(user.getPassword()).isActive(user.getIsActive()).isDeleted(user.getIsDeleted()).role(user.getRole().getName()).build();
   }
 
   @Override
@@ -71,7 +53,7 @@ public class JwtUserDetails implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return true;
+    return !isDeleted;
   }
 
 }

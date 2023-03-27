@@ -9,9 +9,10 @@ public class SecurityConstants {
 
   public static final String HEADER = "Authorization";
 
-  public static final String ROLES = "roles";
+  public static final String ROLE = "role";
 
   public static final String USER_ID = "userID";
 
-  public static final String TOKEN_URL_QUERY = "token";
+  public static final String IS_ACTIVE = "isActive";
+
 }

@@ -12,6 +12,7 @@ export class InputComponent {
   @Input() label = '';
   @Input() errorMessage = 'Field is required';
   @Input() required: boolean = false;
+  @Input() readonly: boolean = false;
 
   @Output() keyDown = new EventEmitter();
 

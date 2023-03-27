@@ -9,7 +9,7 @@ html {
 
 body { height: 100%; margin: 0; padding: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-router-outlet + app-login {
+router-outlet + app-login, app-activate-account {
   display:flex;
   flex-direction: row;
   flex:1;

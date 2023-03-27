@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface PinRepository extends JpaRepository<Pin, Long> {
 
-  Optional<Pin> findByActivationPin(String pin);
+  Optional<Pin> findByPinAndUser_Id(String pin, Long userId);
+
 }

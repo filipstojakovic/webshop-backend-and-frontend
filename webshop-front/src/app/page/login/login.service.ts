@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import tokenService from '../../service/TokenService';
 import {HttpClient} from '@angular/common/http';
 import {ToastService} from 'angular-toastify';
-import {finalize} from 'rxjs';
 import {Router} from '@angular/router';
 
 @Injectable({

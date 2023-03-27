@@ -6,6 +6,7 @@ import tokenService from './TokenService';
 import {RoleEnum} from '../model/role';
 import {HttpClient} from '@angular/common/http';
 import {backendUrl} from '../constants/backendUrl';
+import {tokenConstant} from "../constants/constants";
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,23 @@ export class AuthGuard implements CanActivate {
     const token = tokenService.getTokenFromStorage();
     //TODO: send request to check if token is valid;
 
+    const tokenRole = tokenService.getFieldFromToken(tokenConstant.ROLE);
+    const hasRole = routeRoles.some(role => role === tokenRole);
+
+    if (!hasRole) {
+      this.router.navigateByUrl(paths.ERROR);
+      return false;
+    }
+
     // Check if user is authenticated
     if (token) {
       this.checkIsTokenValid();
+
+      const isActive: boolean = tokenService.getFieldFromToken(tokenConstant.IS_ACTIVE);
+      //if not activated redirect to activation page
+      if (!isActive && state.url !== `/${paths.PIN}`)
+        this.router.navigateByUrl(paths.PIN)
+
       return true;
     }
 

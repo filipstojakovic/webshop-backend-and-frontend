@@ -15,7 +15,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -31,8 +30,9 @@ public class TokenProvider {
     JwtUserDetails userDetails = (JwtUserDetails) authentication.getPrincipal();
 
     return Jwts.builder()
-        .claim(SecurityConstants.ROLES, userDetails.getRole())
+        .claim(SecurityConstants.ROLE, userDetails.getRole())
         .claim(SecurityConstants.USER_ID, userDetails.getId())
+        .claim(SecurityConstants.IS_ACTIVE, userDetails.getIsActive())
         .setSubject(userDetails.getUsername())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + tokenExpirationMillis))

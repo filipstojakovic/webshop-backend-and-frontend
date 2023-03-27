@@ -1,6 +1,7 @@
 <mat-form-field appearance="fill" class="input-style">
   <mat-label>{{label}}</mat-label>
   <input matInput
+         [readonly]=readonly
          [formControl]="control"
          [type]="type"
          [required]="required"

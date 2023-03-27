@@ -61,7 +61,7 @@ public class UserController {
   @GetMapping("email")
   public void email() {
     try {
-      mailService.sendMail("filip.stojakovic1@gmail.com", "hello", "hello world");
+      mailService.sendMailAsync("filip.stojakovic1@gmail.com", "hello majo", "cao majo");
 
     } catch (Exception ex) {
       ex.printStackTrace();

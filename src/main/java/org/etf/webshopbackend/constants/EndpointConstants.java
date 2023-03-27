@@ -13,4 +13,5 @@ public final class EndpointConstants {
 
   public static final String LOGIN = "/login";
 
+  public static final String PIN = "/pins";
 }

@@ -9,9 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.constants.SecurityConstants;
 import org.etf.webshopbackend.security.service.CustomUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -40,10 +40,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         Long userId = tokenProvider.getUserIdFromToken(jwtToken);
 
         UserDetails userDetails = customUserDetailsService.loadUserById(userId);
-        UsernamePasswordAuthenticationToken authentication =
+        Authentication authentication =
             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     } catch (Exception ex) {

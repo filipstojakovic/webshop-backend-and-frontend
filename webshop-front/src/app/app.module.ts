@@ -16,6 +16,8 @@ import {HeaderComponent} from './components/header/header.component';
 import {LoginService} from './page/login/login.service';
 import {AuthGuard} from './service/auth-guard';
 import {routes} from './routes';
+import { RegistrationComponent } from './page/registration/registration.component';
+import { ActivateAccountComponent } from './page/activate-account/activate-account.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import {routes} from './routes';
     ButtonComponent,
     InputComponent,
     HeaderComponent,
+    RegistrationComponent,
+    ActivateAccountComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -13,6 +13,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -31,9 +32,12 @@ public class GMailer {
   private String appName;
   @Value("${app.email}")
   private String myEmail;
+  @Value("${app.clientSecretPath}")
+  private String clientSecretPath;
 
   private final Gmail service;
 
+  //constructor
   public GMailer() throws GeneralSecurityException, IOException {
     NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
     GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
@@ -42,7 +46,8 @@ public class GMailer {
         .build();
   }
 
-  public void sendMail(String toEmail, String subject, String message) throws Exception {
+  @Async
+  public void sendMailAsync(String toEmail, String subject, String message) throws Exception {
     Properties props = new Properties();
     Session session = Session.getDefaultInstance(props, null);
     MimeMessage email = new MimeMessage(session);
@@ -62,12 +67,12 @@ public class GMailer {
       msg = service.users().messages().send("me", msg).execute();
       log.info("Message to: " + toEmail);
       log.info(msg.toPrettyString());
-    } catch (GoogleJsonResponseException e) {
-      GoogleJsonError error = e.getDetails();
+    } catch (GoogleJsonResponseException ex) {
+      GoogleJsonError error = ex.getDetails();
       if (error.getCode() == 403) {
-        log.error("Unable to send message: " + e.getDetails());
+        log.error("Unable to send message: " + ex.getDetails());
       } else {
-        throw e;
+        throw ex;
       }
     }
   }

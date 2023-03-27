@@ -4,16 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.exceptions.BadCredentialsException;
 import org.etf.webshopbackend.model.request.LoginRequest;
-import org.etf.webshopbackend.security.model.JwtUserDetails;
 import org.etf.webshopbackend.security.token.TokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.etf.webshopbackend.exceptions.UnAuthorizedException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,16 +33,4 @@ public class LoginService {
     return token;
   }
 
-  public Optional<JwtUserDetails> getJwtUserDetailsFromRequest() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication == null || !authentication.isAuthenticated()) {
-      return Optional.empty();
-    }
-    return Optional.of(((JwtUserDetails) authentication.getPrincipal()));
-  }
-
-  public Long getUserIdFromRequest() {
-    JwtUserDetails jwtUserDetails = getJwtUserDetailsFromRequest().orElseThrow(UnAuthorizedException::new);
-    return jwtUserDetails.getId();
-  }
 }

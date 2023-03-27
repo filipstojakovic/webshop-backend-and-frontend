@@ -94,7 +94,14 @@ public class SecurityConfig {
   private void createAuthorizationRules(HttpSecurity http) throws Exception {
     publicAuthorizationRule(http);
     userAuthorizationRule(http);
+    activatePinAuthorizationRule(http);
     // TODO: authrorize other endpoints
+  }
+
+  private void activatePinAuthorizationRule(final HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests()
+        .requestMatchers(HttpMethod.POST, EndpointConstants.PIN)
+        .permitAll();
   }
 
   private void publicAuthorizationRule(HttpSecurity http) throws Exception {

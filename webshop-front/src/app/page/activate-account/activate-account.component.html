@@ -1,30 +1,29 @@
 <div class="main-grid">
   <form class="login-box" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <h2>Sign in</h2>
+    <h2>Activate account</h2>
     <app-input
         style="width: 100%"
         label="Username"
         type="text"
         errorMessage="Username is required"
-        [required]="true"
+        [readonly]="true"
         [control]="$any(form.get('username'))"
-        (keyDown)="onKeyDown($event)"
     >
     </app-input>
     <app-input
         style="width: 100%"
-        label="Password"
+        label="Activation pin"
         type="password"
-        errorMessage="Password is required"
+        errorMessage="Activation pin is required"
         [required]="true"
-        [control]="$any(form.get('password'))"
+        [control]="$any(form.get('pin'))"
         (keyDown)="onKeyDown($event)"
     >
     </app-input>
 
-    <app-button type="submit">Sign in</app-button>
+    <app-button type="submit">Activate</app-button>
     <div class="or">or</div>
-    <app-button>Continue as guest</app-button>
+    <app-button (btnClick)="backToLogin()">Back to login</app-button>
   </form>
 </div>
 

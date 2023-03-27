@@ -14,6 +14,7 @@ logging:
 
 
 app:
+  clientSecretPath: /client_secret.json
   name: webshop
   email: ${EMAIL}
   password: ${PASSWORD}
