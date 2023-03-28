@@ -1,6 +1,7 @@
 package org.etf.webshopbackend.security.config;
 
 import lombok.RequiredArgsConstructor;
+import org.etf.webshopbackend.advice.RestExceptionHandler;
 import org.etf.webshopbackend.constants.EndpointConstants;
 import org.etf.webshopbackend.model.enums.RoleEnum;
 import org.etf.webshopbackend.security.service.CustomUserDetailsService;
@@ -31,13 +32,8 @@ public class SecurityConfig {
   private final CustomUserDetailsService customUserDetailsService;
 
   @Bean
-  public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder,
-                                           UserDetailsService userDetailService) throws Exception {
-    return http.getSharedObject(AuthenticationManagerBuilder.class)
-        .userDetailsService(userDetailService)
-        .passwordEncoder(passwordEncoder)
-        .and()
-        .build();
+  public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder, UserDetailsService userDetailService) throws Exception {
+    return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailService).passwordEncoder(passwordEncoder).and().build();
   }
 
   @Bean
@@ -59,32 +55,24 @@ public class SecurityConfig {
   @Profile("local")
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer() {
-    return (web) -> web.ignoring()
-        .requestMatchers("/**");
+    return (web) -> web.ignoring().requestMatchers("/**");
   }
 
   @Profile("default")
   @Bean // this will only run in dev (normal) profile
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     createAuthorizationRules(http);
-    http.cors()
+    // @formatter:off
+    http
+        .cors()
         .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .csrf().disable()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
-        .csrf()
-        .disable()
-        .formLogin()
-        .disable()
-        .httpBasic()
-        .disable()
-        .exceptionHandling()
+        .authorizeHttpRequests().anyRequest().authenticated()
         .and()
-        .authorizeHttpRequests()
-        .anyRequest()
-        .authenticated()
-        .and()
-        .logout();
+        .exceptionHandling().authenticationEntryPoint(new RestExceptionHandler());
+    // @formatter:on
 
     // Our custom Token based authentication filter
     http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -101,21 +89,17 @@ public class SecurityConfig {
   private void activatePinAuthorizationRule(final HttpSecurity http) throws Exception {
     http.authorizeHttpRequests()
         .requestMatchers(HttpMethod.POST, EndpointConstants.PIN)
-        .permitAll();
+        .hasAnyAuthority(RoleEnum.user.toString(), RoleEnum.admin.toString());
   }
 
   private void publicAuthorizationRule(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests()
-        .requestMatchers(HttpMethod.OPTIONS, EndpointConstants.ALL_PATHS)
-        .permitAll();
+    http.authorizeHttpRequests().requestMatchers(HttpMethod.OPTIONS, EndpointConstants.ALL_PATHS).permitAll();
     http.authorizeHttpRequests()
         .requestMatchers(HttpMethod.POST, EndpointConstants.LOGIN)
-        .permitAll();
-    http.authorizeHttpRequests()
-        .requestMatchers(HttpMethod.GET, "/user/me")
-        .permitAll();
-    http.authorizeHttpRequests()
-        .requestMatchers("/logout")
+        .permitAll()
+        .requestMatchers(HttpMethod.POST, EndpointConstants.REGISTER)
+        .permitAll()
+        .requestMatchers(HttpMethod.GET, EndpointConstants.WHOAMI)
         .permitAll();
   }
 

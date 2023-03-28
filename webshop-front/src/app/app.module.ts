@@ -16,8 +16,9 @@ import {HeaderComponent} from './components/header/header.component';
 import {LoginService} from './page/login/login.service';
 import {AuthGuard} from './service/auth-guard';
 import {routes} from './routes';
-import { RegistrationComponent } from './page/registration/registration.component';
-import { ActivateAccountComponent } from './page/activate-account/activate-account.component';
+import {RegistrationComponent} from './page/registration/registration.component';
+import {ActivateAccountComponent} from './page/activate-account/activate-account.component';
+import {NgxDropzoneModule} from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -37,16 +38,17 @@ import { ActivateAccountComponent } from './page/activate-account/activate-accou
     HttpClientModule,
     MaterialModule,
     FormsModule,
-    AngularToastifyModule,
     ReactiveFormsModule,
+    AngularToastifyModule,
+    NgxDropzoneModule,
   ],
   providers: [
     AuthGuard,
     LoginService,
     ToastService,
-    { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -27,7 +28,7 @@ public class UserService {
   private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
 
-  //TODO: filter deleted? read project
+  // TODO: filter deleted? read project
   public List<UserResponse> findAll() {
     List<User> users = userRepository.findAll();
     return userMapper.toResponses(users, UserResponse.class);
@@ -39,6 +40,10 @@ public class UserService {
   }
 
   public UserResponse insert(UserRequest userRequest) {
+    Optional<User> userByUsername = userRepository.findByUsername(userRequest.getUsername());
+    if (userByUsername.isPresent()) {
+      throw new BadRequestException("Username already exists!");
+    }
     User user = storeUser(userRequest);
     return userMapper.toResponse(user, UserResponse.class);
   }

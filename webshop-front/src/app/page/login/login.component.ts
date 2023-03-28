@@ -15,7 +15,7 @@ type LoginData = {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
 
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
-      private loginService:LoginService,
+      private loginService: LoginService,
       private router: Router,
       private http: HttpClient,
       private toastService: ToastService,
@@ -55,5 +55,13 @@ export class LoginComponent implements OnInit {
     if (event?.key === 'Enter') {
       this.onSubmit();
     }
+  }
+
+  navigateHome(replace = false) {
+    this.router.navigateByUrl(paths.HOME, { replaceUrl: replace });
+  }
+
+  navigateRegister(replace = false) {
+    this.router.navigateByUrl(paths.REGISTER, { replaceUrl: replace });
   }
 }

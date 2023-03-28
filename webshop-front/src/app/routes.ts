@@ -5,6 +5,7 @@ import {LoginComponent} from './page/login/login.component';
 import {AuthGuard} from './service/auth-guard';
 import {RoleEnum} from './model/role';
 import {ActivateAccountComponent} from "./page/activate-account/activate-account.component";
+import {RegistrationComponent} from './page/registration/registration.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,11 @@ export const routes: Routes = [
     path: paths.LOGIN,
     pathMatch: 'full',
     component: LoginComponent
+  },
+  {
+    path: paths.REGISTER,
+    pathMatch: 'full',
+    component: RegistrationComponent
   },
   {
     path: paths.HOME,

@@ -2,6 +2,7 @@ package org.etf.webshopbackend.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.etf.webshopbackend.exceptions.BadRequestException;
 import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.etf.webshopbackend.model.entity.Pin;
 import org.etf.webshopbackend.model.entity.User;
@@ -58,13 +59,15 @@ public class PinService {
     mailService.sendMailAsync(user.getEmail(), "Novi pin", "Pin: " + newPin.getPin());
   }
 
-  public boolean activateUsingPin(String pin, Long userId) {
+  public void activateUsingPin(String pin, Long userId) {
 
-    // TODO: send mail if pin not valid
     Optional<Pin> checkPinExists = pinRepository.findByPinAndUser_Id(pin, userId);
-    // TODO: update user's isActivated if pin matched
-    checkPinExists.ifPresent(checkPin -> pinRepository.deleteById(checkPin.getId()));
-    return checkPinExists.isPresent();
+    if (!checkPinExists.isPresent()) {
+      // TODO: send new mail
+      throw new BadRequestException("Pin does not match");
+    }
+    userRepository.findById(userId).ifPresent(user -> user.setIsActive(true));
+    checkPinExists.ifPresent(checkPin -> pinRepository.deleteAllByUser_Id(userId));
   }
 
 }

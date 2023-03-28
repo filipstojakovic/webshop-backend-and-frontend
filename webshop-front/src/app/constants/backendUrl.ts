@@ -1,5 +1,7 @@
 export const backendUrl = {
-  AUTHENTICATE: "/login",
-  USERS: "/users",
+  AUTHENTICATE: "login",
+  USERS: "users",
   WHOAMI: "user/me",
+  REGISTER: 'register',
+
 } as const;

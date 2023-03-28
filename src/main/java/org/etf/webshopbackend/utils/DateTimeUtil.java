@@ -11,6 +11,9 @@ public class DateTimeUtil {
 
   // ISO dates use the ISO 8601 standard
   public static LocalDateTime convertIsoToDate(String isoDate) {
+    if (isoDate == null) {
+      return null;
+    }
     DateTimeFormatter isoDateFormatter = DateTimeFormatter.ofPattern(StdDateFormat.DATE_FORMAT_STR_ISO8601);
     return LocalDateTime.from(isoDateFormatter.parse(isoDate));
   }

@@ -56,10 +56,10 @@ public class User {
   private String avatar;
 
   @Column(nullable = false, columnDefinition = "TINYINT(1)")
-  private Boolean isDeleted;
+  private Boolean isDeleted = false;
 
   @Column(nullable = false, columnDefinition = "TINYINT(1)")
-  private Boolean isActive;
+  private Boolean isActive = false;
 
   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name = "role_id")

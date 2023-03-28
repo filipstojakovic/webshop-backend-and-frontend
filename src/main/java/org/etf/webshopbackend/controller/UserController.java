@@ -58,14 +58,4 @@ public class UserController {
     return ResponseEntity.ok(user);
   }
 
-  @GetMapping("email")
-  public void email() {
-    try {
-      mailService.sendMailAsync("filip.stojakovic1@gmail.com", "hello majo", "cao majo");
-
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-
-  }
 }

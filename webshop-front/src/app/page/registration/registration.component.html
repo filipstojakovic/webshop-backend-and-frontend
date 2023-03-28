@@ -1,6 +1,6 @@
-<div class="main-grid">
-  <form class="login-box" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <h2>Sign in</h2>
+<div class="main-grid login-image">
+  <form class="center-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>Registration</h2>
     <app-input
         style="width: 100%"
         label="Username"
@@ -8,7 +8,6 @@
         errorMessage="Username is required"
         [required]="true"
         [control]="$any(form.get('username'))"
-        (keyDown)="onKeyDown($event)"
     >
     </app-input>
     <app-input
@@ -18,13 +17,72 @@
         errorMessage="Password is required"
         [required]="true"
         [control]="$any(form.get('password'))"
-        (keyDown)="onKeyDown($event)"
+    >
+    </app-input>
+    <app-input
+        style="width: 100%"
+        label="Confirm password"
+        type="password"
+        errorMessage="Passwords do not match"
+        [required]="true"
+        [control]="$any(form.get('confirm_password'))"
     >
     </app-input>
 
-    <app-button type="submit">Sign in</app-button>
-    <div class="or"> or</div>
-    <app-button>Continue as guest</app-button>
+    <div class="or">User info</div>
+
+    <app-input
+        style="width: 100%"
+        label="First name"
+        type="text"
+        errorMessage="First name is required"
+        [required]="true"
+        [control]="$any(form.get('firstName'))"
+    >
+    </app-input>
+
+    <app-input
+        style="width: 100%"
+        label="Last name"
+        type="text"
+        errorMessage="Last name is required"
+        [required]="true"
+        [control]="$any(form.get('lastName'))"
+    >
+    </app-input>
+
+    <app-input
+        style="width: 100%"
+        label="Email"
+        type="text"
+        errorMessage="Email is required"
+        [required]="true"
+        [control]="$any(form.get('email'))"
+    >
+    </app-input>
+    <app-input
+        style="width: 100%"
+        label="City"
+        type="text"
+        errorMessage="city is required"
+        [required]="true"
+        [control]="$any(form.get('city'))"
+    >
+    </app-input>
+
+    <ngx-dropzone class="main-grid" style="opacity: 1 !important"
+                  accept="image/jpeg,image/jpg,image/png"
+                  [multiple]="false" [maxFileSize]="5000000" (change)="onSelect($event)">
+      <ngx-dropzone-label>Drop & Drop!</ngx-dropzone-label>
+      <ng-container *ngIf="imageFile" style="flex-direction: row">
+        <!--        <ngx-dropzone-label>{{ imageFile.name }} ({{ imageFile.type }})</ngx-dropzone-label>-->
+        <ngx-dropzone-image-preview class="center-image" ngProjectAs="ngx-dropzone-preview" [file]="imageFile" (removed)="onRemove()">
+        </ngx-dropzone-image-preview>
+      </ng-container>
+    </ngx-dropzone>
+
+    <app-button type="submit">Submit</app-button>
+    <app-button (btnClick)="navigateLogin()">Back to login</app-button>
   </form>
 </div>
 

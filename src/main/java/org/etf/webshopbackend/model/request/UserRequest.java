@@ -33,6 +33,4 @@ public class UserRequest {
   @NotBlank
   private String city;
 
-  private String avatar;
-
 }
