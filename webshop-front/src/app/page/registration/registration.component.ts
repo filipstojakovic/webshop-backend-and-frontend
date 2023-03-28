@@ -9,6 +9,7 @@ import {paths} from '../../constants/paths';
 import {SignupRequest} from '../../model/request/signupRequest';
 import {ConfirmedValidator} from './confirmed.validator';
 import {backendUrl} from '../../constants/backendUrl';
+import myUtils from "../../utils/myUtils";
 
 @Component({
   selector: 'app-registration',
@@ -49,17 +50,17 @@ export class RegistrationComponent implements OnInit {
   onSubmit() {
     if (!this.form.valid) {
       this.toastService.error("Form not valid")
+      return;
     }
 
     if (this.form.get("password") === this.form.get("repassword")) {
       this.toastService.error("Passwords do not match");
+      return;
     }
 
-    const formData: FormData = new FormData();
-    formData.append("file", this.imageFile!);
+    const formData = myUtils.formGroupToFormDataConverter(this.form);
+    formData.append("avatar", this.imageFile!);
 
-    const signUpRequest: SignupRequest = this.form.value;
-    console.log("registration.component.ts > onSubmit(): " + JSON.stringify(signUpRequest, null, 2));
     this.http.post(backendUrl.REGISTER, formData).subscribe({
         next: (res) => {
             console.log("registration.component.ts > next(): "+ JSON.stringify(res, null, 2));

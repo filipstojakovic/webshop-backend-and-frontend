@@ -1,5 +1,7 @@
 package org.etf.webshopbackend.model.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,25 +10,25 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpRequest {
+public class RegisterRequest {
 
-//   @NotNull
-//   @NotBlank
+  @NotNull
+  @NotBlank
   private String username;
-//   @NotNull
-//   @NotBlank
+  @NotNull
+  @NotBlank
   private String password;
-//   @NotNull
-//   @NotBlank
+  @NotNull
+  @NotBlank
   private String firstName;
-//   @NotNull
-//   @NotBlank
+  @NotNull
+  @NotBlank
   private String lastName;
-//   @NotNull
-//   @NotBlank
+  @NotNull
+  @NotBlank
   private String email;
-//   @NotNull
-//   @NotBlank
+  @NotNull
+  @NotBlank
   private String city;
 
   private MultipartFile avatar;

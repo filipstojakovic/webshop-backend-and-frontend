@@ -5,17 +5,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.constants.SecurityConstants;
 import org.etf.webshopbackend.model.request.LoginRequest;
+import org.etf.webshopbackend.model.request.RegisterRequest;
 import org.etf.webshopbackend.model.response.UserResponse;
 import org.etf.webshopbackend.security.service.AuthService;
 import org.etf.webshopbackend.service.PinService;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -40,12 +41,10 @@ public class AuthController {
   }
 
   @PostMapping(path = "/register", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-  public ResponseEntity<UserResponse> register(@ModelAttribute @Valid MultipartFile file) {
-
-    return null;
-//     UserResponse createdUser = authService.register(user);
+  public ResponseEntity<UserResponse> register(@ModelAttribute @Valid RegisterRequest registerRequest) {
+    UserResponse createdUser = authService.register(registerRequest);
     // TODO: maybe send pin via email
     // maybe add token
-//     return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
   }
 }

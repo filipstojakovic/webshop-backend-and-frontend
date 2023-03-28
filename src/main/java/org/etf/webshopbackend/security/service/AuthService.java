@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.exceptions.BadCredentialsException;
 import org.etf.webshopbackend.model.request.LoginRequest;
-import org.etf.webshopbackend.model.request.SignUpRequest;
+import org.etf.webshopbackend.model.request.RegisterRequest;
 import org.etf.webshopbackend.model.request.UserRequest;
 import org.etf.webshopbackend.model.response.UserResponse;
 import org.etf.webshopbackend.security.token.TokenProvider;
@@ -47,8 +47,10 @@ public class AuthService {
     return token;
   }
 
-  public UserResponse register(SignUpRequest signUpRequest) {
-    UserRequest user = mapper.map(signUpRequest, UserRequest.class);
+  public UserResponse register(RegisterRequest registerRequest) {
+    // TODO: store image, get path and path to UserRequest.avatarPath
+
+    UserRequest user = mapper.map(registerRequest, UserRequest.class);
     return userService.insert(user);
   }
 
