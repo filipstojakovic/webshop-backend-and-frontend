@@ -43,7 +43,10 @@ public class TokenProvider {
 
   public String createToken(Authentication authentication) {
     JwtUserDetails userDetails = (JwtUserDetails) authentication.getPrincipal();
+    return buildToken(userDetails);
+  }
 
+  public String buildToken(JwtUserDetails userDetails) {
     return Jwts.builder()
         .claim(SecurityConstants.ROLE, userDetails.getRole())
         .claim(SecurityConstants.USER_ID, userDetails.getId())
@@ -71,7 +74,7 @@ public class TokenProvider {
           .setSigningKey(secretKey)
           .parseClaimsJws(jwtToken);
 
-      //check is deleted in meantime
+      // check is deleted in meantime
       Long userId = getUserIdFromToken(jwtToken);
       User user = userRepository.findById(userId)
           .orElseThrow(() -> new NotFoundException(User.class, userId));

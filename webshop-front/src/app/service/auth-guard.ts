@@ -9,20 +9,17 @@ import {backendUrl} from '../constants/backendUrl';
 import {tokenConstant} from "../constants/constants";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private loginService: AuthService, private router: Router, private http: HttpClient) {
+  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
 
-    //TODO: remove this return
-    // return true;
     const routeRoles: RoleEnum[] = route.data['role'];
     const token = tokenService.getTokenFromStorage();
-    //TODO: send request to check if token is valid;
 
     const tokenRole = tokenService.getFieldFromToken(tokenConstant.ROLE);
     const hasRole = routeRoles.some(role => role === tokenRole);
@@ -53,18 +50,17 @@ export class AuthGuard implements CanActivate {
   checkIsTokenValid() {
     const token = tokenService.getTokenFromStorage();
     if (token)
-      this.http.get(backendUrl.WHOAMI, {observe: 'response'})
+      this.http.get(backendUrl.WHOAMI, { observe: 'response' })
           .subscribe({
                 next: (res) => {
-                  console.log("auth-guard.ts > next(): " + JSON.stringify(res, null, 2));
-                  console.log(res.status)
+                  console.log("auth-guard.ts > next(): " + res.status);
 
                 },
                 error: (err) => {
                   console.log("auth-guard.ts > error(): " + JSON.stringify(err, null, 2));
-                  this.loginService.logout();
-                }
-              }
+                  this.authService.logout();
+                },
+              },
           )
   }
 

@@ -51,8 +51,6 @@ public class User {
   @NotNull
   private String city;
 
-  @Size(max = 255)
-  @NotNull
   private String avatar;
 
   @Column(nullable = false, columnDefinition = "TINYINT(1)")

@@ -10,10 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import static org.apache.http.entity.ContentType.IMAGE_JPEG;
@@ -31,19 +33,13 @@ public class FileService {
   @Value("${app.image.productsDir}")
   private String productsDirString;
 
+  public static final String ENCODED_IMAGE_PREFIX = "data:image/png;base64,";
+
   private static final List<String> IMAGE_TYPES = Arrays.asList(
       IMAGE_JPEG.getMimeType(),
       IMAGE_PNG.getMimeType());
 
-  // TODO: maybe not needed
-//   private Map<String, String> extractMetadata(MultipartFile file) {
-//     Map<String, String> metadata = new HashMap<>();
-//     metadata.put("Content-Type", file.getContentType());
-//     metadata.put("Content-Length", String.valueOf(file.getSize()));
-//     return metadata;
-//   }
-
-  public String saveImageToFilesystem(Path path, String username, MultipartFile multipartFile) throws IOException {
+  public String saveImageToFilesystem(Path path, String username, MultipartFile multipartFile) throws IOException, URISyntaxException {
     isFileEmpty(multipartFile);
     isFileImage(multipartFile);
     String parentDir = path.toFile().getAbsolutePath();
@@ -99,5 +95,15 @@ public class FileService {
 
   public String getRootDirPath() {
     return System.getProperty("user.dir");
+  }
+
+  public String downloadUserProfileImage(String path) throws IOException {
+    if (path == null) {
+      return null;
+    }
+    Path filePath = Paths.get(path);
+    byte[] imageBytes = Files.readAllBytes(filePath);
+    //TODO: maybe encoded image prefix handle on frontend
+    return ENCODED_IMAGE_PREFIX + Base64.getEncoder().encodeToString(imageBytes);
   }
 }

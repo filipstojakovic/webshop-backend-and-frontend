@@ -2,9 +2,10 @@ package org.etf.webshopbackend.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.etf.webshopbackend.service.MailService;
+import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.model.request.UserRequest;
 import org.etf.webshopbackend.model.response.UserResponse;
+import org.etf.webshopbackend.service.FileService;
 import org.etf.webshopbackend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +18,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.management.relation.RoleNotFoundException;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("users")
 public class UserController {
 
-  private final MailService mailService;
   private final UserService userService;
+  private final FileService fileService;
 
   @GetMapping
   public ResponseEntity<List<UserResponse>> findAll() {
@@ -41,7 +42,7 @@ public class UserController {
   }
 
   @PostMapping
-  public ResponseEntity<UserResponse> insert(@Valid @RequestBody UserRequest userRequest) throws RoleNotFoundException {
+  public ResponseEntity<UserResponse> insert(@Valid @RequestBody UserRequest userRequest) {
     UserResponse user = userService.insert(userRequest);
     return new ResponseEntity<>(user, HttpStatus.CREATED);
   }
@@ -58,4 +59,14 @@ public class UserController {
     return ResponseEntity.ok(user);
   }
 
+  @GetMapping("{id}/image")
+  public String downloadUserProfileImage(@PathVariable Long id) {
+    try {
+      UserResponse user = userService.findById(id);
+      return fileService.downloadUserProfileImage(user.getAvatar());
+    } catch (Exception ex) {
+      log.error("Unable to download image");
+    }
+    return null;
+  }
 }

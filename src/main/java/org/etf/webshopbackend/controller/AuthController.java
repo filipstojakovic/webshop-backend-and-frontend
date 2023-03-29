@@ -43,8 +43,6 @@ public class AuthController {
   @PostMapping(path = "/register", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
   public ResponseEntity<UserResponse> register(@ModelAttribute @Valid RegisterRequest registerRequest) {
     UserResponse createdUser = authService.register(registerRequest);
-    // TODO: maybe send pin via email
-    // maybe add token
     return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
   }
 }

@@ -1,8 +1,11 @@
 logging:
   level:
-        root: debug
-    #    sql: debug
-#    org.springframework.web.client.RestTemplate: DEBUG
+    org:
+      springframework:
+        security: debug # or trace
+    root: debug
+#    sql: debug
+
 spring:
   jpa:
     show-sql: false

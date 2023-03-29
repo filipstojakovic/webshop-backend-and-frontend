@@ -23,7 +23,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
-      private loginService: AuthService,
+      private authService: AuthService,
       private router: Router,
       private http: HttpClient,
       private toastService: ToastService,
@@ -63,15 +63,17 @@ export class RegistrationComponent implements OnInit {
     formData.append("avatar", this.imageFile!);
 
     this.http.post(backendUrl.REGISTER, formData).subscribe({
-        next: (res) => {
-            console.log("registration.component.ts > next(): "+ JSON.stringify(res, null, 2));
-        },
-        error: (err) => {
-          console.log("registration.component.ts > error(): "+ JSON.stringify(err, null, 2));
-        }
-     }
-           );
+          next: (res) => {
+            console.log("registration.component.ts > next(): " + JSON.stringify(res, null, 2));
+            this.navigateLogin(true);
 
+          },
+          error: (err) => {
+            console.log("registration.component.ts > error(): " + JSON.stringify(err, null, 2));
+            this.toastService.error("There was an error with form submit");
+          },
+        },
+    );
   }
 
   onSelect(event: any) {

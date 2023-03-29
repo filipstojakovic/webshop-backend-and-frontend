@@ -20,7 +20,7 @@ export class ActivateAccountComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
-      private loginService: AuthService,
+      private authService: AuthService,
       private router: Router,
       private http: HttpClient,
       private toastService: ToastService,
@@ -62,28 +62,21 @@ export class ActivateAccountComponent implements OnInit {
       return;
     }
 
-    this.http.post(backendUrl.PIN,this.form.value).subscribe({
-        next: (res) => {
-          //TODO: get new token becouse activate is still 0
-          this.router.navigateByUrl(paths.HOME, { replaceUrl: true });
-        },
-        error: (err) => {
-            console.log("activate-account.component.ts > error(): "+ JSON.stringify(err, null, 2));
-        }
-     }
-           )
-    //TODO: if pin valid navigate to home
+    this.http.post(backendUrl.PIN, this.form.value, { observe: "response" }).subscribe({
+          next: (res) => {
+            //TODO: maybe check res.statuscode
+            const token = res.headers.get('Authorization');
+            if (token == null || token === "")
+              this.authService.logout();
 
-    // if (this.form.valid) {
-    //   try {
-    //     this.loginService.login(this.form.value, () => {
-    //       this.router.navigateByUrl(paths.HOME, { replaceUrl: true });
-    //     });
-    //   } catch (error) {
-    //     this.toastService.error('Bad credentials');
-    //   } finally {
-    //   }
-    // }
+            tokenService.setTokenInStorage(token!);
+            this.router.navigateByUrl(paths.HOME, { replaceUrl: true });
+          },
+          error: (err) => {
+            console.log("activate-account.component.ts > error(): " + JSON.stringify(err, null, 2));
+          },
+        },
+    )
   }
 
   backToLogin() {

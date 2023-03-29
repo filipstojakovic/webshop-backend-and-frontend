@@ -17,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -53,7 +54,7 @@ public class AuthService {
             fileService.getAvatarDirPath(),
             registerRequest.getUsername(),
             registerRequest.getAvatar());
-      } catch (IOException ex) {
+      } catch (IOException | URISyntaxException ex) {
         log.error("Unable to create image: " + registerRequest.getAvatar().getName());
       }
     }

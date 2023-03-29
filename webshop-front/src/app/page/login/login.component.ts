@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
-      private loginService: AuthService,
+      private authService: AuthService,
       private router: Router,
       private http: HttpClient,
       private toastService: ToastService,
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       try {
-        this.loginService.login(this.form.value as LoginData, () => {
+        this.authService.login(this.form.value as LoginData, () => {
           this.router.navigateByUrl(paths.HOME, { replaceUrl: true });
         });
       } catch (error) {

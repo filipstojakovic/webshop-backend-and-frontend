@@ -10,16 +10,16 @@ import {AuthService} from '../service/auth.service';
 export class BaseUrlInterceptorService implements HttpInterceptor {
   private readonly baseUrl: string;
 
-  constructor(private loginService: AuthService) {
+  constructor(private authService: AuthService) {
     this.baseUrl = environment.apiUrl
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let apiReq = null;
-    if (this.loginService.getToken())
+    if (this.authService.getToken())
       apiReq = request.clone({
         url: `${this.baseUrl}/${request.url}`,
-        headers: request.headers.set('Authorization', this.loginService.getToken()!)
+        headers: request.headers.set('Authorization', this.authService.getToken()!)
       });
     else {
       apiReq = request.clone({

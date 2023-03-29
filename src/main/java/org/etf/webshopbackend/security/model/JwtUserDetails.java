@@ -10,8 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.Collections;
 
 @Data
 @Builder
@@ -25,15 +24,21 @@ public class JwtUserDetails implements UserDetails {
   private Boolean isActive;
   private Boolean isDeleted;
   private String role;
-  private Map<String, Object> attributes;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(new SimpleGrantedAuthority(role));
+    return Collections.singletonList(new SimpleGrantedAuthority(role));
   }
 
   public static JwtUserDetails create(User user) {
-    return JwtUserDetails.builder().id(user.getId()).username(user.getUsername()).password(user.getPassword()).isActive(user.getIsActive()).isDeleted(user.getIsDeleted()).role(user.getRole().getName()).build();
+    return JwtUserDetails.builder()
+        .id(user.getId())
+        .username(user.getUsername())
+        .password(user.getPassword())
+        .isActive(user.getIsActive())
+        .isDeleted(user.getIsDeleted())
+        .role(user.getRole().getName())
+        .build();
   }
 
   @Override
@@ -53,7 +58,7 @@ public class JwtUserDetails implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return !isDeleted;
+    return true;
   }
 
 }

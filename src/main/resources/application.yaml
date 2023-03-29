@@ -12,7 +12,6 @@ logging:
   file:
     path: logs
 
-
 app:
   imagesDir: "images"
   image:
