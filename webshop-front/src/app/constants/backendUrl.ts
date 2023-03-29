@@ -3,5 +3,6 @@ export const backendUrl = {
   USERS: "users",
   WHOAMI: "user/me",
   REGISTER: 'register',
+  PIN: 'pins',
 
 } as const;

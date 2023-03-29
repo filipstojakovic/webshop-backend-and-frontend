@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment.development';
-import {LoginService} from '../page/login/login.service';
+import {AuthService} from '../service/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import {LoginService} from '../page/login/login.service';
 export class BaseUrlInterceptorService implements HttpInterceptor {
   private readonly baseUrl: string;
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: AuthService) {
     this.baseUrl = environment.apiUrl
   }
 

@@ -8,19 +8,15 @@ import org.etf.webshopbackend.model.request.RegisterRequest;
 import org.etf.webshopbackend.model.request.UserRequest;
 import org.etf.webshopbackend.model.response.UserResponse;
 import org.etf.webshopbackend.security.token.TokenProvider;
+import org.etf.webshopbackend.service.FileService;
 import org.etf.webshopbackend.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,9 +24,11 @@ import java.nio.file.Files;
 public class AuthService {
 
   private final UserService userService;
-  private final ModelMapper mapper;
-  private final AuthenticationManager authenticationManager;
   private final TokenProvider tokenProvider;
+  private final FileService fileService;
+
+  private final AuthenticationManager authenticationManager;
+  private final ModelMapper mapper;
 
   public String login(LoginRequest request) {
     String token;
@@ -48,18 +46,33 @@ public class AuthService {
   }
 
   public UserResponse register(RegisterRequest registerRequest) {
-    // TODO: store image, get path and path to UserRequest.avatarPath
-
-    UserRequest user = mapper.map(registerRequest, UserRequest.class);
-    return userService.insert(user);
-  }
-
-  private static void saveToFilesystem(MultipartFile multipartFile) throws IOException {
-    String dir = Files.createTempDirectory("tmpDir").toFile().getAbsolutePath();
-    File file = new File(dir + File.pathSeparator + multipartFile.getName());
-
-    try (OutputStream os = new FileOutputStream(file)) {
-      os.write(multipartFile.getBytes());
+    String avatarPathString = null;
+    if (registerRequest.getAvatar() != null) {
+      try {
+        avatarPathString = fileService.saveImageToFilesystem(
+            fileService.getAvatarDirPath(),
+            registerRequest.getUsername(),
+            registerRequest.getAvatar());
+      } catch (IOException ex) {
+        log.error("Unable to create image: " + registerRequest.getAvatar().getName());
+      }
     }
+    try {
+      UserRequest user = mapper.map(registerRequest, UserRequest.class);
+      user.setAvatarPath(avatarPathString);
+      return userService.insert(user);
+
+    } catch (Exception ex) {
+      if (avatarPathString != null) {
+        try {
+          fileService.deleteFile(avatarPathString);
+        } catch (IOException e) {
+          log.error("Unable to delete file " + avatarPathString);
+        }
+      }
+      throw ex;
+    }
+
   }
+
 }

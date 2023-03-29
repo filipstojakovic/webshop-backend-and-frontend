@@ -13,12 +13,13 @@ import {MaterialModule} from '../material.module';
 import {ButtonComponent} from './components/button/button.component';
 import {InputComponent} from './components/input/input.component';
 import {HeaderComponent} from './components/header/header.component';
-import {LoginService} from './page/login/login.service';
+import {AuthService} from './service/auth.service';
 import {AuthGuard} from './service/auth-guard';
 import {routes} from './routes';
 import {RegistrationComponent} from './page/registration/registration.component';
 import {ActivateAccountComponent} from './page/activate-account/activate-account.component';
 import {NgxDropzoneModule} from 'ngx-dropzone';
+import {NgOptimizedImage} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -41,10 +42,11 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
     ReactiveFormsModule,
     AngularToastifyModule,
     NgxDropzoneModule,
+    NgOptimizedImage,
   ],
   providers: [
     AuthGuard,
-    LoginService,
+    AuthService,
     ToastService,
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true },
   ],

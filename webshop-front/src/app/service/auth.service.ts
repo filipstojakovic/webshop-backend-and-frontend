@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import tokenService from '../../service/TokenService';
+import tokenService from './TokenService';
 import {HttpClient} from '@angular/common/http';
 import {ToastService} from 'angular-toastify';
 import {Router} from '@angular/router';
@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
 
   private token: string | null = null;
 

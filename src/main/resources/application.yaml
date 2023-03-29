@@ -14,10 +14,14 @@ logging:
 
 
 app:
-  clientSecretPath: /client_secret.json
+  imagesDir: "images"
+  image:
+    avatarDir: "avatars"
+    productsDir: "products"
+
   name: webshop
   email: ${EMAIL}
-  password: ${PASSWORD}
+  clientSecretPath: /client_secret.json
   cors:
     allowedOrigins: http://localhost:4200, http://localhost:8080
   auth:

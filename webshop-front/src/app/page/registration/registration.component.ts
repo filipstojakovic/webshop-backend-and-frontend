@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {LoginService} from '../login/login.service';
+import {AuthService} from '../../service/auth.service';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ToastService} from 'angular-toastify';
@@ -23,7 +23,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
-      private loginService: LoginService,
+      private loginService: AuthService,
       private router: Router,
       private http: HttpClient,
       private toastService: ToastService,
@@ -32,15 +32,16 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     tokenService.removeTokenFromStorage();
+    const defaultFieldValue = "a"
     this.form = this.fb.group({
-      username: ['a', Validators.required],
-      password: ['a', Validators.required],
-      confirm_password: ['a', Validators.required],
+      username: [defaultFieldValue, Validators.required],
+      password: [defaultFieldValue, Validators.required],
+      confirm_password: [defaultFieldValue, Validators.required],
 
-      firstName: ['a', Validators.required],
-      lastName: ['a', Validators.required],
-      email: ['a@a', Validators.email],
-      city: ['a', Validators.required],
+      firstName: [defaultFieldValue, Validators.required],
+      lastName: [defaultFieldValue, Validators.required],
+      email: ['filip.stojakovic1@gmail.com', Validators.email],
+      city: [defaultFieldValue, Validators.required],
       avatar: null,
     }, {
       validators: ConfirmedValidator('password', 'confirm_password'),

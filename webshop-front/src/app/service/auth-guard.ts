@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {paths} from '../constants/paths';
-import {LoginService} from '../page/login/login.service';
+import {AuthService} from './auth.service';
 import tokenService from './TokenService';
 import {RoleEnum} from '../model/role';
 import {HttpClient} from '@angular/common/http';
@@ -13,10 +13,13 @@ import {tokenConstant} from "../constants/constants";
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private loginService: LoginService, private router: Router, private http: HttpClient) {
+  constructor(private loginService: AuthService, private router: Router, private http: HttpClient) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
+
+    //TODO: remove this return
+    // return true;
     const routeRoles: RoleEnum[] = route.data['role'];
     const token = tokenService.getTokenFromStorage();
     //TODO: send request to check if token is valid;

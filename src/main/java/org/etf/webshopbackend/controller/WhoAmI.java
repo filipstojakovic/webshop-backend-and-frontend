@@ -16,4 +16,5 @@ public class WhoAmI {
   public Principal user(Principal user) {
     return Optional.of(user).orElseThrow(UnAuthorizedException::new);
   }
+
 }

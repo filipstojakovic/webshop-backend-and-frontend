@@ -5,7 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {paths} from '../../constants/paths';
 import {ToastService} from 'angular-toastify';
 import tokenService from '../../service/TokenService';
-import {LoginService} from './login.service';
+import {AuthService} from '../../service/auth.service';
 
 type LoginData = {
   username: string;
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
-      private loginService: LoginService,
+      private loginService: AuthService,
       private router: Router,
       private http: HttpClient,
       private toastService: ToastService,

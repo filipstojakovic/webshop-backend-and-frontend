@@ -25,4 +25,5 @@ public class PinController {
     pinService.activateUsingPin(activationPinRequest.getPin(), userId);
     return ResponseEntity.ok().build();
   }
+
 }

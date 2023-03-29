@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {GenericCrudService} from '../../service/GenericCrudService';
 import {User} from '../../model/user';
-import {LoginService} from '../login/login.service';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +11,12 @@ import {LoginService} from '../login/login.service';
 })
 export class HomeComponent {
   currentUser: any;
-  users: any[] = [];
+  users: User[] = [];
   public userService: GenericCrudService<User>;
   public JSON: any;
+  filePath: string = "C:\\Users\\filip\\IdeaProjects\\webshop-backend\\images\\avatars\\a-maja.jpg";
 
-  constructor(private loginService: LoginService, private http: HttpClient) {
+  constructor(private loginService: AuthService, private http: HttpClient) {
     this.userService = new GenericCrudService<User>("users", http);
     this.JSON = JSON;
     http.get<any>('user/me').subscribe(res => this.currentUser = JSON.stringify(res));
@@ -24,5 +25,10 @@ export class HomeComponent {
 
   authenticated() {
     return this.loginService.getToken() !== null;
+  }
+
+  getPath(user: User) {
+    const path = user.avatar;
+    return path.replace("\\","\\");
   }
 }
