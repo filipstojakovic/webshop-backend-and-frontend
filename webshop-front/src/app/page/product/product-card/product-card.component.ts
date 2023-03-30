@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class ProductCardComponent {
 
+  likeClick($event: MouseEvent) {
+
+    $event.stopPropagation();
+
+    console.log("product-card.component.ts > likeClick(): "+ "like");
+  }
 }
