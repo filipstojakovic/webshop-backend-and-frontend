@@ -12,14 +12,19 @@ img {
   opacity: 1 !important;
 }
 
-body { height: 100%; margin: 0; padding: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /*router-outlet + app-login, app-activate-account {*/
 
 router-outlet + * {
-  display:flex;
+  display: flex;
   flex-direction: row;
-  flex:1;
+  flex: 1;
 }
 
 .header-style {
@@ -30,17 +35,28 @@ router-outlet + * {
   width: 100%;
 }
 
+.default-style {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.center-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .main-grid {
   width: 100%;
   height: 100%;
   display: flex;
-  flex:1;
+  flex: 1;
   justify-content: center;
   align-items: center;
 }
 
-.login-image{
+.login-image {
   background-image: url("src/assets/login_background.webp");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -58,10 +74,10 @@ router-outlet + * {
 .or {
   margin: 4px;
   width: 100%;
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  color:grey;
+  color: grey;
 }
 
 .or:after,
@@ -70,6 +86,6 @@ router-outlet + * {
   display: block;
   background: grey;
   width: 30%;
-  height:1px;
+  height: 1px;
   margin: 0 10px;
 }

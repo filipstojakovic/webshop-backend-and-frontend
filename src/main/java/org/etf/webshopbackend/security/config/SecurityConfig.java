@@ -63,6 +63,8 @@ public class SecurityConfig {
     userAuthorizationRule(http);
     publicAuthorizationRule(http);
     activatePinAuthorizationRule(http);
+    procutAuthorizationRule(http);
+
     // TODO: authrorize other endpoints
   }
 
@@ -95,6 +97,14 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.DELETE, EndpointConstants.USERS)
             .hasAnyAuthority(RoleEnum.admin.toString())
     );
+  }
+
+
+  private void procutAuthorizationRule(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests(requests ->
+        requests
+            .requestMatchers(HttpMethod.GET, EndpointConstants.PRODUCTS)
+            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name()));
   }
 
   @Bean

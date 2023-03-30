@@ -22,10 +22,12 @@
     >
     </app-input>
 
-    <app-button type="submit">Sign in</app-button>
-    <app-button (btnClick)="navigateHome()">Continue as guest</app-button>
-    <div class="or">or</div>
-    <app-button (btnClick)="navigateRegister()">Register</app-button>
+    <div class="default-style" style="align-items: center">
+      <app-button type="submit">Sign in</app-button>
+      <app-button (btnClick)="navigateHome()">Continue as guest</app-button>
+      <div class="or">or</div>
+      <app-button (btnClick)="navigateRegister()">Register</app-button>
+    </div>
   </form>
 </div>
 

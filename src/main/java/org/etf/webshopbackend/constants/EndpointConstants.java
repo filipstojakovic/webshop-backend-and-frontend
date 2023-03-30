@@ -12,4 +12,5 @@ public final class EndpointConstants {
   public static final String REGISTER = "/register";
   public static final String PIN = "/pins";
   public static final String WHOAMI = "/user/me";
+    public static final String PRODUCTS = "/products";
 }
