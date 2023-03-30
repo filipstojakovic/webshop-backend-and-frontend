@@ -20,6 +20,7 @@ import {RegistrationComponent} from './page/registration/registration.component'
 import {ActivateAccountComponent} from './page/activate-account/activate-account.component';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 import {NgOptimizedImage} from '@angular/common';
+import { AvatarButtonComponent } from './components/avatar-button/avatar-button.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {NgOptimizedImage} from '@angular/common';
     HeaderComponent,
     RegistrationComponent,
     ActivateAccountComponent,
+    AvatarButtonComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

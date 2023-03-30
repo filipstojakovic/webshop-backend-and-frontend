@@ -20,7 +20,6 @@ export class ActivateAccountComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
-      private authService: AuthService,
       private router: Router,
       private http: HttpClient,
       private toastService: ToastService,
@@ -66,14 +65,17 @@ export class ActivateAccountComponent implements OnInit {
           next: (res) => {
             //TODO: maybe check res.statuscode
             const token = res.headers.get('Authorization');
-            if (token == null || token === "")
-              this.authService.logout();
+            if (token == null || token === "") {
+              this.toastService.info("New pin send via email");
+              return;
+            }
 
             tokenService.setTokenInStorage(token!);
             this.router.navigateByUrl(paths.HOME, { replaceUrl: true });
           },
           error: (err) => {
             console.log("activate-account.component.ts > error(): " + JSON.stringify(err, null, 2));
+            this.toastService.error("Incorrect pin! Sending new pin")
           },
         },
     )

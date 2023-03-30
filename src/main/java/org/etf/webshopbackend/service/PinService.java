@@ -51,17 +51,18 @@ public class PinService {
     return newPin;
   }
 
-  public void sendMailIfNotActivated(String username) throws Exception {
+  public Pin savePin(Pin pin) {
+    return pinRepository.saveAndFlush(pin);
+  }
+
+  private void sendMailIfNotActivated(String username, Pin pin) throws Exception {
     User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("User not found by username"));
     boolean isActivated = user.getIsActive();
     if (isActivated) {
+      log.info("User already active");
       return;
     }
-
-    removeUsersPins(user.getId());
-    Pin newPin = generatePinForUser(user);
-    pinRepository.saveAndFlush(newPin);
-    mailService.sendMailAsync(user.getEmail(), "Novi pin", "Pin: " + newPin.getPin());
+    mailService.sendMailAsync(user.getEmail(), "Novi pin", "Pin: " + pin.getPin());
   }
 
   public String activateUsingPin(String pin, Long userId) {
@@ -69,12 +70,6 @@ public class PinService {
     User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(User.class, userId));
     Optional<Pin> checkPinExists = pinRepository.findByPinAndUser_Id(pin, userId);
     if (checkPinExists.isEmpty()) {
-      try {
-        // TODO: refactor this, exception is triggering rollback transaction
-        sendMailIfNotActivated(user.getUsername());
-      } catch (Exception e) {
-        log.error("Unable to send pin to email");
-      }
       throw new BadRequestException("Pin does not match");
     }
 
@@ -83,8 +78,20 @@ public class PinService {
     return tokenProvider.buildToken(JwtUserDetails.create(user));
   }
 
-  private void removeUsersPins(Long userId) {
+  public void removeUsersPins(Long userId) {
     pinRepository.deleteAllByUser_Id(userId);
   }
 
+  public void sendNewPin(String username) throws Exception {
+    User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("User not found by username"));
+    removeUsersPins(user.getId());
+    Pin pin = generatePinForUser(user);
+    pin = savePin(pin);
+    sendMailIfNotActivated(username, pin);
+  }
+
+  public void sendNewPin(Long userId) throws Exception {
+    User user = userRepository.findById(userId).orElseThrow(()->new NotFoundException(User.class,userId));
+    sendNewPin(user.getUsername());
+  }
 }

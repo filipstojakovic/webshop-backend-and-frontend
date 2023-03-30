@@ -1,0 +1,7 @@
+<button *ngIf="!image" mat-icon-button>
+  <mat-icon>person</mat-icon>
+</button>
+<img *ngIf="image" class="avatar-image"
+     src="{{image}}"
+     (click)="imageClick()"
+     alt="Avatar">

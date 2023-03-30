@@ -1,5 +1,7 @@
 <div>
   <h1>Greeting</h1>
+  <app-avatar-button style="height: 100%" [image]="image"></app-avatar-button>
+
   <img width="400px" height="400px" [src]="image"/>
   <div [hidden]="!authenticated()">
     <div *ngFor="let user of users">

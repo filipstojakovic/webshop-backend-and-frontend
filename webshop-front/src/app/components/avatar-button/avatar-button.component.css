@@ -1,0 +1,10 @@
+.avatar-image {
+  display: flex;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.avatar-image:hover {
+  cursor: pointer;
+}

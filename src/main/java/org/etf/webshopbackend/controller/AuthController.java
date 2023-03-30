@@ -30,7 +30,7 @@ public class AuthController {
   public ResponseEntity<Void> login(@Valid @RequestBody LoginRequest loginRequest) {
     String token = authService.login(loginRequest);
     try {
-      pinService.sendMailIfNotActivated(loginRequest.getUsername());
+      pinService.sendNewPin(loginRequest.getUsername());
     } catch (Exception ex) {
       log.error("Unable to send pin to email");
     }
