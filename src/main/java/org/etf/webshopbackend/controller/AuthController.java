@@ -16,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,8 +43,9 @@ public class AuthController {
   }
 
   @PostMapping(path = "/register", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-  public ResponseEntity<UserResponse> register(@ModelAttribute @Valid RegisterRequest registerRequest) {
-    UserResponse createdUser = authService.register(registerRequest);
+  public ResponseEntity<UserResponse> register(@ModelAttribute @Valid RegisterRequest registerRequest,
+                                               @RequestParam(required = false) MultipartFile avatar) {
+    UserResponse createdUser = authService.register(registerRequest, avatar);
     return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
   }
 }

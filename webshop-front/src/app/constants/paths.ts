@@ -6,6 +6,6 @@ export const paths = {
   PIN: "pin",
   PROFILE: "profile",
   ERROR: "error",
-
+  CONTACT_SUPPORT: "contact-support",
 
 } as const;

@@ -1,5 +1,6 @@
 package org.etf.webshopbackend.advice;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.etf.webshopbackend.exceptions.HttpException;
@@ -16,6 +17,7 @@ import org.springframework.web.method.HandlerMethod;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

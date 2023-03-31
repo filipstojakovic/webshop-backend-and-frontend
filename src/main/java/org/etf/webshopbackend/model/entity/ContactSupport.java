@@ -1,6 +1,5 @@
 package org.etf.webshopbackend.model.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,58 +8,34 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class User {
+public class ContactSupport {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
-  @Size(max = 255)
   @NotNull
-  private String username;
-
-  @Size(max = 255)
-  @NotNull
-  private String password;
-
-  @Size(max = 255)
-  @NotNull
-  private String firstName;
-
-  @Size(max = 255)
-  @NotNull
-  private String lastName;
-
-  @Size(max = 255)
-  @NotNull
-  private String email;
-
-  @Size(max = 255)
-  @NotNull
-  private String city;
-
-  private String avatarPath;
-
+  @NotBlank
+  private String title;
+  private String message;
+  private LocalDateTime date = LocalDateTime.now();
   @Column(nullable = false, columnDefinition = "TINYINT(1)")
-  private Boolean isDeleted = false;
+  private Boolean isRead = false;
 
-  @Column(nullable = false, columnDefinition = "TINYINT(1)")
-  private Boolean isActive = false;
-
-  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  @JoinColumn(name = "role_id")
-  private Role role;
-
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 }

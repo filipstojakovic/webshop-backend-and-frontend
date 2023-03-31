@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -46,16 +47,16 @@ public class AuthService {
     return token;
   }
 
-  public UserResponse register(RegisterRequest registerRequest) {
+  public UserResponse register(RegisterRequest registerRequest, MultipartFile avatar) {
     String avatarPathString = null;
-    if (registerRequest.getAvatar() != null) {
+    if (avatar != null) {
       try {
         avatarPathString = fileService.saveImageToFilesystem(
             fileService.getAvatarDirPath(),
             registerRequest.getUsername(),
-            registerRequest.getAvatar());
+            avatar);
       } catch (IOException | URISyntaxException ex) {
-        log.error("Unable to create image: " + registerRequest.getAvatar().getName());
+        log.error("Unable to create image: " + avatar.getName());
       }
     }
     try {

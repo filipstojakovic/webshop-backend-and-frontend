@@ -64,8 +64,14 @@ public class SecurityConfig {
     publicAuthorizationRule(http);
     activatePinAuthorizationRule(http);
     procutAuthorizationRule(http);
-
+    contactSupportAuthorizationRule(http);
     // TODO: authrorize other endpoints
+  }
+
+  private void contactSupportAuthorizationRule(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests()
+        .requestMatchers(HttpMethod.POST, EndpointConstants.CONTACT_SUPPORT)
+        .hasAnyAuthority(RoleEnum.user.toString());
   }
 
   private void activatePinAuthorizationRule(final HttpSecurity http) throws Exception {

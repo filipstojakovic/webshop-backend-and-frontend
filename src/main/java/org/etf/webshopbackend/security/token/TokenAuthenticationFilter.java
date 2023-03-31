@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.constants.SecurityConstants;
+import org.etf.webshopbackend.security.model.JwtUserDetails;
 import org.etf.webshopbackend.security.service.CustomUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,13 +41,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         Long userId = tokenProvider.getUserIdFromToken(jwtToken);
 
         UserDetails userDetails = customUserDetailsService.loadUserById(userId);
+        ((JwtUserDetails) userDetails).setPassword(null); // we don't want AuthenticationPrincipal to have password
         Authentication authentication =
             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     } catch (Exception ex) {
-      //TODO: maybe SecurityContextHolder.clearContext();
+      // TODO: maybe SecurityContextHolder.clearContext();
       log.error("Could not set user authentication in security context", ex);
     }
 

@@ -35,7 +35,8 @@ public class UserService {
   }
 
   public UserResponse findById(Long id) {
-    User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(User.class, id));
+    User user = userRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(User.class, id));
     return userMapper.toResponse(user, UserResponse.class);
   }
 
@@ -78,7 +79,8 @@ public class UserService {
   }
 
   public UserResponse delete(Long id) {
-    User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(User.class, id));
+    User user = userRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(User.class, id));
     boolean isDeleted = !user.getIsDeleted();
     user.setIsDeleted(isDeleted);
     return userMapper.toResponse(user, UserResponse.class);

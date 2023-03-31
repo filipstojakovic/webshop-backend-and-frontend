@@ -2,8 +2,8 @@ logging:
   level:
     org:
       springframework:
-        security: debug # or trace
-    root: debug
+        security: trace
+    root: trace
 #    sql: debug
 
 spring:

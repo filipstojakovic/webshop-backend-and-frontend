@@ -6,6 +6,7 @@ import {AuthGuard} from './service/auth-guard';
 import {RoleEnum} from './model/role';
 import {ActivateAccountComponent} from "./page/activate-account/activate-account.component";
 import {RegistrationComponent} from './page/registration/registration.component';
+import {ContactSupportComponent} from './page/contact-support/contact-support.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,13 @@ export const routes: Routes = [
     path: paths.PIN,
     pathMatch: 'full',
     component: ActivateAccountComponent,
+    canActivate: [AuthGuard],
+    data: { role: [RoleEnum.admin, RoleEnum.user] }
+  },
+  {
+    path: paths.CONTACT_SUPPORT,
+    pathMatch: 'full',
+    component: ContactSupportComponent,
     canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user] }
   },

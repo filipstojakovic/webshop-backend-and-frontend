@@ -23,6 +23,7 @@ import {NgOptimizedImage} from '@angular/common';
 import { AvatarButtonComponent } from './components/avatar-button/avatar-button.component';
 import { ProductComponent } from './page/product/product.component';
 import { ProductCardComponent } from './page/product/product-card/product-card.component';
+import { ContactSupportComponent } from './page/contact-support/contact-support.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ProductCardComponent } from './page/product/product-card/product-card.c
     AvatarButtonComponent,
     ProductComponent,
     ProductCardComponent,
+    ContactSupportComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

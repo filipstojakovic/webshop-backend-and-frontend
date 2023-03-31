@@ -9,24 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
+public class ContactSupportRequest {
 
   @NotNull
   @NotBlank
-  private String username;
+  String title;
   @NotNull
-  @NotBlank
-  private String password;
-  @NotNull
-  @NotBlank
-  private String firstName;
-  @NotNull
-  @NotBlank
-  private String lastName;
-  @NotNull
-  @NotBlank
-  private String email;
-  @NotNull
-  @NotBlank
-  private String city;
+  String message;
+
 }
