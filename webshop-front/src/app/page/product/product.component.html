@@ -1,11 +1,13 @@
 <mat-form-field appearance="fill" class="search-input-style">
   <mat-label>Search product</mat-label>
-  <input matInput [value]="searchText" (keydown)="onKeyDown($event)"
+  <input matInput
+         (keydown)="onKeyDown($event)"
+         [(ngModel)]="searchText"
+         (ngModelChange)="this.searchTextUpdate.next($event)"
   />
 </mat-form-field>
-
 <div class="product-list">
-  <div *ngFor="let i of [0, 1, 2, 3]">
+  <div *ngFor="let i of [0, 1, 2]">
     <app-product-card (click)="productCardClick(i)"></app-product-card>
   </div>
 </div>

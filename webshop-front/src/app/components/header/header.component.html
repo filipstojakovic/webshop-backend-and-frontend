@@ -1,4 +1,13 @@
 <mat-toolbar color="primary" class="header-style">
-    <div>Hello world</div>
+  <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loading">
+    <div>Logged in</div>
     <app-avatar-button style="margin: 0" [image]="image"></app-avatar-button>
+    <app-button (click)="logoutClick()">Logout</app-button>
+<!--    TODO: logout button-->
+  </ng-template>
+
+  <ng-template #loading>
+<!--    TODO: <Login and Singup buttons on the right-->
+    <div>Not logged in</div>
+  </ng-template>
 </mat-toolbar>

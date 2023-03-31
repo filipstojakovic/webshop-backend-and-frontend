@@ -5,6 +5,8 @@ export const constant = {
   MAX_NUM_OF_CHAR: 255,
   PIN_DIGIT_NUM: 4,
   MAX_FILE_SIZE: 5_000_000,
+  DEBOUNCE_TIME: 400,
+
 } as const;
 
 export const tokenConstant = {
@@ -12,4 +14,5 @@ export const tokenConstant = {
   IS_ACTIVE: "isActive",
   ROLE: "role",
   USERNAME: "sub",
-}
+
+} as const;

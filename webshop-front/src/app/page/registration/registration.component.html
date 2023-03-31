@@ -72,11 +72,14 @@
 
     <ngx-dropzone class="main-grid" style="opacity: 1 !important"
                   accept="image/jpeg,image/jpg,image/png"
-                  [multiple]="false" [maxFileSize]="5000000" (change)="onSelect($event)">
+                  [multiple]="false" [maxFileSize]="5000000"
+                  (change)="onSelect($event)">
       <ngx-dropzone-label>Drop & Drop!</ngx-dropzone-label>
       <ng-container *ngIf="imageFile" style="flex-direction: row">
         <!--        <ngx-dropzone-label>{{ imageFile.name }} ({{ imageFile.type }})</ngx-dropzone-label>-->
-        <ngx-dropzone-image-preview class="center-image" ngProjectAs="ngx-dropzone-preview" [file]="imageFile" (removed)="onRemove()">
+        <ngx-dropzone-image-preview class="center-image"
+                                    ngProjectAs="ngx-dropzone-preview"
+                                    [file]="imageFile" (removed)="onRemove()">
         </ngx-dropzone-image-preview>
       </ng-container>
     </ngx-dropzone>

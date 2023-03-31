@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import tokenService from '../../service/TokenService';
 import {HttpClient} from '@angular/common/http';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import {HttpClient} from '@angular/common/http';
 export class HeaderComponent implements OnInit {
   image: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private auth:AuthService) {
   }
 
   ngOnInit(): void {
@@ -26,4 +27,12 @@ export class HeaderComponent implements OnInit {
     )
   }
 
+  isLoggedIn(): boolean {
+    const token = tokenService.getTokenFromStorage();
+    return token != null && token != "";
+  }
+
+  logoutClick() {
+    this.auth.logout();
+  }
 }

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
-  styleUrls: ['./product-card.component.css']
+  styleUrls: ['./product-card.component.css'],
 })
 export class ProductCardComponent {
 
@@ -11,6 +11,6 @@ export class ProductCardComponent {
 
     $event.stopPropagation();
 
-    console.log("product-card.component.ts > likeClick(): "+ "like");
+    console.log("product-card.component.ts > likeClick(): " + "like");
   }
 }
