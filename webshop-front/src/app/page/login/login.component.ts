@@ -18,7 +18,7 @@ type LoginData = {
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
+  protected readonly paths = paths;
   form!: FormGroup;
 
   constructor(
@@ -39,15 +39,17 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      try {
-        this.authService.login(this.form.value as LoginData, () => {
-          this.router.navigateByUrl(paths.HOME, { replaceUrl: true });
-        });
-      } catch (error) {
-        this.toastService.error('Bad credentials');
-      } finally {
-      }
+    if (!this.form.valid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    try {
+      this.authService.login(this.form.value as LoginData, () => {
+        this.router.navigateByUrl(paths.HOME, { replaceUrl: true });
+      });
+    } catch (error) {
+      this.toastService.error('Bad credentials');
+    } finally {
     }
   }
 
@@ -57,11 +59,4 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  navigateHome(replace = false) {
-    this.router.navigateByUrl(paths.HOME, { replaceUrl: replace });
-  }
-
-  navigateRegister(replace = false) {
-    this.router.navigateByUrl(paths.REGISTER, { replaceUrl: replace });
-  }
 }

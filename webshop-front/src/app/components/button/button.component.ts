@@ -9,6 +9,7 @@ export class ButtonComponent {
   @Input() color!: string;
   @Input() type="button";
 
+
   @Output() btnClick = new EventEmitter();
 
   onBtnClick() {

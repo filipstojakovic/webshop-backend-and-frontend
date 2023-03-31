@@ -1,0 +1,26 @@
+<form class="center-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Login</h2>
+  <app-input
+      style="width: 100%"
+      label="Username"
+      type="text"
+      errorMessage="Username is required"
+      [required]="true"
+      [control]="$any(form.get('title'))"
+  >
+  </app-input>
+
+  <mat-form-field class="multiline-style">
+    <mat-label>Leave a comment</mat-label>
+    <textarea matInput required
+              formControlName="message"
+              placeholder="Ex. It makes me angry..."></textarea>
+    <mat-error *ngIf="displayErrors()">Message text required</mat-error>
+  </mat-form-field>
+
+
+  <div class="default-style" style="align-items: center">
+    <app-button type="submit">Submit</app-button>
+    <app-button (btnClick)="clearClick()">Clear</app-button>
+  </div>
+</form>

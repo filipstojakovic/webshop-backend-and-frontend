@@ -1,13 +1,29 @@
-<mat-toolbar color="primary" class="header-style">
+<nav class="header-container">
+  <button mat-raised-button [routerLink]="['home']"
+          routerLinkActive="selected-button">Home
+  </button>
+  <button mat-raised-button [routerLink]="['contact-support']"
+          routerLinkActive="selected-button">Contact support
+  </button>
+  <button mat-raised-button [routerLink]="['contact-support']"
+          routerLinkActive="selected-button">Contact support
+  </button>
+  <button mat-raised-button [routerLink]="['contact-support']"
+          routerLinkActive="selected-button">Contact support
+  </button>
+
+
   <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loading">
     <div>Logged in</div>
+    <app-button (click)="logoutClick()">Logout</app-button>
+
     <app-avatar-button style="margin: 0" [image]="image"></app-avatar-button>
     <app-button (click)="logoutClick()">Logout</app-button>
-<!--    TODO: logout button-->
+    <!--    TODO: logout button-->
   </ng-template>
 
   <ng-template #loading>
-<!--    TODO: <Login and Singup buttons on the right-->
+    <!--    TODO: <Login and Singup buttons on the right-->
     <div>Not logged in</div>
   </ng-template>
-</mat-toolbar>
+</nav>

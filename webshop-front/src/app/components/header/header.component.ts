@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import tokenService from '../../service/TokenService';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../../service/auth.service';
+import {paths} from '../../constants/paths';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ import {AuthService} from '../../service/auth.service';
 export class HeaderComponent implements OnInit {
   image: any;
 
-  constructor(private http: HttpClient, private auth:AuthService) {
+  constructor(private http: HttpClient, private auth: AuthService) {
   }
 
   ngOnInit(): void {
@@ -35,4 +36,6 @@ export class HeaderComponent implements OnInit {
   logoutClick() {
     this.auth.logout();
   }
+
+  protected readonly paths = paths;
 }

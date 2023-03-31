@@ -1,6 +1,17 @@
-.header-container{
-  display:flex;
+.header-container {
+  display: flex;
+  flex:1;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin: auto;
+  background-color: #673ab7;
+  color: white;
+  padding: 10px;
+}
+
+.selected-button {
+  /*#FFD700 yellowish*/
+  /*#FFA07A pinkish*/
+  background-color: #FFD700 !important;
+  color: green;
 }

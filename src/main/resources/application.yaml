@@ -18,6 +18,7 @@ app:
     avatarDir: "avatars"
     productsDir: "products"
 
+
   name: webshop
   email: ${EMAIL}
   clientSecretPath: /client_secret.json

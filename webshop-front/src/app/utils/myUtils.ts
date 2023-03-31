@@ -1,4 +1,3 @@
-import jwt_decode from 'jwt-decode';
 import {FormGroup} from "@angular/forms";
 
 export function formGroupToFormDataConverter(formGroup: FormGroup) {
@@ -12,8 +11,15 @@ export function formGroupToFormDataConverter(formGroup: FormGroup) {
   return formData;
 }
 
+export function clearFormErrors(formGroup: FormGroup) {
+  Object.keys(formGroup.value).forEach(key => {
+    formGroup.get(key)?.setErrors(null);
+  });
+}
+
 const myUtils = {
-  formGroupToFormDataConverter
+  formGroupToFormDataConverter,
+  clearFormErrors
 }
 
 export default myUtils;
