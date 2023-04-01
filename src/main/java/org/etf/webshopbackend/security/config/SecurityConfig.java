@@ -9,11 +9,13 @@ import org.etf.webshopbackend.security.token.TokenAuthenticationFilter;
 import org.etf.webshopbackend.security.token.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,6 +42,23 @@ public class SecurityConfig {
     return new TokenAuthenticationFilter(tokenProvider, customUserDetailsService);
   }
 
+  @Profile("local")
+  @Bean // disable security
+  public SecurityFilterChain noSecurityfilterChain(HttpSecurity http) throws Exception {
+    http.csrf().and().cors().disable();
+    http.authorizeHttpRequests().requestMatchers("/**").permitAll();
+    http.authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/**").permitAll();
+    return http.build();
+  }
+
+  @Profile("local")
+  @Bean
+  public WebSecurityCustomizer webSecurityCustomizer() {
+    return (web) -> web.ignoring()
+        .requestMatchers("/**");
+  }
+
+  @Profile("default")
   @Bean // this will only run in dev (normal) profile
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     createAuthorizationRules(http);

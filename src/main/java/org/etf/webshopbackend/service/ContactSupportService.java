@@ -23,7 +23,6 @@ public class ContactSupportService {
   private final GenericMapper<ContactSupportRequest, ContactSupport, ContactSupport> contactSupportMapper;
 
   public void sendMessage(ContactSupportRequest request, Long userId) {
-    // TODO: repository
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new NotFoundException(User.class, userId));
     ContactSupport contactSupport = contactSupportMapper.fromRequest(request, ContactSupport.class);

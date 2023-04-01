@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     username: root
@@ -5,6 +6,12 @@ spring:
     password: root
   jpa:
     show-sql: 'false'
+
+server:
+  port: ${PORT:8080}
+  compression:
+    enabled: true
+    min-response-size: 1024 # min size to use compression for responses
 
 logging:
   level:

@@ -1,6 +1,6 @@
 package org.etf.webshopbackend.model.entity;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,15 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Builder
 @Setter
@@ -25,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Category {
+public class Attribute {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,17 +30,12 @@ public class Category {
   @Column(nullable = false, unique = true)
   private String name;
 
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  //   @JsonIgnore
+//   @ManyToOne
+//   @JoinColumn(name = "category_id", nullable = false)
+  @JsonIgnore
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id")
-  private List<Attribute> attributes = new ArrayList<>();
+  private Category category;
 
-
-  @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Category> subCategories = new ArrayList<>();
-
-  @ManyToOne
-  @JoinColumn(name = "parent_category_id")
-  private Category parentCategory;
-  //@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
-  //private List<Category> subCategories = new ArrayList<>();
 }

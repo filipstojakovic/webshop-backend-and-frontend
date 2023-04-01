@@ -3,7 +3,7 @@ logging:
     org:
       springframework:
         security: trace
-    root: trace
+    root: debug
 #    sql: debug
 
 spring:

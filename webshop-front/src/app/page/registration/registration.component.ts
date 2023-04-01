@@ -64,6 +64,7 @@ export class RegistrationComponent implements OnInit {
     this.http.post(backendUrl.REGISTER, formData).subscribe({
           next: (res) => {
             console.log("registration.component.ts > next(): " + JSON.stringify(res, null, 2));
+            this.toastService.success("Account created successfully!");
             this.navigateLogin(true);
 
           },
