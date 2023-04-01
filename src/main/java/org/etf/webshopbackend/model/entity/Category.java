@@ -1,6 +1,6 @@
 package org.etf.webshopbackend.model.entity;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,17 +34,20 @@ public class Category {
   @Column(nullable = false, unique = true)
   private String name;
 
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = "category_id")
-  private List<Attribute> attributes = new ArrayList<>();
+  @Column(name = "parent_category_id", insertable = false, updatable = false)
+  private Long parrentId;
 
-
-  @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.EAGER)
+  @JoinColumn(name = "parent_category_id")
   private List<Category> subCategories = new ArrayList<>();
 
-  @ManyToOne
+  @JsonIgnore
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "parent_category_id")
   private Category parentCategory;
-  //@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
-  //private List<Category> subCategories = new ArrayList<>();
+
+  @OneToMany(mappedBy = "category")
+  private List<Attribute> attributes = new ArrayList<>();
 }
+
+
