@@ -6,7 +6,6 @@ import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.etf.webshopbackend.model.entity.Category;
 import org.etf.webshopbackend.model.mapper.GenericMapper;
 import org.etf.webshopbackend.model.request.CategoryRequest;
-import org.etf.webshopbackend.repository.AttributeRespository;
 import org.etf.webshopbackend.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +16,8 @@ import java.util.List;
 @Service
 public class CategoryService {
 
+  private final AttributeService attributeService;
   private final CategoryRepository categoryRepository;
-  private final AttributeRespository attributeRespository;
   private final GenericMapper<CategoryRequest, Category, Category> categoryMapper;
 
   public List<Category> findAll() {
@@ -37,11 +36,7 @@ public class CategoryService {
     setCategoryParent(category, parentId);
     category = categoryRepository.saveAndFlush(category);
 
-    if(category.getAttributes()!=null){
-      final Category finalCategory = category;
-      category.getAttributes().forEach(attribute -> attribute.setCategory(finalCategory));
-      attributeRespository.saveAllAndFlush(category.getAttributes());
-    }
+    attributeService.insertCategoryAttributes(category, category.getAttributes());
 
     return category;
   }
@@ -49,7 +44,7 @@ public class CategoryService {
   private void setCategoryParent(Category category, Long parentId) {
     Category parentCategory = findCategoryByIdOrNull(parentId);
     category.setParentCategory(parentCategory);
-    if (parentCategory!=null && parentCategory.getParentCategory() != null) {
+    if (parentCategory != null && parentCategory.getParentCategory() != null) {
       parentCategory.getSubCategories().add(category);
     }
   }
