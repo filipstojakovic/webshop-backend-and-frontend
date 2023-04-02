@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.etf.webshopbackend.model.entity.Category;
 import org.etf.webshopbackend.model.request.CategoryRequest;
+import org.etf.webshopbackend.model.response.CategoryResponse;
 import org.etf.webshopbackend.service.CategoryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +22,13 @@ public class CategoryController {
   private final CategoryService categoryService;
 
   @GetMapping
-  public List<Category> findAll() {
+  public List<CategoryResponse> findAll() {
     return categoryService.findAll();
+  }
+
+  @GetMapping("nested")
+  public List<Category> findAllNested() {
+    return categoryService.findAllNested();
   }
 
   @PostMapping

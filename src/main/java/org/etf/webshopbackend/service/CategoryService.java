@@ -6,6 +6,7 @@ import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.etf.webshopbackend.model.entity.Category;
 import org.etf.webshopbackend.model.mapper.GenericMapper;
 import org.etf.webshopbackend.model.request.CategoryRequest;
+import org.etf.webshopbackend.model.response.CategoryResponse;
 import org.etf.webshopbackend.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,9 @@ public class CategoryService {
   private final AttributeService attributeService;
   private final CategoryRepository categoryRepository;
   private final GenericMapper<CategoryRequest, Category, Category> categoryMapper;
+  private final GenericMapper<Category, Category, CategoryResponse> categoryResponseMapper;
 
-  public List<Category> findAll() {
+  public List<Category> findAllNested() {
     List<Category> rootCategory = categoryRepository.findRootCategory();
     for (var category : rootCategory) {
       List<Category> subCategory = categoryRepository.findByParentCategory(category);
@@ -56,5 +58,10 @@ public class CategoryService {
           .orElseThrow(() -> new NotFoundException(Category.class, categoryId));
     }
     return category;
+  }
+
+  public List<CategoryResponse> findAll() {
+    List<Category> categories = categoryRepository.findAll();
+    return categoryResponseMapper.toResponses(categories, CategoryResponse.class);
   }
 }

@@ -37,12 +37,12 @@ public class Category {
   @Column(name = "parent_category_id", insertable = false, updatable = false)
   private Long parrentId;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany(fetch = FetchType.LAZY)
   @JoinColumn(name = "parent_category_id")
   private List<Category> subCategories = new ArrayList<>();
 
   @JsonIgnore
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "parent_category_id")
   private Category parentCategory;
 

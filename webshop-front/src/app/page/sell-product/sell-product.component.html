@@ -1,0 +1,48 @@
+<div class="main-grid login-image">
+  <form class="center-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>Registration</h2>
+    <app-input
+        style="width: 100%"
+        label="Username"
+        type="text"
+        errorMessage="Username is required"
+        [required]="true"
+        [control]="$any(form.get('username'))"
+    >
+    </app-input>
+
+    <mat-form-field style="width: 100%" appearance="fill">
+      <mat-label>Category</mat-label>
+      <input type="text"
+             placeholder="Pick one"
+             matInput
+             formControlName="category"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                        (optionSelected)="optionSelected($event)"
+                        [displayWith]="displayCategoryName"
+      >
+        <mat-option *ngFor="let category of filteredOptions | async"
+                    [value]="category">
+          {{category.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <ngx-dropzone class="main-grid" style="min-height: 200px"
+                  accept="image/jpeg,image/jpg,image/png"
+                  [multiple]="false" [maxFileSize]="5000000"
+                  (change)="onSelect($event)">
+      <ngx-dropzone-label>Drop & Drop!</ngx-dropzone-label>
+      <ng-container *ngIf="imageFile" style="flex-direction: row">
+        <ngx-dropzone-image-preview class="center-image"
+                                    ngProjectAs="ngx-dropzone-preview"
+                                    [file]="imageFile" (removed)="onRemove()">
+        </ngx-dropzone-image-preview>
+      </ng-container>
+    </ngx-dropzone>
+
+    <app-button type="submit">Submit</app-button>
+    <app-button (btnClick)="clearForm()">Clear</app-button>
+  </form>
+</div>

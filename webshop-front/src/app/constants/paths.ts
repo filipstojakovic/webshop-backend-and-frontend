@@ -2,10 +2,11 @@ export const paths = {
   LOGIN: "login",
   LOGOUT: "logout",
   REGISTER: "register",
-  HOME: "home",
   PIN: "pin",
-  PROFILE: "profile",
-  ERROR: "error",
+  HOME: "home",
+  SELL_PRODUCT: "sell-product",
+  // PROFILE: "profile",
   CONTACT_SUPPORT: "contact-support",
+  ERROR: "error",
 
 } as const;

@@ -1,5 +1,6 @@
 package org.etf.webshopbackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,6 +32,7 @@ public class User {
   @NotNull
   private String username;
 
+  @JsonIgnore
   @Size(max = 255)
   @NotNull
   private String password;

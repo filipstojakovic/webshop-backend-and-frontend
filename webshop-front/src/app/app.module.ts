@@ -24,6 +24,7 @@ import { AvatarButtonComponent } from './components/avatar-button/avatar-button.
 import { ProductComponent } from './page/product/product.component';
 import { ProductCardComponent } from './page/product/product-card/product-card.component';
 import { ContactSupportComponent } from './page/contact-support/contact-support.component';
+import { SellProductComponent } from './page/sell-product/sell-product.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ContactSupportComponent } from './page/contact-support/contact-support.
     ProductComponent,
     ProductCardComponent,
     ContactSupportComponent,
+    SellProductComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

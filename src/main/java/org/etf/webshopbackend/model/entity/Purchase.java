@@ -1,6 +1,5 @@
 package org.etf.webshopbackend.model.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -9,36 +8,25 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
-@Setter
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Product {
+public class Purchase {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String name;
-  private String description;
-  private Double price;
-  private String location;
-  @Column(nullable = false, columnDefinition = "TINYINT(1)")
-  private Boolean isNew;
-  private String image;
-
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "seller_id")
-  private User seller;
-
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "orders_id")
-  private Purchase purchase;
+  @JoinColumn(name = "payment_method_id")
+  private PaymentMethod paymentMethod;
+
+
+
 }
