@@ -1,15 +1,6 @@
 <div class="main-grid login-image">
   <form class="center-container" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <h2>Registration</h2>
-    <app-input
-        style="width: 100%"
-        label="Username"
-        type="text"
-        errorMessage="Username is required"
-        [required]="true"
-        [control]="$any(form.get('username'))"
-    >
-    </app-input>
+    <h2>Product information</h2>
 
     <mat-form-field style="width: 100%" appearance="fill">
       <mat-label>Category</mat-label>
@@ -28,6 +19,51 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
+
+    <div style="width: 100%">
+      <mat-checkbox color="primary" formControlName="isNew">
+        {{form.controls['isNew'].value ? "Product is in new condition" : "Product is not new"}}
+      </mat-checkbox>
+    </div>
+
+    <app-input
+        style="width: 100%"
+        label="Product name"
+        type="text"
+        errorMessage="Product name is required"
+        [required]="true"
+        [control]="$any(form.get('name'))"
+    >
+    </app-input>
+
+    <mat-form-field class="multiline-style"
+                    style="width: 100%; max-height: 400px">
+      <mat-label>Product description</mat-label>
+      <textarea matInput
+                formControlName="description"
+                placeholder="Ex. This product is..."></textarea>
+    </mat-form-field>
+
+    <app-input
+        style="width: 100%"
+        label="Price"
+        type="number"
+        errorMessage="Price is required"
+        [required]="true"
+        [control]="$any(form.get('price'))"
+    >
+    </app-input>
+
+    <app-input
+        style="width: 100%"
+        label="Location"
+        type="text"
+        errorMessage="Location is required"
+        [required]="true"
+        [control]="$any(form.get('location'))"
+    >
+    </app-input>
+
 
     <ngx-dropzone class="main-grid" style="min-height: 200px"
                   accept="image/jpeg,image/jpg,image/png"

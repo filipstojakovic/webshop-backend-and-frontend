@@ -103,7 +103,6 @@ public class FileService {
     }
     Path filePath = Paths.get(path);
     byte[] imageBytes = Files.readAllBytes(filePath);
-    // TODO: maybe encoded image prefix handle on frontend
     return ENCODED_IMAGE_PREFIX + Base64.getEncoder()
         .encodeToString(imageBytes);
   }

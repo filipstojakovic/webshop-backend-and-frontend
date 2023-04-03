@@ -1,19 +1,19 @@
-package org.etf.webshopbackend.model.response;
+package org.etf.webshopbackend.model.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryResponse {
+public class CategoryDto {
 
   private Long id;
   private String name;
-//   private List<Attribute> attributes;
+  private List<AttributeDto> attributes;
 }

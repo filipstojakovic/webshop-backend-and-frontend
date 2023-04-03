@@ -10,6 +10,7 @@ import {ToastService} from 'angular-toastify';
 import myUtils from '../../utils/myUtils';
 import {map, Observable, startWith} from 'rxjs';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {Attribute} from '../../model/attribute';
 
 @Component({
   selector: 'app-sell-product',
@@ -37,28 +38,68 @@ export class SellProductComponent implements OnInit {
   ngOnInit(): void {
     var defaultFieldValue = "a";
     this.form = this.fb.group({
-      username: [defaultFieldValue, Validators.required],
-      category: [null],
-      avatar: null,
+      category: [null, Validators.required],
+      name: [defaultFieldValue, Validators.required],
+      description: [defaultFieldValue],
+      price: [null, Validators.required],
+      location: [defaultFieldValue, Validators.required],
+      isNew: true,
+      image: null,
     });
     this.categoryService.getAll().subscribe({
           next: (res) => {
-            console.log("sell-product.component.ts > next(): " + JSON.stringify(res, null, 2));
             this.categories = res;
             this.filteredOptions = this.form.controls['category'].valueChanges.pipe(
                 startWith(''),
-                map(value => this.filterCategories(value.name || '')),
+                map(value => this.filterCategories(value?.name || '')),
             );
           },
           error: (err) => {
-
+            this.toastService.error("Unable to get categories");
           },
         },
     )
   }
 
+  onSubmit() {
+    if (!this.form.valid) {
+      this.toastService.error("Form not valid")
+      return;
+    }
+
+    const formData = myUtils.formGroupToFormDataConverter(this.form);
+    // const formData = new FormData();
+    // formData.append("name", "test");
+    // const categoryData= this.form.controls['category'].value;
+    // formData.append("name", "test");
+
+    // formData.append("category.id",categoryData.id);
+    // formData.append("category.name",categoryData.name);
+    formData.append("image", this.imageFile!);
+    // @ts-ignore
+
+    for (let pair of formData.entries()) {
+      console.log(pair[0]+ ' - ' + pair[1]);
+    }
+
+    //MISSING ATTRIBUTES VALUE
+    this.http.post(backendUrl.PRODUCTS, formData).subscribe({
+          next: (res) => {
+            this.toastService.success("Product created successfully!");
+
+
+            //TODO: clear form
+            // this.clearForm();
+          },
+          error: (err) => {
+            console.log("registration.component.ts > error(): " + JSON.stringify(err, null, 2));
+            this.toastService.error("There was an error with form submit");
+          },
+        },
+    );
+  }
+
   displayCategoryName(category: any): string {
-    console.log("sell-product.component.ts > displayCategoryName(): "+ JSON.stringify(category, null, 2));
     return category ? category.name : '';
   }
 
@@ -73,45 +114,19 @@ export class SellProductComponent implements OnInit {
     this.form.patchValue({ category: selectedCategory });
   }
 
-  onSubmit() {
-    console.log("sell-product.component.ts > onSubmit(): " + JSON.stringify(this.form.value, null, 2));
-    if (!this.form.valid) {
-      this.toastService.error("Form not valid")
-      return;
-    }
-
-    const formData = myUtils.formGroupToFormDataConverter(this.form);
-    formData.append("avatar", this.imageFile!);
-
-    this.http.post(backendUrl.REGISTER, formData).subscribe({
-          next: (res) => {
-            console.log("registration.component.ts > next(): " + JSON.stringify(res, null, 2));
-            this.toastService.success("Account created successfully!");
-
-            //clear form
-          },
-          error: (err) => {
-            console.log("registration.component.ts > error(): " + JSON.stringify(err, null, 2));
-            this.toastService.error("There was an error with form submit");
-          },
-        },
-    );
-  }
-
   onSelect(event: any) {
     this.imageFile = event.addedFiles[0];
     const reader = new FileReader();
     reader.readAsDataURL(this.imageFile!)
     reader.onload = (event: any) => {
       const imageText = event.target.result;
-      this.form.controls['avatar'].setValue(imageText);
+      this.form.controls['image'].setValue(imageText);
     }
   }
 
   onRemove() {
     this.imageFile = null;
   }
-
 
   clearForm() {
     this.form.reset();

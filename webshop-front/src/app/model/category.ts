@@ -1,4 +1,7 @@
+import {Attribute} from './attribute';
+
 export type Category = {
-  id: number | null,
+  id: number,
   name: string,
 }
+  // attributes: Attribute[]
