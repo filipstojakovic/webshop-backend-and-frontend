@@ -10,7 +10,7 @@ import {ToastService} from 'angular-toastify';
 import formUtils from '../../utils/formUtils';
 import {map, Observable, startWith} from 'rxjs';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {Attribute} from '../../model/attribute';
+import {Attribute, AttributeValue} from '../../model/attribute';
 
 @Component({
   selector: 'app-sell-product',
@@ -20,10 +20,13 @@ import {Attribute} from '../../model/attribute';
 export class SellProductComponent implements OnInit {
 
   form!: FormGroup;
+  attributeForm!: FormGroup | null;
   imageFile: File | null = null;
 
   categories: Category[] = [];
   filteredOptions!: Observable<Category[]>;
+  attributesValue: AttributeValue[] = [];
+
 
   categoryService!: GenericCrudService<Category>
 
@@ -39,6 +42,7 @@ export class SellProductComponent implements OnInit {
     var defaultFieldValue = "a";
     this.form = this.fb.group({
       category: [null, Validators.required],
+      attributes: [],
       name: [defaultFieldValue, Validators.required],
       description: [defaultFieldValue],
       price: [null, Validators.required],
@@ -49,7 +53,7 @@ export class SellProductComponent implements OnInit {
     this.categoryService.getAll().subscribe({
           next: (res) => {
             this.categories = res;
-            console.log("sell-product.component.ts > next(): "+ JSON.stringify(res, null, 2));
+            console.log("sell-product.component.ts > next(): " + JSON.stringify(res, null, 2));
             this.filteredOptions = this.form.controls['category'].valueChanges.pipe(
                 startWith(''),
                 map(value => this.filterCategories(value?.name || '')),
@@ -61,6 +65,7 @@ export class SellProductComponent implements OnInit {
         },
     )
   }
+
 
   onSubmit() {
     if (!this.form.valid) {
@@ -96,11 +101,23 @@ export class SellProductComponent implements OnInit {
   }
 
   optionSelected(event: MatAutocompleteSelectedEvent): void {
-    const selectedCategory = event.option.value;
+    const selectedCategory: Category = event.option.value;
     this.form.patchValue({ category: selectedCategory });
+    this.attributesValue = selectedCategory.attributes.map(attribute => ({
+      ...attribute,
+      value: '',
+    }));
+    this.createAttributeForm(this.attributesValue);
   }
 
-  onSelect(event: any) {
+  createAttributeForm(attributesValue: AttributeValue[]) {
+    this.attributeForm = this.fb.group({});
+    attributesValue.map(attributeValue => {
+      this.attributeForm?.addControl(attributeValue.name, new FormControl())
+    })
+  }
+
+  onImageSelect(event: any) {
     this.imageFile = event.addedFiles[0];
     const reader = new FileReader();
     reader.readAsDataURL(this.imageFile!)
@@ -110,7 +127,7 @@ export class SellProductComponent implements OnInit {
     }
   }
 
-  onRemove() {
+  onImageRemove() {
     this.imageFile = null;
   }
 

@@ -20,6 +20,26 @@
       </mat-autocomplete>
     </mat-form-field>
 
+
+    <div style="border: 2px solid black; width: 100%" *ngIf="attributeForm">
+      <form class="center-container"  [formGroup]="attributeForm">
+        <app-input *ngFor="let attributeValue of attributesValue"
+                   style="width: 100%"
+                   label="{{attributeValue.name}}"
+                   type="text"
+                   [control]="$any(attributeForm.get(attributeValue.name))"
+        >
+        </app-input>
+
+      </form>
+    </div>
+
+
+
+
+
+
+
     <div style="width: 100%">
       <mat-checkbox color="primary" formControlName="isNew">
         {{form.controls['isNew'].value ? "Product is in new condition" : "Product is not new"}}
@@ -64,16 +84,15 @@
     >
     </app-input>
 
-
     <ngx-dropzone class="main-grid" style="min-height: 200px"
                   accept="image/jpeg,image/jpg,image/png"
                   [multiple]="false" [maxFileSize]="5000000"
-                  (change)="onSelect($event)">
+                  (change)="onImageSelect($event)">
       <ngx-dropzone-label>Drop & Drop!</ngx-dropzone-label>
       <ng-container *ngIf="imageFile" style="flex-direction: row">
         <ngx-dropzone-image-preview class="center-image"
                                     ngProjectAs="ngx-dropzone-preview"
-                                    [file]="imageFile" (removed)="onRemove()">
+                                    [file]="imageFile" (removed)="onImageRemove()">
         </ngx-dropzone-image-preview>
       </ng-container>
     </ngx-dropzone>
