@@ -63,7 +63,7 @@ public class UserController {
   public String downloadUserProfileImage(@PathVariable Long id) {
     try {
       UserResponse user = userService.findById(id);
-      return fileService.downloadUserProfileImage(user.getAvatar());
+      return fileService.loadImageFromPath(user.getAvatar());
     } catch (Exception ex) {
       log.error("Unable to download image");
     }

@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {ToastService} from 'angular-toastify';
 import {GenericCrudService} from '../../service/GenericCrudService';
-import myUtils from '../../utils/myUtils';
+import formUtils from '../../utils/formUtils';
 
 @Component({
   selector: 'app-contact-support',
@@ -36,7 +36,7 @@ export class ContactSupportComponent implements OnInit {
 
   clearClick() {
     this.form.reset();
-    myUtils.clearFormErrors(this.form);
+    formUtils.clearFormErrors(this.form);
   }
 
   displayErrors() {

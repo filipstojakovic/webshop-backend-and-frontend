@@ -7,7 +7,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../service/auth.service';
 import {Router} from '@angular/router';
 import {ToastService} from 'angular-toastify';
-import myUtils from '../../utils/myUtils';
+import formUtils from '../../utils/formUtils';
 import {map, Observable, startWith} from 'rxjs';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Attribute} from '../../model/attribute';
@@ -49,6 +49,7 @@ export class SellProductComponent implements OnInit {
     this.categoryService.getAll().subscribe({
           next: (res) => {
             this.categories = res;
+            console.log("sell-product.component.ts > next(): "+ JSON.stringify(res, null, 2));
             this.filteredOptions = this.form.controls['category'].valueChanges.pipe(
                 startWith(''),
                 map(value => this.filterCategories(value?.name || '')),
@@ -67,23 +68,8 @@ export class SellProductComponent implements OnInit {
       return;
     }
 
-    const formData = myUtils.formGroupToFormDataConverter(this.form);
-    // const formData = new FormData();
-    // formData.append("name", "test");
-    // const categoryData= this.form.controls['category'].value;
-    // formData.append("name", "test");
-
-    // formData.append("category.id",categoryData.id);
-    // formData.append("category.name",categoryData.name);
-    formData.append("image", this.imageFile!);
-    // @ts-ignore
-
-    for (let pair of formData.entries()) {
-      console.log(pair[0]+ ' - ' + pair[1]);
-    }
-
     //MISSING ATTRIBUTES VALUE
-    this.http.post(backendUrl.PRODUCTS, formData).subscribe({
+    this.http.post(backendUrl.PRODUCTS, this.form.value).subscribe({
           next: (res) => {
             this.toastService.success("Product created successfully!");
 
@@ -130,7 +116,7 @@ export class SellProductComponent implements OnInit {
 
   clearForm() {
     this.form.reset();
-    myUtils.clearFormErrors(this.form);
+    formUtils.clearFormErrors(this.form);
   }
 
 }

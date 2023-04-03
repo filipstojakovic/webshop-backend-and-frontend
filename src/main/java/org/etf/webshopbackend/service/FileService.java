@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 
 import static org.apache.http.entity.ContentType.IMAGE_JPEG;
 import static org.apache.http.entity.ContentType.IMAGE_PNG;
@@ -97,7 +99,7 @@ public class FileService {
     return System.getProperty("user.dir");
   }
 
-  public String downloadUserProfileImage(String path) throws IOException {
+  public String loadImageFromPath(String path) throws IOException {
     if (path == null) {
       return null;
     }
@@ -105,5 +107,18 @@ public class FileService {
     byte[] imageBytes = Files.readAllBytes(filePath);
     return ENCODED_IMAGE_PREFIX + Base64.getEncoder()
         .encodeToString(imageBytes);
+  }
+
+  public String saveBase64String(String base64Image) throws IOException {
+    String[] parts = base64Image.split(",");
+    byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
+    String fileName = UUID.randomUUID() + ".jpg";
+    Path filePath = Paths.get(getProductsDirPath().toString(),fileName);
+//     String filePath = getProductsDirPath() + fileName;
+    File file = filePath.toFile();
+    try (FileOutputStream fos = new FileOutputStream(file)) {
+      fos.write(imageBytes);
+    }
+    return file.getPath();
   }
 }

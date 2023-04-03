@@ -17,9 +17,10 @@ public class ProductRequest {
 
   private Double price;
 
-  private boolean isNew;
+  private Boolean isNew;
   private String location;
 
   private CategoryDto category;
 
+  private String image;
 }

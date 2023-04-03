@@ -34,7 +34,8 @@ public class SecurityConfig {
 
   @Bean
   public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder, UserDetailsService userDetailService) throws Exception {
-    return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailService).passwordEncoder(passwordEncoder).and().build();
+    return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailService)
+        .passwordEncoder(passwordEncoder).and().build();
   }
 
   @Bean
@@ -47,7 +48,7 @@ public class SecurityConfig {
   public SecurityFilterChain noSecurityfilterChain(HttpSecurity http) throws Exception {
     http.csrf().and().cors().disable();
     http.authorizeHttpRequests().requestMatchers("/**").permitAll();
-    http.authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/**").permitAll();
+    http.authorizeHttpRequests().requestMatchers(HttpMethod.POST, "/**").permitAll();
     return http.build();
   }
 
@@ -82,9 +83,16 @@ public class SecurityConfig {
     userAuthorizationRule(http);
     publicAuthorizationRule(http);
     activatePinAuthorizationRule(http);
+    categoryAuthorizationRule(http);
     procutAuthorizationRule(http);
     contactSupportAuthorizationRule(http);
     // TODO: authrorize other endpoints
+  }
+
+  private void categoryAuthorizationRule(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests()
+        .requestMatchers(HttpMethod.GET, EndpointConstants.CATEGORIES)
+        .permitAll();
   }
 
   private void contactSupportAuthorizationRule(HttpSecurity http) throws Exception {
@@ -124,11 +132,12 @@ public class SecurityConfig {
     );
   }
 
-
   private void procutAuthorizationRule(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(requests ->
         requests
             .requestMatchers(HttpMethod.GET, EndpointConstants.PRODUCTS)
+            .permitAll()
+            .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS)
             .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name()));
   }
 

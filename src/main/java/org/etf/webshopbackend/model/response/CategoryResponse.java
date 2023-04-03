@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.etf.webshopbackend.model.dto.AttributeDto;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,5 +18,5 @@ public class CategoryResponse {
 
   private Long id;
   private String name;
-//   private List<Attribute> attributes;
+  private List<AttributeDto> attributes;
 }

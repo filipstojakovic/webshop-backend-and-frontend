@@ -38,6 +38,10 @@ public class Product {
   @JoinColumn(name = "seller_id")
   private User seller;
 
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "category_id")
+  private Category category;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "orders_id")
   private Purchase purchase;

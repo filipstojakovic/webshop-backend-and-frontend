@@ -8,7 +8,7 @@ import tokenService from '../../service/TokenService';
 import {paths} from '../../constants/paths';
 import {ConfirmedValidator} from './confirmed.validator';
 import {backendUrl} from '../../constants/backendUrl';
-import myUtils from "../../utils/myUtils";
+import formUtils from "../../utils/formUtils";
 
 @Component({
   selector: 'app-registration',
@@ -58,7 +58,7 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    const formData = myUtils.formGroupToFormDataConverter(this.form);
+    const formData = formUtils.formGroupToFormDataConverter(this.form);
     formData.append("avatar", this.imageFile!);
 
     this.http.post(backendUrl.REGISTER, formData).subscribe({
