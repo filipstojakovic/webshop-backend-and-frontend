@@ -41,7 +41,7 @@ export class SellProductComponent implements OnInit {
   ngOnInit(): void {
     var defaultFieldValue = "a";
     this.form = this.fb.group({
-      category: [null, Validators.required],
+      category: [new FormControl<Category | null>(null), Validators.required],
       attributes: [],
       name: [defaultFieldValue, Validators.required],
       description: [defaultFieldValue],
@@ -67,11 +67,14 @@ export class SellProductComponent implements OnInit {
   }
 
 
+  //ON SUBMIT /////////////// /////////////// ////////////////////////// /////////////// ///////////////
   onSubmit() {
     if (!this.form.valid) {
       this.toastService.error("Form not valid")
       return;
     }
+
+    console.log("sell-product.component.ts > onSubmit(): "+ JSON.stringify(this.attributeForm?.value, null, 2));
 
     //MISSING ATTRIBUTES VALUE
     this.http.post(backendUrl.PRODUCTS, this.form.value).subscribe({
@@ -113,7 +116,7 @@ export class SellProductComponent implements OnInit {
   createAttributeForm(attributesValue: AttributeValue[]) {
     this.attributeForm = this.fb.group({});
     attributesValue.map(attributeValue => {
-      this.attributeForm?.addControl(attributeValue.name, new FormControl())
+      this.attributeForm?.addControl(attributeValue.name, new FormControl<Attribute | null>(null))
     })
   }
 

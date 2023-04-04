@@ -13,6 +13,7 @@ export class InputComponent {
   @Input() errorMessage = 'Field is required';
   @Input() required: boolean = false;
   @Input() readonly: boolean = false;
+  @Input() maxLenght: number = 255;
 
   @Output() keyDown = new EventEmitter();
 

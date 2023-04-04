@@ -3,7 +3,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '
 import {paths} from '../constants/paths';
 import {AuthService} from './auth.service';
 import tokenService from './TokenService';
-import {RoleEnum} from '../model/role';
+import {RoleEnum} from '../model/enums/role';
 import {HttpClient} from '@angular/common/http';
 import {backendUrl} from '../constants/backendUrl';
 import {tokenConstant} from "../constants/constants";

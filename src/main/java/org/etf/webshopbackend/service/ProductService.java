@@ -1,6 +1,5 @@
 package org.etf.webshopbackend.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.exceptions.NotFoundException;
@@ -22,7 +21,7 @@ import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
+// @Transactional
 @Service
 public class ProductService {
 
@@ -38,7 +37,16 @@ public class ProductService {
 //         .param("sort", "id,desc")   // <-- no space after comma!
 //         .param("sort", "name,asc")) // <-- no
   public Page<Product> findAll(Pageable page) {
-    return productRepository.findAll(page);
+
+    Page<Product> products = productRepository.findAll(page).map(product -> {
+      try {
+        product.setImage(fileService.loadImageFromPath(product.getImage()));
+      } catch (IOException e) {
+        product.setImage(null);
+      }
+      return product;
+    });
+    return products;
   }
 
   public ProductResponse insert(ProductRequest productRequest) {
@@ -48,28 +56,26 @@ public class ProductService {
     } catch (IOException ex) {
       ex.printStackTrace();
     }
+    Product product = productMapper.fromRequest(productRequest, Product.class);
     Long userId = tokenService.getUserIdFromRequest();
-    User sellerUser = userRepository.findById(userId).orElseThrow(()->new NotFoundException(User.class,userId));
+    User sellerUser = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(User.class, userId));
     Long categoryId = productRequest.getCategory().getId();
     Category category = categoryRepository.findById(categoryId)
         .orElseThrow(() -> new NotFoundException(Category.class, categoryId));
-    Product product = productMapper.fromRequest(productRequest, Product.class);
     product.setCategory(category);
     product.setSeller(sellerUser);
     product.setImage(imagePath);
     try {
       productRepository.saveAndFlush(product);
-    }catch(Exception ex)
-    {
+    } catch (Exception ex) {
       try {
         fileService.deleteFile(imagePath);
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
       ex.printStackTrace();
-       throw ex;
+      throw ex;
     }
-
 
     return productMapper.toResponse(product, ProductResponse.class);
   }

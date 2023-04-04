@@ -3,7 +3,7 @@ import {paths} from './constants/paths';
 import {HomeComponent} from './page/home/home.component';
 import {LoginComponent} from './page/login/login.component';
 import {AuthGuard} from './service/auth-guard';
-import {RoleEnum} from './model/role';
+import {RoleEnum} from './model/enums/role';
 import {ActivateAccountComponent} from "./page/activate-account/activate-account.component";
 import {RegistrationComponent} from './page/registration/registration.component';
 import {ContactSupportComponent} from './page/contact-support/contact-support.component';

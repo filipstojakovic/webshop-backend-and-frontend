@@ -6,14 +6,23 @@
          (ngModelChange)="this.searchTextUpdate.next($event)"
   />
 </mat-form-field>
+
 <div class="product-list">
-  <div *ngFor="let i of [0, 1, 2]">
-    <app-product-card (click)="productCardClick(i)"></app-product-card>
-  </div>
+  <ng-template [ngIf]="products && products.length!==0" [ngIfElse]="noproducts">
+    <div *ngFor="let product of products">
+      <app-product-card [product]="product" (click)="productCardClick(product)"></app-product-card>
+    </div>
+  </ng-template>
+  <ng-template #noproducts>
+    <h2>Currently there are no products</h2>
+  </ng-template>
 </div>
-<mat-paginator [length]="100"
-               [pageSize]="10"
-               [pageSizeOptions]="[5, 10, 25]"
-               aria-label="Select page"
-               class="mat-mdc-paginator-container"
+
+<mat-paginator
+    [length]="totalNumber"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25]"
+    (page)="onPaginatorChange($event)"
+    aria-label="Select page"
+    class="mat-mdc-paginator-container"
 ></mat-paginator>
