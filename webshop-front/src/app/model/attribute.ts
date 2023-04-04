@@ -8,15 +8,13 @@ export class Attribute {
   }
 }
 
-export class AttributeValue extends Attribute {
-  value: string;
+export class AttributeNameValue {
+  name: string;
+  value: string|null;
 
-  constructor(id: number, name: string, value: string) {
-    super(id, name);
+
+  constructor(name: string, value: string | null) {
+    this.name = name;
     this.value = value;
-  }
-
-  override toString(): string {
-    return this.value;
   }
 }

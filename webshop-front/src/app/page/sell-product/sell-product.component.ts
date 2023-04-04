@@ -10,7 +10,7 @@ import {ToastService} from 'angular-toastify';
 import formUtils from '../../utils/formUtils';
 import {map, Observable, startWith} from 'rxjs';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {Attribute, AttributeValue} from '../../model/attribute';
+import {Attribute, AttributeNameValue} from '../../model/attribute';
 
 @Component({
   selector: 'app-sell-product',
@@ -25,7 +25,7 @@ export class SellProductComponent implements OnInit {
 
   categories: Category[] = [];
   filteredOptions!: Observable<Category[]>;
-  attributesValue: AttributeValue[] = [];
+  attributesValue: AttributeNameValue[] = [];
 
 
   categoryService!: GenericCrudService<Category>
@@ -74,10 +74,18 @@ export class SellProductComponent implements OnInit {
       return;
     }
 
-    console.log("sell-product.component.ts > onSubmit(): "+ JSON.stringify(this.attributeForm?.value, null, 2));
+    const attributesNameValue: AttributeNameValue[] = Object.keys(this.attributeForm!.controls)
+        .map(key => {
+          const value = this.attributeForm!.controls[key].value;
+          return new AttributeNameValue(key, value);
+        });
+
+    const request = this.form.value;
+    request.category.attributes = attributesNameValue;
+    console.log("sell-product.component.ts > onSubmit(): "+ JSON.stringify(request, null, 2));
 
     //MISSING ATTRIBUTES VALUE
-    this.http.post(backendUrl.PRODUCTS, this.form.value).subscribe({
+    this.http.post(backendUrl.PRODUCTS, request).subscribe({
           next: (res) => {
             this.toastService.success("Product created successfully!");
 
@@ -113,7 +121,7 @@ export class SellProductComponent implements OnInit {
     this.createAttributeForm(this.attributesValue);
   }
 
-  createAttributeForm(attributesValue: AttributeValue[]) {
+  createAttributeForm(attributesValue: AttributeNameValue[]) {
     this.attributeForm = this.fb.group({});
     attributesValue.map(attributeValue => {
       this.attributeForm?.addControl(attributeValue.name, new FormControl<Attribute | null>(null))
