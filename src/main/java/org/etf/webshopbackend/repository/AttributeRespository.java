@@ -4,7 +4,10 @@ import org.etf.webshopbackend.model.entity.Attribute;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface AttributeRespository extends JpaRepository<Attribute,Long> {
+import java.util.Optional;
 
+@Repository
+public interface AttributeRespository extends JpaRepository<Attribute, Long> {
+
+  Optional<Attribute> findAttributeByCategory_IdAndName(Long categoryId, String name);
 }

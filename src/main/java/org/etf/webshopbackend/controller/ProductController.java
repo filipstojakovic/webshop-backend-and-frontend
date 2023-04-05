@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -24,8 +26,13 @@ public class ProductController {
   private final ProductService productService;
 
   @GetMapping
-  public Page<Product> findAll(Pageable page) {
-    return productService.findAll(page);
+  public Page<Product> findAllPageable(Pageable page) {
+    return productService.findAllPageable(page);
+  }
+
+  @GetMapping("all")
+  public List<Product> findAll() {
+    return productService.findAll();
   }
 
   @PostMapping

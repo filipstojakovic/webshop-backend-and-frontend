@@ -135,7 +135,7 @@ public class SecurityConfig {
   private void procutAuthorizationRule(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(requests ->
         requests
-            .requestMatchers(HttpMethod.GET, EndpointConstants.PRODUCTS)
+            .requestMatchers(HttpMethod.GET, EndpointConstants.PRODUCTS + EndpointConstants.ALL_PATHS)
             .permitAll()
             .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS)
             .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name()));

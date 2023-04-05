@@ -5,7 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.etf.webshopbackend.model.entity.Purchase;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,6 +22,8 @@ public class ProductResponse {
   private String location;
   private Boolean isNew;
   private UserResponse seller;
-  private Purchase purchase;
   private String image;
+
+  private ProductCategoryResponse productCategory;
+  private List<ProductAttributesResponse> productAttributesResponses;
 }

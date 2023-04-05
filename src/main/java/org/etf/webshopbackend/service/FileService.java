@@ -100,7 +100,7 @@ public class FileService {
   }
 
   public String loadImageFromPath(String path) throws IOException {
-    if (path == null) {
+    if (path == null || path.isEmpty()) {
       return null;
     }
     Path filePath = Paths.get(path);
@@ -114,7 +114,6 @@ public class FileService {
     byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
     String fileName = UUID.randomUUID() + ".jpg";
     Path filePath = Paths.get(getProductsDirPath().toString(),fileName);
-//     String filePath = getProductsDirPath() + fileName;
     File file = filePath.toFile();
     try (FileOutputStream fos = new FileOutputStream(file)) {
       fos.write(imageBytes);

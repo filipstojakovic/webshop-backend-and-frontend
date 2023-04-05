@@ -3,6 +3,7 @@ package org.etf.webshopbackend.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,8 +31,11 @@ public class Attribute {
   private String name;
 
   @JsonIgnore
-  @ManyToOne//(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id",nullable=false)
   private Category category;
 
+//   @JsonIgnore
+//   @OneToMany(mappedBy = "attribute", cascade= CascadeType.ALL, fetch= FetchType.LAZY)
+//   private List<ProductHasAttribute> attributeHasProducts = new ArrayList<>();
 }
