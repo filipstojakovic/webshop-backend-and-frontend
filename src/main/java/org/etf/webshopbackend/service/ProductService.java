@@ -46,15 +46,18 @@ public class ProductService {
 //         .param("size", "10")
 //         .param("sort", "id,desc")   // <-- no space after comma!
 //         .param("sort", "name,asc")) // <-- no
-  public Page<Product> findAllPageable(Pageable page) {
+  public Page<ProductResponse> findAllPageable(Pageable page) {
 
-    Page<Product> products = productRepository.findAll(page).map(product -> {
+    Page<ProductResponse> products = productRepository.findAll(page).map(product -> {
+      String image = null;
       try {
-        product.setImage(fileService.loadImageFromPath(product.getImage()));
+        image = fileService.loadImageFromPath(product.getImage());
       } catch (IOException e) {
         product.setImage(null);
       }
-      return product;
+      ProductResponse productResponse = productMapper.toResponse(product);
+      productResponse.setImage(image);
+      return productResponse;
     });
     return products;
   }

@@ -26,7 +26,7 @@ public class ProductController {
   private final ProductService productService;
 
   @GetMapping
-  public Page<Product> findAllPageable(Pageable page) {
+  public Page<ProductResponse> findAllPageable(Pageable page) {
     return productService.findAllPageable(page);
   }
 
