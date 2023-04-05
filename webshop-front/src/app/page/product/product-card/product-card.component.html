@@ -1,29 +1,27 @@
-<mat-card class="example-card">
-  <mat-card-header>
-    <mat-card-title>{{product.name}}</mat-card-title>
-    <mat-card-subtitle>{{product.seller.firstName + ' ' + product.seller.lastName}}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content
-      style="align-items: center; justify-content: center; display: flex; flex-direction: column">
-    <ng-template [ngIf]="product.image && product.image.length>0" [ngIfElse]="altImage">
-      <img mat-card-image
-           class="product-card-img"
-           src="{{product.image}}"
-           alt="/assets/product-default-image.png">
-    </ng-template>
-    <ng-template #altImage>
-      <img mat-card-image
-           class="product-card-img"
-           src="/assets/product-default-image.png" alt="image"
-      >
-    </ng-template>
-
-    <p>
-      {{product.description}}
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button (click)="likeClick($event)">LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-</mat-card>
+<div class="product-card">
+  <div class="product-card-container">
+    <h2 class="product-name">{{product.name}}</h2>
+    <div class="product-image">
+      <ng-template [ngIf]="product.image && product.image.length>0"
+                   [ngIfElse]="altImage">
+        <img mat-card-image
+             class="product-card-img"
+             src="{{product.image}}"
+             alt="/assets/product-default-image.png">
+      </ng-template>
+      <ng-template #altImage>
+        <img mat-card-image
+             class="product-card-img"
+             src="/assets/product-default-image.png" alt="image"
+        >
+      </ng-template>
+    </div>
+    <h4>Seller: {{product.seller.firstName + ' ' + product.seller.lastName}}</h4>
+    <div class="product-price">${{product.price}}</div>
+  </div>
+  <div class="product-buttons">
+    <app-button style="width: 100%; padding-bottom: 8px">View details
+    </app-button>
+    <app-button style="width: 100%">Buy now!</app-button>
+  </div>
+</div>

@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {ProductService} from '../../service/product.service';
 import {Product} from '../../model/Product';
+import tokenService from '../../service/TokenService';
 
 @Component({
   selector: 'app-product',
@@ -22,6 +23,9 @@ export class ProductComponent implements OnInit {
   products: Product[] = [];
 
   constructor(private productService: ProductService) {
+    const userId: number = tokenService.getIdFromToken();
+    //TODO: uncomment next line
+    // this.pageSize = Number.parseInt(sessionStorage.getItem(userId + "") ?? "10");
   }
 
   ngOnInit(): void {
@@ -57,7 +61,7 @@ export class ProductComponent implements OnInit {
   }
 
   productCardClick(product: Product) {
-    console.log("product.component.ts > productCardClick(): "+ JSON.stringify(product, null, 2));
+    console.log("product.component.ts > productCardClick(): " + JSON.stringify(product, null, 2));
   }
 
   onPaginatorChange($event: PageEvent) {
@@ -70,6 +74,7 @@ export class ProductComponent implements OnInit {
     } = $event;
 
     this.pageSize = pageSize;
+    sessionStorage.setItem(tokenService.getIdFromToken() + "", pageSize + "");
     this.currentPageNumber = pageIndex;
     this.getProducts();
   }
