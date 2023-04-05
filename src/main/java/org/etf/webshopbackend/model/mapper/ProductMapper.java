@@ -20,7 +20,7 @@ public class ProductMapper {
   public ProductResponse toResponse(Product product){
     ProductResponse productResponse = modelMapper.map(product, ProductResponse.class);
     Category category = product.getCategory();
-    productResponse.setProductCategoryResponse(new ProductCategoryResponse(category.getId(),category.getName()));
+    productResponse.setProductCategory(new ProductCategoryResponse(category.getId(),category.getName()));
 
     List<ProductAttributesResponse> productAttributesResponse = productAttributesMapper.toResponse(product.getProductHasAttributes());
     productResponse.setProductAttributesResponses(productAttributesResponse);
