@@ -17,15 +17,16 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     const id = tokenService.getIdFromToken();
-    this.http.get(`users/${id}/image`, { responseType: 'text' }).subscribe({
-          next: (res) => {
-            this.image = res;
+    if (id)
+      this.http.get(`users/${id}/image`, { responseType: 'text' }).subscribe({
+            next: (res) => {
+              this.image = res;
+            },
+            error: (err) => {
+              console.log("home.component.ts > error(): " + JSON.stringify(err, null, 2));
+            },
           },
-          error: (err) => {
-            console.log("home.component.ts > error(): " + JSON.stringify(err, null, 2));
-          },
-        },
-    )
+      )
   }
 
   isLoggedIn(): boolean {

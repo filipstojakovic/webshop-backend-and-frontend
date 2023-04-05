@@ -1,6 +1,5 @@
 <div class="product-card">
   <div class="product-card-container">
-    <h2 class="product-name">{{product.name}}</h2>
     <div class="product-image">
       <ng-template [ngIf]="product.image && product.image.length>0"
                    [ngIfElse]="altImage">
@@ -16,6 +15,7 @@
         >
       </ng-template>
     </div>
+    <h2 class="product-name">{{product.name}}</h2>
     <h4>Seller: {{product.seller.firstName + ' ' + product.seller.lastName}}</h4>
     <div class="product-price">${{product.price}}</div>
   </div>

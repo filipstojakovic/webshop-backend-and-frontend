@@ -7,8 +7,11 @@ export function getIdFromToken(): number {
 
 export function getFieldFromToken(field: string) {
   const token = getTokenFromStorage();
-  const decoded: any = jwt_decode(token!);
-  return decoded[field];
+  if (token) {
+    const decoded: any = jwt_decode(token!);
+    return decoded[field];
+  }
+  return null;
 }
 
 export function hasRole(role: string): boolean {

@@ -12,8 +12,6 @@
 
   <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loading">
     <div>Logged in</div>
-    <app-button (click)="logoutClick()">Logout</app-button>
-
     <app-avatar-button style="margin: 0" [image]="image"></app-avatar-button>
     <app-button (click)="logoutClick()">Logout</app-button>
     <!--    TODO: logout button-->
@@ -21,6 +19,9 @@
 
   <ng-template #loading>
     <!--    TODO: <Login and Singup buttons on the right-->
+    <button mat-raised-button [routerLink]="[paths.LOGIN]"
+            routerLinkActive="selected-button">Login
+    </button>
     <div>Not logged in</div>
   </ng-template>
 </nav>

@@ -5,7 +5,7 @@ import {environment} from '../../environments/environment.development';
 import {AuthService} from '../service/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BaseUrlInterceptorService implements HttpInterceptor {
   private readonly baseUrl: string;
@@ -16,10 +16,11 @@ export class BaseUrlInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let apiReq = null;
-    if (this.authService.getToken())
+    const token = this.authService.getToken();
+    if (token != null && token !== "")
       apiReq = request.clone({
         url: `${this.baseUrl}/${request.url}`,
-        headers: request.headers.set('Authorization', this.authService.getToken()!)
+        headers: request.headers.set('Authorization', this.authService.getToken()!),
       });
     else {
       apiReq = request.clone({

@@ -6,6 +6,7 @@ export const paths = {
   HOME: "home",
   SELL_PRODUCT: "sell-product",
   // PROFILE: "profile",
+  PRODUCT_DETAILS: "product-details/:id",
   CONTACT_SUPPORT: "contact-support",
   ERROR: "error",
 

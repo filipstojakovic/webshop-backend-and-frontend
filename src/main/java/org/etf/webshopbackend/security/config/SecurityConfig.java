@@ -137,7 +137,7 @@ public class SecurityConfig {
         requests
             .requestMatchers(HttpMethod.GET, EndpointConstants.PRODUCTS + EndpointConstants.ALL_PATHS)
             .permitAll()
-            .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS)
+            .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS + EndpointConstants.ALL_PATHS)
             .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name()));
   }
 
