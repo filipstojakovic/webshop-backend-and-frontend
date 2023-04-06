@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {GenericCrudService} from '../../service/GenericCrudService';
-import {Product} from '../../model/Product';
-import {backendUrl} from '../../constants/backendUrl';
+import {GenericCrudService} from '../../../service/GenericCrudService';
+import {Product} from '../../../model/Product';
+import {backendUrl} from '../../../constants/backendUrl';
 import {ToastService} from 'angular-toastify';
-import {paths} from '../../constants/paths';
+import {paths} from '../../../constants/paths';
 
 @Component({
   selector: 'app-product-details',

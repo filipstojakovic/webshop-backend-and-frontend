@@ -2,19 +2,19 @@ package org.etf.webshopbackend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.etf.webshopbackend.model.entity.compositekey.UserProductId;
 
 import java.time.LocalDateTime;
 
@@ -27,18 +27,17 @@ import java.time.LocalDateTime;
 @Entity
 public class Comment {
 
-  @EmbeddedId
-  UserProductId id = new UserProductId();
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @MapsId("userId")
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
   @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY)
-  @MapsId("productId")
-  @JoinColumn(name = "product_id")
+  @JoinColumn(name = "product_id", nullable = false)
   private Product product;
 
   @NotNull
@@ -46,14 +45,14 @@ public class Comment {
 
   private LocalDateTime date;
 
+  public Comment(final User user, final Product product, final String message) {
+    this(user, product, message, LocalDateTime.now());
+  }
+
   public Comment(final User user, final Product product, final String message, final LocalDateTime date) {
     this.user = user;
     this.product = product;
-    this.date = date;
     this.message = message;
-  }
-
-  public Comment(final User user, final Product product, final String message) {
-    this(user, product, message, LocalDateTime.now());
+    this.date = date;
   }
 }

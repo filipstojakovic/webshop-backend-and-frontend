@@ -6,7 +6,6 @@ import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.etf.webshopbackend.model.entity.Comment;
 import org.etf.webshopbackend.model.entity.Product;
 import org.etf.webshopbackend.model.entity.User;
-import org.etf.webshopbackend.model.entity.compositekey.UserProductId;
 import org.etf.webshopbackend.model.mapper.GenericMapper;
 import org.etf.webshopbackend.model.request.CommentRequest;
 import org.etf.webshopbackend.model.response.CommentResponse;
@@ -35,8 +34,6 @@ public class CommentService {
 
     String commentMessage = commentRequest.getMessage();
 
-    UserProductId userProductId = new UserProductId(userId, productId);
-
     Comment comment = new Comment(user, product, commentMessage);
 
     comment = commentRepository.saveAndFlush(comment);
@@ -45,7 +42,7 @@ public class CommentService {
   }
 
   public List<CommentResponse> findCommentsByProductId(Long productId) {
-    List<Comment> comments = commentRepository.findByIdProductId(productId);
+    List<Comment> comments = commentRepository.findByProductId(productId);
     return commentMapper.toResponses(comments, CommentResponse.class);
   }
 }
