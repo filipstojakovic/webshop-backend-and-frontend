@@ -71,7 +71,7 @@ export class ActivateAccountComponent implements OnInit {
             }
 
             tokenService.setTokenInStorage(token!);
-            this.router.navigateByUrl(paths.HOME, { replaceUrl: true });
+            this.router.navigateByUrl(paths.PRODUCTS, { replaceUrl: true });
           },
           error: (err) => {
             console.log("activate-account.component.ts > error(): " + JSON.stringify(err, null, 2));

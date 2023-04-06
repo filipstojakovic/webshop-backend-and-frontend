@@ -1,28 +1,36 @@
-<mat-form-field appearance="fill" class="search-input-style">
-  <mat-label>Search product</mat-label>
-  <input matInput
-         (keydown)="onKeyDown($event)"
-         [(ngModel)]="searchText"
-         (ngModelChange)="this.searchTextUpdate.next($event)"
-  />
-</mat-form-field>
+<div>
+  <mat-form-field appearance="fill" class="search-input-style">
+    <mat-label>Search product</mat-label>
+    <input matInput
+           (keydown)="onKeyDown($event)"
+           [(ngModel)]="searchText"
+           (ngModelChange)="this.searchTextUpdate.next($event)"
+    />
+  </mat-form-field>
 
-<div class="product-list">
-  <ng-template [ngIf]="products && products.length!==0" [ngIfElse]="noproducts">
-    <div *ngFor="let product of products">
-      <app-product-card [product]="product" (click)="productCardClick(product)"></app-product-card>
-    </div>
-  </ng-template>
-  <ng-template #noproducts>
-    <h2>Currently there are no products</h2>
-  </ng-template>
+  <div class="product-list">
+    <ng-container *ngIf="products; else loadingState">
+      <ng-container *ngIf="products.length; else noDataState">
+        <div *ngFor="let product of products">
+          <app-product-card [product]="product"
+                            (click)="productCardClick(product)"></app-product-card>
+        </div>
+      </ng-container>
+      <ng-template #noDataState>
+        <div>There is no products to display</div>
+      </ng-template>
+    </ng-container>
+    <ng-template #loadingState>
+      <div>Loading...</div>
+    </ng-template>
+  </div>
+
+  <mat-paginator
+      [length]="totalNumber"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25]"
+      (page)="onPaginatorChange($event)"
+      aria-label="Select page"
+      class="mat-mdc-paginator-container"
+  ></mat-paginator>
 </div>
-
-<mat-paginator
-    [length]="totalNumber"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="[5, 10, 25]"
-    (page)="onPaginatorChange($event)"
-    aria-label="Select page"
-    class="mat-mdc-paginator-container"
-></mat-paginator>

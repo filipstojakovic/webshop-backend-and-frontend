@@ -1,14 +1,13 @@
 import {Routes} from '@angular/router';
 import {paths} from './constants/paths';
-import {HomeComponent} from './page/home/home.component';
 import {LoginComponent} from './page/login/login.component';
-import {AuthGuard} from './service/auth-guard';
 import {RoleEnum} from './model/enums/role';
 import {ActivateAccountComponent} from "./page/activate-account/activate-account.component";
 import {RegistrationComponent} from './page/registration/registration.component';
 import {ContactSupportComponent} from './page/contact-support/contact-support.component';
 import {SellProductComponent} from './page/sell-product/sell-product.component';
 import {ProductDetailsComponent} from './page/product-details/product-details.component';
+import {ProductComponent} from './page/product/product.component';
 
 export const routes: Routes = [
   {
@@ -34,9 +33,9 @@ export const routes: Routes = [
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   {
-    path: paths.HOME,
+    path: paths.PRODUCTS,
     pathMatch: 'full',
-    component: HomeComponent,
+    component: ProductComponent,
     // canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },

@@ -1,11 +1,11 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 import {constant} from '../../constants/constants';
-import {HttpClient} from '@angular/common/http';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {PageEvent} from '@angular/material/paginator';
 import {ProductService} from '../../service/product.service';
 import {Product} from '../../model/Product';
 import tokenService from '../../service/TokenService';
+import {ToastService} from 'angular-toastify';
 
 @Component({
   selector: 'app-product',
@@ -15,14 +15,15 @@ import tokenService from '../../service/TokenService';
 export class ProductComponent implements OnInit {
   public searchText: string = '';
   searchTextUpdate = new Subject<string>();
-  //selectedCategory
+  //add selectedCategory field when ready
+
   totalNumber: number = 0;
   private currentPageNumber: number = 0;
   pageSize: number = 2; // TODO: go back to 10
 
-  products: Product[] = [];
+  products: Product[] | undefined | null;
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private toastService: ToastService) {
     const userId: number = tokenService.getIdFromToken();
     //TODO: uncomment next line
     // this.pageSize = Number.parseInt(sessionStorage.getItem(userId + "") ?? "10");
@@ -49,7 +50,7 @@ export class ProductComponent implements OnInit {
             console.log("product.component.ts > next(): " + JSON.stringify(this.products, null, 2));
           },
           error: (err) => {
-
+            this.toastService.error("Error showing products");
           },
         },
     )
@@ -57,6 +58,7 @@ export class ProductComponent implements OnInit {
 
   onKeyDown(event: any) {
     if (event?.key === 'Enter') {
+      //TODO: do something with enter?
     }
   }
 

@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
               this.image = res;
             },
             error: (err) => {
-              console.log("home.component.ts > error(): " + JSON.stringify(err, null, 2));
+              console.log("header.component.ts > error(): "+ JSON.stringify(err, null, 2));
             },
           },
       )

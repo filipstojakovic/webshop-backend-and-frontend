@@ -4,7 +4,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
-import {HomeComponent} from './page/home/home.component';
 import {LoginComponent} from './page/login/login.component';
 import {BaseUrlInterceptorService} from './interceptor/base-url-interceptor.service';
 import {AngularToastifyModule, ToastService} from 'angular-toastify';
@@ -20,17 +19,16 @@ import {RegistrationComponent} from './page/registration/registration.component'
 import {ActivateAccountComponent} from './page/activate-account/activate-account.component';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 import {NgOptimizedImage} from '@angular/common';
-import { AvatarButtonComponent } from './components/avatar-button/avatar-button.component';
-import { ProductComponent } from './page/product/product.component';
-import { ProductCardComponent } from './page/product/product-card/product-card.component';
-import { ContactSupportComponent } from './page/contact-support/contact-support.component';
-import { SellProductComponent } from './page/sell-product/sell-product.component';
-import { ProductDetailsComponent } from './page/product-details/product-details.component';
+import {AvatarButtonComponent} from './components/avatar-button/avatar-button.component';
+import {ProductComponent} from './page/product/product.component';
+import {ProductCardComponent} from './page/product/product-card/product-card.component';
+import {ContactSupportComponent} from './page/contact-support/contact-support.component';
+import {SellProductComponent} from './page/sell-product/sell-product.component';
+import {ProductDetailsComponent} from './page/product-details/product-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
     ButtonComponent,
     InputComponent,

@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     }
     try {
       this.authService.login(this.form.value as LoginData, () => {
-        this.router.navigateByUrl(paths.HOME, { replaceUrl: true });
+        this.router.navigateByUrl(paths.PRODUCTS, { replaceUrl: true });
       });
     } catch (error) {
       this.toastService.error('Bad credentials');
