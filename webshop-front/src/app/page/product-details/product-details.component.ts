@@ -23,7 +23,6 @@ export class ProductDetailsComponent implements OnInit {
               private router: Router,
   ) {
     this.productService = new GenericCrudService<Product>(backendUrl.PRODUCTS, http);
-
   }
 
   ngOnInit(): void {

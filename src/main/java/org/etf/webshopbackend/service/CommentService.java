@@ -7,11 +7,15 @@ import org.etf.webshopbackend.model.entity.Comment;
 import org.etf.webshopbackend.model.entity.Product;
 import org.etf.webshopbackend.model.entity.User;
 import org.etf.webshopbackend.model.entity.compositekey.UserProductId;
+import org.etf.webshopbackend.model.mapper.GenericMapper;
 import org.etf.webshopbackend.model.request.CommentRequest;
+import org.etf.webshopbackend.model.response.CommentResponse;
 import org.etf.webshopbackend.repository.CommentRepository;
 import org.etf.webshopbackend.repository.ProductRepository;
 import org.etf.webshopbackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -21,6 +25,7 @@ public class CommentService {
   private final UserRepository userRepository;
   private final ProductRepository productRepository;
   private final CommentRepository commentRepository;
+  private final GenericMapper<CommentRequest, Comment, CommentResponse> commentMapper;
 
   public Comment insertProductComment(Long userId, Long productId, CommentRequest commentRequest) {
     Product product = productRepository.findById(productId)
@@ -33,10 +38,14 @@ public class CommentService {
     UserProductId userProductId = new UserProductId(userId, productId);
 
     Comment comment = new Comment(user, product, commentMessage);
-//     comment.setId(userProductId);
 
     comment = commentRepository.saveAndFlush(comment);
 
     return comment;
+  }
+
+  public List<CommentResponse> findCommentsByProductId(Long productId) {
+    List<Comment> comments = commentRepository.findByIdProductId(productId);
+    return commentMapper.toResponses(comments, CommentResponse.class);
   }
 }
