@@ -12,11 +12,4 @@ export class ProductCardComponent {
 
   constructor() {
   }
-
-  likeClick($event: MouseEvent) {
-
-    $event.stopPropagation();
-
-    console.log("product-card.component.ts > likeClick(): " + "like");
-  }
 }

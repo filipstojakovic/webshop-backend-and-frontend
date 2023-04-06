@@ -13,7 +13,7 @@ export class GenericCrudService<T> {
     return this.http.get<T[]>(this.path);
   }
 
-  getById(id: string) {
+  getById(id: number) {
     const uriId = this.path + `/${id}`;
     return this.http.get<T>(uriId);
   }

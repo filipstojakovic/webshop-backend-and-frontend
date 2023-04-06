@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {GenericCrudService} from '../../service/GenericCrudService';
-import {Category} from '../../model/category';
+import {Category} from '../../model/Category';
 import {backendUrl} from '../../constants/backendUrl';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../service/auth.service';
@@ -10,7 +10,7 @@ import {ToastService} from 'angular-toastify';
 import formUtils from '../../utils/formUtils';
 import {map, Observable, startWith} from 'rxjs';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {Attribute, AttributeNameValue} from '../../model/attribute';
+import {Attribute, AttributeNameValue} from '../../model/Attribute';
 
 @Component({
   selector: 'app-sell-product',

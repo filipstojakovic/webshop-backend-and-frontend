@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GenericMapper<REQUEST, ENTITY, RESPONSE> {
 
-  private final ModelMapper modelMapper;
+  protected final ModelMapper modelMapper;
 
   public ENTITY fromRequest(REQUEST request, Class<ENTITY> targetClass) {
     return modelMapper.map(request, targetClass);

@@ -33,6 +33,7 @@ export class AuthGuard implements CanActivate {
 
     // Check if user is authenticated
     if (token) {
+      //TODO: logout if not valid or unauthrorized.
       this.checkIsTokenValid();
 
       const isActive: boolean = tokenService.getFieldFromToken(tokenConstant.IS_ACTIVE);

@@ -5,11 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.etf.webshopbackend.model.entity.Attribute;
-import org.etf.webshopbackend.model.entity.Category;
 import org.etf.webshopbackend.model.entity.Product;
 import org.etf.webshopbackend.model.entity.ProductHasAttribute;
 import org.etf.webshopbackend.model.entity.User;
-import org.etf.webshopbackend.model.mapper.GenericMapper;
 import org.etf.webshopbackend.model.mapper.ProductMapper;
 import org.etf.webshopbackend.model.request.AttributeNameValueRequest;
 import org.etf.webshopbackend.model.request.ProductRequest;
@@ -18,7 +16,6 @@ import org.etf.webshopbackend.repository.AttributeRespository;
 import org.etf.webshopbackend.repository.CategoryRepository;
 import org.etf.webshopbackend.repository.ProductRepository;
 import org.etf.webshopbackend.repository.UserRepository;
-import org.etf.webshopbackend.security.service.TokenService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,8 +30,6 @@ import java.util.List;
 @Service
 public class ProductService {
 
-  private final TokenService tokenService;
-  private final GenericMapper<ProductRequest, Product, ProductResponse> genericProductMapper;
   private final ProductMapper productMapper;
   private final AttributeRespository attributeRespository;
   private final ProductRepository productRepository;
@@ -58,35 +53,21 @@ public class ProductService {
         .toList();
   }
 
-  public ProductResponse insert(ProductRequest productRequest) {
-    String imagePath = null;
-    try {
-      if (productRequest.getImage() != null) {
-        imagePath = fileService.saveBase64String(productRequest.getImage());
-      }
-    } catch (IOException ex) {
-      log.error("faild to upload product image");
-      ex.printStackTrace();
-    }
-    Product product = genericProductMapper.fromRequest(productRequest, Product.class);
-    Long userId = tokenService.getUserIdFromRequest();
+  public ProductResponse insert(ProductRequest productRequest, Long userId) {
     User sellerUser = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(User.class, userId));
-    Long categoryId = productRequest.getCategory().getId();
-    Category category = categoryRepository.findById(categoryId)
-        .orElseThrow(() -> new NotFoundException(Category.class, categoryId));
-    product.setCategory(category);
+    Product product = productMapper.fromRequest(productRequest);
     product.setSeller(sellerUser);
-    product.setImage(imagePath);
+
     try {
       product = productRepository.saveAndFlush(product);
       List<ProductHasAttribute> productHasAttributes = createProductAttributeList(product, productRequest.getCategory()
           .getAttributes());
-      product.getProductHasAttributes().addAll(productHasAttributes); // TODO: mozda get pa set?
+      product.getProductHasAttributes().addAll(productHasAttributes);
 
     } catch (Exception ex) {
       // delete image if failed to insert product
       try {
-        fileService.deleteFile(imagePath);
+        fileService.deleteFile(product.getImage());
       } catch (IOException e) {
         log.error("faild to delete product image");
         throw new RuntimeException(e);

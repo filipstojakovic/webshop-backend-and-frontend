@@ -4,10 +4,6 @@
   min-width: 250px;
   max-width: 250px;
 
-  height: 350px;
-  min-height: 350px;
-  max-height: 350px;
-
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   display: flex;
@@ -45,24 +41,9 @@
   color: #ff0303;
 }
 
-.product-description {
-  width: calc(250px - 16px);
-  flex:1;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
 .product-price {
   font-size: 1rem;
   font-weight: bold;
   text-align: end;
   padding: 5px 5px 5px 0;
-}
-
-.product-buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 }

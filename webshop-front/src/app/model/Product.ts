@@ -1,5 +1,5 @@
-import {Category} from './category';
-import {User} from './user';
+import {Category} from './Category';
+import {User} from './User';
 
 export class Product {
   id: number;
@@ -11,7 +11,6 @@ export class Product {
   image: string | null;
   seller: User;
   category: Category;
-  purchase: any | null; // replace 'any' with the actual type of the purchase object
 
   constructor(data: any) {
     this.id = data.id;
@@ -23,6 +22,5 @@ export class Product {
     this.image = data.image;
     this.seller = new User(data.seller);
     this.category = new Category(data.category);
-    this.purchase = data.purchase;
   }
 }
