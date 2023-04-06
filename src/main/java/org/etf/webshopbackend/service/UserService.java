@@ -7,7 +7,7 @@ import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.etf.webshopbackend.model.entity.Role;
 import org.etf.webshopbackend.model.entity.User;
 import org.etf.webshopbackend.model.enums.RoleEnum;
-import org.etf.webshopbackend.model.mapper.GenericMapper;
+import org.etf.webshopbackend.model.mapper.UserMapper;
 import org.etf.webshopbackend.model.request.UserRequest;
 import org.etf.webshopbackend.model.response.UserResponse;
 import org.etf.webshopbackend.repository.RoleRepository;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-  private final GenericMapper<UserRequest, User, UserResponse> userMapper;
+  private final UserMapper userMapper;
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
