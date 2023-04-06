@@ -40,7 +40,7 @@ export const routes: Routes = [
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   {
-    path: paths.PRODUCT_DETAILS +"/:id",
+    path: paths.PRODUCTS +"/:id",
     pathMatch: 'full',
     component: ProductDetailsComponent,
   },

@@ -20,19 +20,19 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("products")
+@RequestMapping("products/{id}/comments")
 public class CommentController {
 
   private final CommentService commentService;
 
-  @GetMapping("{id}/comments")
+  @GetMapping
   public ResponseEntity<List<CommentResponse>> insertProductComment(@PathVariable("id") Long productId
   ) {
     List<CommentResponse> commentResponses = commentService.findCommentsByProductId(productId);
     return ResponseEntity.ok(commentResponses);
   }
 
-  @PostMapping("{id}/comments")
+  @PostMapping
   public ResponseEntity<Comment> insertProductComment(@PathVariable("id") Long productId,
                                                       @RequestBody @Valid CommentRequest commentRequest,
                                                       @AuthenticationPrincipal JwtUserDetails user

@@ -70,7 +70,7 @@ export class ProductComponent implements OnInit {
   productCardClick(product: Product) {
     const productId = product ? product.id : null;
     console.log("product.component.ts > productCardClick(): " + JSON.stringify(productId, null, 2));
-    this.router.navigateByUrl(paths.PRODUCT_DETAILS + "/" + productId);
+    this.router.navigateByUrl(paths.PRODUCTS + "/" + productId);
   }
 
   onPaginatorChange($event: PageEvent) {

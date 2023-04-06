@@ -5,7 +5,6 @@ export const paths = {
   PIN: "pin",
   SELL_PRODUCT: "sell-product",
   // PROFILE: "profile",
-  PRODUCT_DETAILS: "product-details",
   CONTACT_SUPPORT: "contact-support",
   ERROR: "error",
   PRODUCTS: "products",
