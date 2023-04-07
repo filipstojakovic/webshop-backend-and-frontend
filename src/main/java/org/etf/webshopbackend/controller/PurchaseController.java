@@ -24,7 +24,9 @@ public class PurchaseController {
   //@AuthenticationPrincipal JwtUserDetails user
   @GetMapping
   public List<PurchaseResponse> findAllPurchasedProducts() {
-    List<Purchase> purchases = purchaseRepository.findAll();
+    List<Purchase> purchases = purchaseRepository.findByUserId(1L);
     return purchaseMapper.toResponses(purchases, PurchaseResponse.class);
   }
+
+
 }

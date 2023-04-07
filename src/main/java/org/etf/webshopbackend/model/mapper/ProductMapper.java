@@ -48,7 +48,6 @@ public class ProductMapper extends GenericMapper<ProductRequest, Product, Produc
 
     List<ProductAttributesResponse> productAttributesResponse = productAttributesMapper.toResponse(product.getProductHasAttributes());
     productResponse.setProductAttributesResponses(productAttributesResponse);
-//     setProductImage(product, productResponse); //TODO: check if needed
     return productResponse;
   }
 

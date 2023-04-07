@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.etf.webshopbackend.model.entity.PaymentMethod;
 
 @Getter
 @Setter
@@ -13,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PurchaseResponse {
 
-  private Long productId;
-  private Long userId;
-  private Long paymentMethodId;
+  private ProductResponse product;
+  private UserResponse user;
+  private PaymentMethod paymentMethod;
 }

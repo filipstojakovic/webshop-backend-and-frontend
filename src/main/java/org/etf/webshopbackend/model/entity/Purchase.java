@@ -22,19 +22,19 @@ public class Purchase {
 
   @Id
   @Column(name = "product_id")
-  private Long productId;
+  private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private User user;
 
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "payment_method_id")
   private PaymentMethod paymentMethod;
 
   @OneToOne(fetch = FetchType.EAGER)
   @MapsId
   @JoinColumn(name = "product_id")
-  private Product products;
+  private Product product;
 }
