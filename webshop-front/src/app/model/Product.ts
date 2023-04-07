@@ -8,7 +8,7 @@ export class Product {
   price: number;
   location: string;
   isNew: boolean;
-  image: string | null;
+  imagePath: string | null;
   seller: User;
   category: Category;
 
@@ -19,7 +19,7 @@ export class Product {
     this.price = data.price;
     this.location = data.location;
     this.isNew = data.isNew;
-    this.image = data.image;
+    this.imagePath = data.imagePath;
     this.seller = new User(data.seller);
     this.category = new Category(data.category);
   }

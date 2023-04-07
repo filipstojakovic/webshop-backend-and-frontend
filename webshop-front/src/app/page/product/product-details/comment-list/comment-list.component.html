@@ -1,5 +1,5 @@
 <ng-container *ngIf="isLoggedIn()">
-  <form [formGroup]="form" (ngSubmit)="postComment()">
+  <form class="post-comment-form" [formGroup]="form" (ngSubmit)="postComment()">
     <app-input style="width: 100%"
                label="Post comment"
                errorMessage="Price is required"
@@ -11,13 +11,24 @@
   </form>
 </ng-container>
 
-<mat-card class="comment-card" *ngFor="let comment of comments">
-  <mat-card-header>
-    <mat-card-subtitle>{{comment.userFirstName + ' ' + comment.userLastName }}</mat-card-subtitle>
-    <!--    <mat-card-title>Shiba Inu</mat-card-title>-->
-  </mat-card-header>
-  <mat-card-content>
-    <p>{{comment.message}}</p>
-    <mat-divider></mat-divider>
-  </mat-card-content>
-</mat-card>
+<ng-container *ngIf="comments; else loadingState">
+  <ng-container *ngIf="comments.length; else noDataState">
+    <mat-card class="comment-card" *ngFor="let comment of comments">
+      <mat-card-header>
+        <mat-card-subtitle>{{comment.userFirstName + ' ' + comment.userLastName }}</mat-card-subtitle>
+        <!--    <mat-card-title>Shiba Inu</mat-card-title>-->
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{comment.message}}</p>
+        <mat-divider></mat-divider>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-template #noDataState>
+    <h2>There are no comments to display</h2>
+  </ng-template>
+</ng-container>
+<ng-template #loadingState>
+  <h2>Loading...</h2>
+</ng-template>
+

@@ -11,10 +11,8 @@
   <div class="product-list">
     <ng-container *ngIf="products; else loadingState">
       <ng-container *ngIf="products.length; else noDataState">
-        <div *ngFor="let product of products">
-          <app-product-card [product]="product"
-                            (click)="productCardClick(product)"></app-product-card>
-        </div>
+        <app-product-card class="card-pointer" *ngFor="let product of products" [product]="product"
+                          (click)="productCardClick(product)"></app-product-card>
       </ng-container>
       <ng-template #noDataState>
         <h2>There is no products to display</h2>

@@ -2,7 +2,7 @@
   <div class="product-card-container">
     <div>
       <div class="product-image">
-        <ng-template [ngIf]="product.image && product.image.length>0"
+        <ng-template [ngIf]="product.imagePath && product.imagePath.length>0"
                      [ngIfElse]="altImage">
           <img mat-card-image
                class="product-card-img"

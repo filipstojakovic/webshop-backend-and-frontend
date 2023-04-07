@@ -1,5 +1,8 @@
 package org.etf.webshopbackend.model.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 public class CategoryDto {
 
+  @NotNull
   private Long id;
+  @NotNull
+  @NotBlank
   private String name;
+  @NotNull
+  @NotBlank
+  @Valid
   private List<AttributeNameValueRequest> attributes;
 }

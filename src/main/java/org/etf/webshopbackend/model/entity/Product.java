@@ -38,7 +38,7 @@ public class Product {
   private String location;
   @Column(nullable = false, columnDefinition = "TINYINT(1)")
   private Boolean isNew;
-  private String image;
+  private String imagePath;
   private LocalDateTime date = LocalDateTime.now();
 
   @ManyToOne(fetch = FetchType.EAGER)

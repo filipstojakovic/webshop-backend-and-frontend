@@ -120,7 +120,7 @@ public class FileService {
         .encodeToString(imageBytes);
   }
 
-  public String saveBase64String(String base64Image) throws IOException {
+  public String saveBase64ImageGetPath(String base64Image) throws IOException {
     String[] parts = base64Image.split(",");
     byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
     String fileName = UUID.randomUUID() + ".jpg";

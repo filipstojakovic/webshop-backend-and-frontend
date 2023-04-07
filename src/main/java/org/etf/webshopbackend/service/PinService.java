@@ -10,7 +10,6 @@ import org.etf.webshopbackend.model.entity.User;
 import org.etf.webshopbackend.repository.PinRepository;
 import org.etf.webshopbackend.repository.UserRepository;
 import org.etf.webshopbackend.security.model.JwtUserDetails;
-import org.etf.webshopbackend.security.service.TokenService;
 import org.etf.webshopbackend.security.token.TokenProvider;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,6 @@ public class PinService {
 
   private final UserRepository userRepository;
   private final PinRepository pinRepository;
-  private final TokenService tokenService;
   private final MailService mailService;
   private final TokenProvider tokenProvider;
 

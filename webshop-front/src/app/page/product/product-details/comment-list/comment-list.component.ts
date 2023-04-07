@@ -3,8 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {backendUrl} from '../../../../constants/backendUrl';
 import {CommentResponse} from '../../../../model/CommentResponse';
 import tokenService from '../../../../service/TokenService';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Category} from '../../../../model/Category';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastService} from 'angular-toastify';
 import formUtils from '../../../../utils/formUtils';
 

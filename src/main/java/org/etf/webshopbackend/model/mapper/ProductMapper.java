@@ -58,7 +58,7 @@ public class ProductMapper extends GenericMapper<ProductRequest, Product, Produc
     String imagePath = null;
     try {
       if (productRequest.getImage() != null) {
-        imagePath = fileService.saveBase64String(productRequest.getImage());
+        imagePath = fileService.saveBase64ImageGetPath(productRequest.getImage());
       }
     } catch (IOException ex) {
       log.error("faild to upload product image");
@@ -68,19 +68,9 @@ public class ProductMapper extends GenericMapper<ProductRequest, Product, Produc
     Category category = categoryRepository.findById(categoryId)
         .orElseThrow(() -> new NotFoundException(Category.class, categoryId));
     product.setCategory(category);
-    product.setImage(imagePath);
+    product.setImagePath(imagePath);
 
     return product;
   }
 
-  private void setProductImage(Product product, ProductResponse productResponse) {
-    String image = null;
-    try {
-      image = fileService.loadImageBase64FromPath(product.getImage());
-    } catch (IOException e) {
-      log.error("unable to load image from path: " + product.getImage());
-      product.setImage(null);
-    }
-    productResponse.setImage(image);
-  }
 }

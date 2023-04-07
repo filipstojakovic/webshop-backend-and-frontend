@@ -33,5 +33,5 @@ public class UserRequest {
   @NotBlank
   private String city;
 
-  private String avatarPath;
+  private String avatar;
 }

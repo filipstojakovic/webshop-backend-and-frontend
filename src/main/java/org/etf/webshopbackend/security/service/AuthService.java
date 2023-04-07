@@ -60,9 +60,9 @@ public class AuthService {
       }
     }
     try {
-      UserRequest user = mapper.map(registerRequest, UserRequest.class);
-      user.setAvatarPath(avatarPathString);
-      return userService.insert(user);
+      UserRequest userRequest = mapper.map(registerRequest, UserRequest.class);
+      userRequest.setAvatar(avatarPathString);
+      return userService.insert(userRequest);
 
     } catch (Exception ex) {
       if (avatarPathString != null) {

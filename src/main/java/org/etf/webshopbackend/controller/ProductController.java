@@ -9,6 +9,7 @@ import org.etf.webshopbackend.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -50,10 +52,12 @@ public class ProductController {
     return ResponseEntity.ok(productResponse);
   }
 
+  @Async
   @GetMapping("{id}/image")
-  public ResponseEntity<byte[]> getProductImage(@PathVariable("id") Long productId) {
+  public CompletableFuture<ResponseEntity<byte[]>> getProductImage(@PathVariable("id") Long productId) {
+    log.info("Current Thread Name: " + Thread.currentThread().getName());
     var image = productService.getProductImage(productId);
-    return ResponseEntity.ok(image);
+    return CompletableFuture.completedFuture(ResponseEntity.ok(image));
   }
 
 }

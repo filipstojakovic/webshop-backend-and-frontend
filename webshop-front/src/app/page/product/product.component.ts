@@ -22,7 +22,7 @@ export class ProductComponent implements OnInit {
 
   totalNumber: number = 0;
   private currentPageNumber: number = 0;
-  pageSize: number = 2; // TODO: go back to 10
+  pageSize: number = 5; // TODO: go back to 10
 
   products: Product[] | undefined | null;
 

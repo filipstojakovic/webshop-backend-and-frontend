@@ -25,7 +25,7 @@ public class UserResponse {
 
   private String city;
 
-  private String avatar;
+  private String avatarPath;
 
   private Boolean isDeleted;
 

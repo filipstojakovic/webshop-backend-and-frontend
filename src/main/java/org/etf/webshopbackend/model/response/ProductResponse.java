@@ -22,7 +22,7 @@ public class ProductResponse {
   private String location;
   private Boolean isNew;
   private UserResponse seller;
-  private String image;
+  private String imagePath;
 
   private ProductCategoryResponse productCategory;
   private List<ProductAttributesResponse> productAttributesResponses;

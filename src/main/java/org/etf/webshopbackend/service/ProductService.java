@@ -70,7 +70,7 @@ public class ProductService {
     } catch (Exception ex) {
       // delete image if failed to insert product
       try {
-        fileService.deleteFile(product.getImage());
+        fileService.deleteFile(product.getImagePath());
       } catch (IOException e) {
         log.error("faild to delete product image");
         throw new RuntimeException(e);
@@ -110,7 +110,7 @@ public class ProductService {
   public byte[] getProductImage(Long productId) {
     ProductResponse productResponse = findById(productId);
     try {
-      return fileService.loadImageBytesFromPath(productResponse.getImage());
+      return fileService.loadImageBytesFromPath(productResponse.getImagePath());
     } catch (IOException e) {
       log.error("Unable to load image");
       throw new BadRequestException("Unable to load image");
