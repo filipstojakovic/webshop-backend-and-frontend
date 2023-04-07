@@ -26,23 +26,21 @@ public class CommentService {
   private final CommentRepository commentRepository;
   private final GenericMapper<CommentRequest, Comment, CommentResponse> commentMapper;
 
-  public Comment insertProductComment(Long userId, Long productId, CommentRequest commentRequest) {
+  public CommentResponse insertProductComment(Long userId, Long productId, CommentRequest commentRequest) {
     Product product = productRepository.findById(productId)
         .orElseThrow(() -> new NotFoundException(Product.class, productId));
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new NotFoundException(User.class, userId));
-
     String commentMessage = commentRequest.getMessage();
 
     Comment comment = new Comment(user, product, commentMessage);
-
     comment = commentRepository.saveAndFlush(comment);
 
-    return comment;
+    return commentMapper.toResponse(comment, CommentResponse.class);
   }
 
   public List<CommentResponse> findCommentsByProductId(Long productId) {
-    List<Comment> comments = commentRepository.findByProductId(productId);
+    List<Comment> comments = commentRepository.findByProductIdOrderByDateDesc(productId);
     return commentMapper.toResponses(comments, CommentResponse.class);
   }
 }

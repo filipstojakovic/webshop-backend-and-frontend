@@ -50,4 +50,10 @@ public class ProductController {
     return ResponseEntity.ok(productResponse);
   }
 
+  @GetMapping("{id}/image")
+  public ResponseEntity<byte[]> getProductImage(@PathVariable("id") Long productId) {
+    var image = productService.getProductImage(productId);
+    return ResponseEntity.ok(image);
+  }
+
 }

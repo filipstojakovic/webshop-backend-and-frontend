@@ -3,6 +3,7 @@ package org.etf.webshopbackend.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.etf.webshopbackend.exceptions.BadRequestException;
 import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.etf.webshopbackend.model.entity.Attribute;
 import org.etf.webshopbackend.model.entity.Product;
@@ -13,11 +14,12 @@ import org.etf.webshopbackend.model.request.AttributeNameValueRequest;
 import org.etf.webshopbackend.model.request.ProductRequest;
 import org.etf.webshopbackend.model.response.ProductResponse;
 import org.etf.webshopbackend.repository.AttributeRespository;
-import org.etf.webshopbackend.repository.CategoryRepository;
 import org.etf.webshopbackend.repository.ProductRepository;
 import org.etf.webshopbackend.repository.UserRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -33,16 +35,17 @@ public class ProductService {
   private final ProductMapper productMapper;
   private final AttributeRespository attributeRespository;
   private final ProductRepository productRepository;
-  private final CategoryRepository categoryRepository;
   private final UserRepository userRepository;
   private final FileService fileService;
+  private final static String DEFAULT_SORT_COLUMN = "date";
 
   //       .param("page", "5")
 //         .param("size", "10")
 //         .param("sort", "id,desc")   // <-- no space after comma!
-//         .param("sort", "name,asc")) // <-- no
+//         .param("sort", "name,asc")) //
   public Page<ProductResponse> findAllPageable(Pageable page) {
-    return productRepository.findAll(page)
+    Pageable sortedPage = defaultSortPageIfNotExists(page);
+    return productRepository.findAll(sortedPage)
         .map(productMapper::toResponse);
   }
 
@@ -102,5 +105,22 @@ public class ProductService {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new NotFoundException(Product.class, id));
     return productMapper.toResponse(product);
+  }
+
+  public byte[] getProductImage(Long productId) {
+    ProductResponse productResponse = findById(productId);
+    try {
+      return fileService.loadImageBytesFromPath(productResponse.getImage());
+    } catch (IOException e) {
+      log.error("Unable to load image");
+      throw new BadRequestException("Unable to load image");
+    }
+  }
+
+  private Pageable defaultSortPageIfNotExists(Pageable page) {
+    return page.getSort().isSorted() ? page : PageRequest.of(
+        page.getPageNumber(),
+        page.getPageSize(),
+        Sort.by(DEFAULT_SORT_COLUMN).descending());
   }
 }

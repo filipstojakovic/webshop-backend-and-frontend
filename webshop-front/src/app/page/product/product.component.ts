@@ -54,6 +54,7 @@ export class ProductComponent implements OnInit {
             this.products = res.content;
           },
           error: (err) => {
+            this.products = [];
             this.toastService.error("Error showing products");
           },
         },

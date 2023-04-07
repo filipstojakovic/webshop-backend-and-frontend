@@ -6,7 +6,7 @@
                      [ngIfElse]="altImage">
           <img mat-card-image
                class="product-card-img"
-               src="{{product.image}}"
+               src="http://localhost:8080/products/{{product.id}}/image"
                alt="/assets/product-default-image.png">
         </ng-template>
         <ng-template #altImage>

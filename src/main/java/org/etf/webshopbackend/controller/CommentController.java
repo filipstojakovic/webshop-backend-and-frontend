@@ -2,7 +2,6 @@ package org.etf.webshopbackend.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.etf.webshopbackend.model.entity.Comment;
 import org.etf.webshopbackend.model.request.CommentRequest;
 import org.etf.webshopbackend.model.response.CommentResponse;
 import org.etf.webshopbackend.security.model.JwtUserDetails;
@@ -33,11 +32,11 @@ public class CommentController {
   }
 
   @PostMapping
-  public ResponseEntity<Comment> insertProductComment(@PathVariable("id") Long productId,
+  public ResponseEntity<CommentResponse> insertProductComment(@PathVariable("id") Long productId,
                                                       @RequestBody @Valid CommentRequest commentRequest,
                                                       @AuthenticationPrincipal JwtUserDetails user
   ) {
-    Comment comment = commentService.insertProductComment(user.getId(), productId, commentRequest);
-    return ResponseEntity.ok(comment);
+    CommentResponse commentResponse = commentService.insertProductComment(user.getId(), productId, commentRequest);
+    return ResponseEntity.ok(commentResponse);
   }
 }

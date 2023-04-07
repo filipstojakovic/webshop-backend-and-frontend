@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class Product {
   @Column(nullable = false, columnDefinition = "TINYINT(1)")
   private Boolean isNew;
   private String image;
+  private LocalDateTime date = LocalDateTime.now();
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "seller_id")

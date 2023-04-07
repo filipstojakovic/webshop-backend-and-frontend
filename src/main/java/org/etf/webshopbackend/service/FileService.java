@@ -3,8 +3,10 @@ package org.etf.webshopbackend.service;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.exceptions.BadRequestException;
+import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -99,12 +101,21 @@ public class FileService {
     return System.getProperty("user.dir");
   }
 
-  public String loadImageFromPath(String path) throws IOException {
-    if (path == null || path.isEmpty()) {
-      return null;
+  public byte[] loadImageBytesFromPath(String path) throws IOException {
+    if (!StringUtils.hasText(path)) {
+      throw new BadRequestException("No image path");
     }
+
     Path filePath = Paths.get(path);
-    byte[] imageBytes = Files.readAllBytes(filePath);
+    if (!filePath.toFile().exists()) {
+      throw new NotFoundException("Image not found");
+    }
+
+    return Files.readAllBytes(filePath);
+  }
+
+  public String loadImageBase64FromPath(String path) throws IOException {
+    byte[] imageBytes = loadImageBytesFromPath(path);
     return ENCODED_IMAGE_PREFIX + Base64.getEncoder()
         .encodeToString(imageBytes);
   }
@@ -113,7 +124,7 @@ public class FileService {
     String[] parts = base64Image.split(",");
     byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
     String fileName = UUID.randomUUID() + ".jpg";
-    Path filePath = Paths.get(getProductsDirPath().toString(),fileName);
+    Path filePath = Paths.get(getProductsDirPath().toString(), fileName);
     File file = filePath.toFile();
     try (FileOutputStream fos = new FileOutputStream(file)) {
       fos.write(imageBytes);

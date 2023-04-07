@@ -27,7 +27,6 @@ export class SellProductComponent implements OnInit {
   filteredOptions!: Observable<Category[]>;
   attributesValue: AttributeNameValue[] = [];
 
-
   categoryService!: GenericCrudService<Category>
 
   constructor(private fb: FormBuilder,
@@ -82,7 +81,7 @@ export class SellProductComponent implements OnInit {
 
     const request = this.form.value;
     request.category.attributes = attributesNameValue;
-    console.log("sell-product.component.ts > onSubmit(): "+ JSON.stringify(request, null, 2));
+    console.log("sell-product.component.ts > onSubmit(): " + JSON.stringify(request, null, 2));
 
     //MISSING ATTRIBUTES VALUE
     this.http.post(backendUrl.PRODUCTS, request).subscribe({
@@ -140,11 +139,6 @@ export class SellProductComponent implements OnInit {
 
   onImageRemove() {
     this.imageFile = null;
-  }
-
-  clearForm() {
-    this.form.reset();
-    formUtils.clearFormErrors(this.form);
   }
 
 }

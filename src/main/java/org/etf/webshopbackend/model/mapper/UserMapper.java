@@ -27,7 +27,7 @@ public class UserMapper extends GenericMapper<UserRequest, User, UserResponse> {
 
     String avatarImage = null;
     try {
-      avatarImage = fileService.loadImageFromPath(user.getAvatarPath());
+      avatarImage = fileService.loadImageBase64FromPath(user.getAvatarPath());
     } catch (IOException e) {
       log.error("unable to load avatarImage from path: " + user.getAvatarPath());
     }

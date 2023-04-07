@@ -48,7 +48,7 @@ public class ProductMapper extends GenericMapper<ProductRequest, Product, Produc
 
     List<ProductAttributesResponse> productAttributesResponse = productAttributesMapper.toResponse(product.getProductHasAttributes());
     productResponse.setProductAttributesResponses(productAttributesResponse);
-    setProductImage(product, productResponse);
+//     setProductImage(product, productResponse); //TODO: check if needed
     return productResponse;
   }
 
@@ -76,7 +76,7 @@ public class ProductMapper extends GenericMapper<ProductRequest, Product, Produc
   private void setProductImage(Product product, ProductResponse productResponse) {
     String image = null;
     try {
-      image = fileService.loadImageFromPath(product.getImage());
+      image = fileService.loadImageBase64FromPath(product.getImage());
     } catch (IOException e) {
       log.error("unable to load image from path: " + product.getImage());
       product.setImage(null);
