@@ -21,6 +21,8 @@ public class PurchaseController {
   private final PurchaseRepository purchaseRepository;
   private final GenericMapper<Purchase, Purchase, PurchaseResponse> purchaseMapper;
 
+  //TODO: only can get his own purchases
+
   //@AuthenticationPrincipal JwtUserDetails user
   @GetMapping
   public List<PurchaseResponse> findAllPurchasedProducts() {

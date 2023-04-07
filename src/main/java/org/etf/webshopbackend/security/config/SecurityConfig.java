@@ -86,6 +86,7 @@ public class SecurityConfig {
     categoryAuthorizationRule(http);
     procutAuthorizationRule(http);
     contactSupportAuthorizationRule(http);
+    purchaseAuthorizationRule(http);
     // TODO: authrorize other endpoints
   }
 
@@ -138,6 +139,15 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET, EndpointConstants.PRODUCTS + EndpointConstants.ALL_PATHS)
             .permitAll()
             .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS + EndpointConstants.ALL_PATHS)
+            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name()));
+  }
+
+  private void purchaseAuthorizationRule(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests(requests ->
+        requests
+            .requestMatchers(HttpMethod.GET, EndpointConstants.PURCHASES + EndpointConstants.ALL_PATHS)
+            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
+            .requestMatchers(HttpMethod.POST, EndpointConstants.PURCHASES + EndpointConstants.ALL_PATHS)
             .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name()));
   }
 
