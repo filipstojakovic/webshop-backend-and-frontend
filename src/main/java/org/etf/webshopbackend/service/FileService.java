@@ -114,11 +114,11 @@ public class FileService {
     return Files.readAllBytes(filePath);
   }
 
-  public String loadImageBase64FromPath(String path) throws IOException {
-    byte[] imageBytes = loadImageBytesFromPath(path);
-    return ENCODED_IMAGE_PREFIX + Base64.getEncoder()
-        .encodeToString(imageBytes);
-  }
+//   public String loadImageBase64FromPath(String path) throws IOException {
+//     byte[] imageBytes = loadImageBytesFromPath(path);
+//     return ENCODED_IMAGE_PREFIX + Base64.getEncoder()
+//         .encodeToString(imageBytes);
+//   }
 
   public String saveBase64ImageGetPath(String base64Image) throws IOException {
     String[] parts = base64Image.split(",");

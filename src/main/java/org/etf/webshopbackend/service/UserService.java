@@ -65,6 +65,7 @@ public class UserService {
       throw new BadRequestException("User password is null!");
     }
     User user = userMapper.fromRequest(userRequest, User.class);
+    user.setAvatarPath(userRequest.getAvatar());
     if (user.getRole() == null) {
       setDefaultUserRole(user);
     }

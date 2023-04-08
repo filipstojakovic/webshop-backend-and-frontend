@@ -65,13 +65,13 @@ public class UserController {
 
   @Async
   @GetMapping("{id}/image")
-  public CompletableFuture<String> downloadUserProfileImage(@PathVariable Long id) {
-
+  public CompletableFuture<ResponseEntity<byte[]>> downloadUserProfileImage(@PathVariable Long id) {
     try {
       UserResponse user = userService.findById(id);
-      CompletableFuture.completedFuture(fileService.loadImageBase64FromPath(user.getAvatarPath()));
+      var image = fileService.loadImageBytesFromPath(user.getAvatarPath());
+      return CompletableFuture.completedFuture(ResponseEntity.ok(image));
     } catch (Exception ex) {
-      log.error("Unable to download image");
+      log.error("Unable to load avatar image");
     }
     return null;
   }

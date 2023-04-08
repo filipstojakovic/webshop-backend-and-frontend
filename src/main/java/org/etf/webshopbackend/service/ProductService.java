@@ -113,6 +113,7 @@ public class ProductService {
       return fileService.loadImageBytesFromPath(productResponse.getImagePath());
     } catch (IOException e) {
       log.error("Unable to load image");
+      e.printStackTrace();
       throw new BadRequestException("Unable to load image");
     }
   }

@@ -56,7 +56,7 @@ public class AuthService {
             registerRequest.getUsername(),
             avatar);
       } catch (IOException | URISyntaxException ex) {
-        log.error("Unable to create image: " + avatar.getName());
+        log.error("Unable to create avatar image: " + avatar.getName());
       }
     }
     try {

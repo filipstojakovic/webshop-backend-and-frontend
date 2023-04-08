@@ -21,7 +21,7 @@ public class PurchaseController {
   private final PurchaseRepository purchaseRepository;
   private final GenericMapper<Purchase, Purchase, PurchaseResponse> purchaseMapper;
 
-  //TODO: only can get his own purchases
+  // TODO: only can get his own purchases
 
   //@AuthenticationPrincipal JwtUserDetails user
   @GetMapping
@@ -29,6 +29,5 @@ public class PurchaseController {
     List<Purchase> purchases = purchaseRepository.findByUserId(1L);
     return purchaseMapper.toResponses(purchases, PurchaseResponse.class);
   }
-
 
 }
