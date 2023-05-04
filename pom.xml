@@ -89,6 +89,19 @@
             <version>2.11.0</version>
         </dependency>
 
+        <!-- generate entity column names constants -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>6.2.1.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--        Fix for jpamodelgen-->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
 
         <!-- runtime dependency-->
         <dependency>

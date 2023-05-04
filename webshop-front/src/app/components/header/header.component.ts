@@ -10,23 +10,13 @@ import {paths} from '../../constants/paths';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  image: any;
+  id: number | null = null;
 
   constructor(private http: HttpClient, private auth: AuthService) {
   }
 
   ngOnInit(): void {
-    const id = tokenService.getIdFromToken();
-    if (id)
-      this.http.get(`users/${id}/image`, { responseType: 'text' }).subscribe({
-            next: (res) => {
-              this.image = res;
-            },
-            error: (err) => {
-              console.log("header.component.ts > error(): "+ JSON.stringify(err, null, 2));
-            },
-          },
-      )
+    this.id = tokenService.getIdFromToken() ?? null;
   }
 
   isLoggedIn(): boolean {

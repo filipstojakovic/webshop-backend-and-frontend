@@ -77,16 +77,17 @@
     >
     </app-input>
 
-    <ngx-dropzone class="main-grid" style="min-height: 200px"
+    <ngx-dropzone style="min-height: 200px; width: 100%"
                   accept="image/jpeg,image/jpg,image/png"
-                  [multiple]="false" [maxFileSize]="5000000"
+                  [multiple]="true" [maxFileSize]=5000000
                   (change)="onImageSelect($event)">
       <ngx-dropzone-label>Drop & Drop!</ngx-dropzone-label>
-      <ng-container *ngIf="imageFile" style="flex-direction: row">
-        <ngx-dropzone-image-preview class="center-image"
-                                    ngProjectAs="ngx-dropzone-preview"
-                                    [file]="imageFile"
-                                    (removed)="onImageRemove()">
+      <ng-container *ngIf="files" style="flex-direction: row">
+        <ngx-dropzone-image-preview
+            *ngFor="let file of files"
+            [file]="file"
+            ngProjectAs="ngx-dropzone-preview"
+            [removable]="true" (removed)="onImageRemove(file)">
         </ngx-dropzone-image-preview>
       </ng-container>
     </ngx-dropzone>

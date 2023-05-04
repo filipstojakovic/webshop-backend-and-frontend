@@ -26,6 +26,7 @@ import {ContactSupportComponent} from './page/contact-support/contact-support.co
 import {SellProductComponent} from './page/sell-product/sell-product.component';
 import {ProductDetailsComponent} from './page/product/product-details/product-details.component';
 import { CommentListComponent } from './page/product/product-details/comment-list/comment-list.component';
+import { PurchaseHistoryComponent } from './page/purchase-history/purchase-history.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { CommentListComponent } from './page/product/product-details/comment-lis
     SellProductComponent,
     ProductDetailsComponent,
     CommentListComponent,
+    PurchaseHistoryComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -13,7 +13,7 @@ import java.io.Serializable;
 @EqualsAndHashCode // Equals and HashCode methods are MANDATORY
 @Embeddable
 public class ProductAttributeId implements Serializable {
-  @JsonIgnore // TODO: we can comment this, depends on what we want as response
+  @JsonIgnore // we can comment this, depends on what we want as response
   private Long productId;
 
   private Long attributeId;

@@ -9,10 +9,14 @@
           routerLinkActive="selected-button">Sell product
   </button>
 
+  <button mat-raised-button [routerLink]="[paths.PURCHASE_HISTORY]"
+          routerLinkActive="selected-button">Purchase history
+  </button>
+
 
   <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loading">
     <div>Logged in</div>
-    <app-avatar-button style="margin: 0" [image]="image"></app-avatar-button>
+    <app-avatar-button style="margin: 0" [id]="id"></app-avatar-button>
     <app-button (click)="logoutClick()">Logout</app-button>
     <!--    TODO: logout button-->
   </ng-template>

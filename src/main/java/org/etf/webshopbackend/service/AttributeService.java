@@ -22,6 +22,7 @@ public class AttributeService {
   public List<Attribute> insertCategoryAttributes(Long categoryId, List<Attribute> attributesRequest) {
     Category category = categoryRepository.findById(categoryId)
         .orElseThrow(() -> new NotFoundException(Category.class, categoryId));
+
     return insertCategoryAttributes(category, attributesRequest);
   }
 

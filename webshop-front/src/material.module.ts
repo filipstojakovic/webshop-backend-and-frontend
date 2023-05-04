@@ -60,7 +60,6 @@ const materialModules = [
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule,
   MatProgressSpinnerModule,
   MatPaginatorModule,
   MatRippleModule,

@@ -8,18 +8,22 @@ import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.etf.webshopbackend.model.entity.Attribute;
 import org.etf.webshopbackend.model.entity.Product;
 import org.etf.webshopbackend.model.entity.ProductHasAttribute;
+import org.etf.webshopbackend.model.entity.ProductImage;
 import org.etf.webshopbackend.model.entity.User;
+import org.etf.webshopbackend.model.entity.specification.ProductSpecifications;
 import org.etf.webshopbackend.model.mapper.ProductMapper;
 import org.etf.webshopbackend.model.request.AttributeNameValueRequest;
 import org.etf.webshopbackend.model.request.ProductRequest;
 import org.etf.webshopbackend.model.response.ProductResponse;
 import org.etf.webshopbackend.repository.AttributeRespository;
+import org.etf.webshopbackend.repository.ProductImageRepository;
 import org.etf.webshopbackend.repository.ProductRepository;
 import org.etf.webshopbackend.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -37,6 +41,7 @@ public class ProductService {
   private final ProductRepository productRepository;
   private final UserRepository userRepository;
   private final FileService fileService;
+  private final ProductImageRepository productImageRepository;
   private final static String DEFAULT_SORT_COLUMN = "date";
 
   //       .param("page", "5")
@@ -45,10 +50,12 @@ public class ProductService {
 //         .param("sort", "name,asc")) //
   public Page<ProductResponse> findAllPageable(Pageable page) {
     Pageable sortedPage = defaultSortPageIfNotExists(page);
-    return productRepository.findAll(sortedPage)
+    final Specification<Product> productNotPurchased = ProductSpecifications.productHasNameWith(null);
+    return productRepository.findAll(productNotPurchased, sortedPage)
         .map(productMapper::toResponse);
   }
 
+  // TODO: this is for testing purposes
   public List<ProductResponse> findAll() {
     return productRepository.findAll()
         .stream()
@@ -58,7 +65,7 @@ public class ProductService {
 
   public ProductResponse insert(ProductRequest productRequest, Long userId) {
     User sellerUser = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(User.class, userId));
-    Product product = productMapper.fromRequest(productRequest);
+    Product product = productMapper.fromRequest(productRequest); // TODO: extract save images from this method
     product.setSeller(sellerUser);
 
     try {
@@ -68,14 +75,12 @@ public class ProductService {
       product.getProductHasAttributes().addAll(productHasAttributes);
 
     } catch (Exception ex) {
-      // delete image if failed to insert product
-      try {
-        fileService.deleteFile(product.getImagePath());
-      } catch (IOException e) {
-        log.error("faild to delete product image");
-        throw new RuntimeException(e);
-      }
-      ex.printStackTrace();
+      product.getProductImages().forEach(x -> {
+        try {
+          fileService.deleteFile(x.getImagePath());
+        } catch (IOException e) {
+        }
+      });
       throw ex;
     }
 
@@ -107,12 +112,15 @@ public class ProductService {
     return productMapper.toResponse(product);
   }
 
-  public byte[] getProductImage(Long productId) {
-    ProductResponse productResponse = findById(productId);
+  public byte[] getProductImage(Long productImageId) {
+
+    ProductImage productImage = productImageRepository.findById(productImageId)
+        .orElseThrow(() -> new NotFoundException(ProductImage.class, productImageId));
+
     try {
-      return fileService.loadImageBytesFromPath(productResponse.getImagePath());
+      return fileService.loadImageBytesFromPath(productImage.getImagePath());
     } catch (IOException e) {
-      log.error("Unable to load image");
+      log.error("Unable to load product image");
       e.printStackTrace();
       throw new BadRequestException("Unable to load image");
     }

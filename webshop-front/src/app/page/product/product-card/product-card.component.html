@@ -2,12 +2,14 @@
   <div class="product-card-container">
     <div>
       <div class="product-image">
-        <ng-template [ngIf]="product.imagePath && product.imagePath.length>0"
-                     [ngIfElse]="altImage">
+        <ng-template
+            [ngIf]="product.productImages && product.productImages.length>0"
+            [ngIfElse]="altImage">
           <img mat-card-image
                class="product-card-img"
-               src="http://localhost:8080/products/{{product.id}}/image"
-               alt="/assets/product-default-image.png">
+               src="http://localhost:8080/products/{{product.productImages[0].id}}/image"
+               alt="/assets/product-default-image.png"
+          />
         </ng-template>
         <ng-template #altImage>
           <img mat-card-image
@@ -18,7 +20,7 @@
       </div>
       <h2 class="product-name">{{product.name}}</h2>
       <h4>
-        Seller: {{product.seller.firstName + ' ' + product.seller.lastName}}</h4>
+        Seller: {{product.seller!.firstName + ' ' + product.seller!.lastName}}</h4>
     </div>
     <div class="product-price">${{product.price}}</div>
   </div>

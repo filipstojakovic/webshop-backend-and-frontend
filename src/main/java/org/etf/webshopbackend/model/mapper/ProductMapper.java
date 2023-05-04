@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.etf.webshopbackend.model.entity.Category;
 import org.etf.webshopbackend.model.entity.Product;
+import org.etf.webshopbackend.model.entity.ProductImage;
 import org.etf.webshopbackend.model.request.ProductRequest;
 import org.etf.webshopbackend.model.response.ProductAttributesResponse;
 import org.etf.webshopbackend.model.response.ProductCategoryResponse;
@@ -15,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -54,22 +56,28 @@ public class ProductMapper extends GenericMapper<ProductRequest, Product, Produc
   public Product fromRequest(ProductRequest productRequest) {
     Product product = super.fromRequest(productRequest, Product.class);
 
-    String imagePath = null;
-    try {
-      if (productRequest.getImage() != null) {
-        imagePath = fileService.saveBase64ImageGetPath(productRequest.getImage());
-      }
-    } catch (IOException ex) {
-      log.error("faild to upload product image");
-      ex.printStackTrace();
-    }
+    List<ProductImage> productImages = saveProductImages(productRequest);
+    product.setProductImages(productImages);
+
     Long categoryId = productRequest.getCategory().getId();
     Category category = categoryRepository.findById(categoryId)
         .orElseThrow(() -> new NotFoundException(Category.class, categoryId));
     product.setCategory(category);
-    product.setImagePath(imagePath);
 
     return product;
+  }
+
+  private List<ProductImage> saveProductImages(ProductRequest productRequest) {
+    List<ProductImage> productImages = new ArrayList<>();
+    for (String image : productRequest.getImages()) {
+      try {
+        String imagePath = fileService.saveBase64ImageGetPath(image);
+        productImages.add(new ProductImage(null, imagePath));
+      } catch (IOException e) {
+        log.error("Error saving product image");
+      }
+    }
+    return productImages;
   }
 
 }

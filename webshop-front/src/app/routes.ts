@@ -8,6 +8,7 @@ import {ContactSupportComponent} from './page/contact-support/contact-support.co
 import {SellProductComponent} from './page/sell-product/sell-product.component';
 import {ProductDetailsComponent} from './page/product/product-details/product-details.component';
 import {ProductComponent} from './page/product/product.component';
+import {PurchaseHistoryComponent} from './page/purchase-history/purchase-history.component';
 
 export const routes: Routes = [
   {
@@ -40,7 +41,7 @@ export const routes: Routes = [
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   {
-    path: paths.PRODUCTS +"/:id",
+    path: paths.PRODUCTS + "/:id",
     pathMatch: 'full',
     component: ProductDetailsComponent,
   },
@@ -48,6 +49,13 @@ export const routes: Routes = [
     path: paths.SELL_PRODUCT,
     pathMatch: 'full',
     component: SellProductComponent,
+    // canActivate: [AuthGuard],
+    data: { role: [RoleEnum.admin, RoleEnum.user] },
+  },
+  {
+    path: paths.PURCHASE_HISTORY,
+    pathMatch: 'full',
+    component: PurchaseHistoryComponent,
     // canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },

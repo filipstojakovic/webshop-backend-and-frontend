@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,7 +33,9 @@ public class Purchase {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "payment_method_id")
-  private PaymentMethod paymentMethod;
+  private PaymentMethod paymentMethod; //TODO: need card number value/attribute
+
+  private LocalDateTime date;
 
   @OneToOne(fetch = FetchType.EAGER)
   @MapsId

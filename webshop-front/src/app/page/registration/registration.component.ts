@@ -33,6 +33,8 @@ export class RegistrationComponent implements OnInit {
     tokenService.removeTokenFromStorage();
     const defaultFieldValue = "a"
     this.form = this.fb.group({
+      //TODO: use this: username: [{ value: this.userRequest.username, disabled: this.isEditMode }, Validators.required],
+
       username: [defaultFieldValue, Validators.required],
       password: [defaultFieldValue, Validators.required],
       confirm_password: [defaultFieldValue, Validators.required],
@@ -79,6 +81,7 @@ export class RegistrationComponent implements OnInit {
   onSelect(event: any) {
     this.imageFile = event.addedFiles[0];
     const reader = new FileReader();
+    //TODO: use fileToBase64 from utils
     reader.readAsDataURL(this.imageFile!)
     reader.onload = (event: any) => {
       const imageText = event.target.result;
@@ -93,4 +96,5 @@ export class RegistrationComponent implements OnInit {
   navigateLogin(replace = false) {
     this.router.navigateByUrl(paths.LOGIN, { replaceUrl: replace });
   }
+
 }

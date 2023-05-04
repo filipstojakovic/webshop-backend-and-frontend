@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.etf.webshopbackend.model.entity.PaymentMethod;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -15,6 +17,7 @@ import org.etf.webshopbackend.model.entity.PaymentMethod;
 public class PurchaseResponse {
 
   private ProductResponse product;
-  private UserResponse user;
+//   private UserResponse user;
   private PaymentMethod paymentMethod;
+  private LocalDateTime date;
 }

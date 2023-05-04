@@ -1,26 +1,16 @@
 import {Category} from './Category';
 import {User} from './User';
+import {ProductImage} from './ProductImage';
 
 export class Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  location: string;
-  isNew: boolean;
-  imagePath: string | null;
-  seller: User;
-  category: Category;
+  id?: number;
+  name: string = "";
+  description: string = "";
+  price: number = 0;
+  location: string = "";
+  isNew: boolean = true;
+  productImages: ProductImage[] = [];
+  seller: User | null = null;
+  category: Category | null = null;
 
-  constructor(data: any) {
-    this.id = data.id;
-    this.name = data.name;
-    this.description = data.description;
-    this.price = data.price;
-    this.location = data.location;
-    this.isNew = data.isNew;
-    this.imagePath = data.imagePath;
-    this.seller = new User(data.seller);
-    this.category = new Category(data.category);
-  }
 }

@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.etf.webshopbackend.model.dto.CategoryDto;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,5 +37,5 @@ public class ProductRequest {
   @Valid
   private CategoryDto category;
 
-  private String image;
+  private List<String> images;
 }

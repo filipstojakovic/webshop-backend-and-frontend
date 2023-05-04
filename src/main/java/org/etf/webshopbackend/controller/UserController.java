@@ -3,13 +3,17 @@ package org.etf.webshopbackend.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.etf.webshopbackend.exceptions.UnAuthorizedException;
+import org.etf.webshopbackend.model.enums.RoleEnum;
 import org.etf.webshopbackend.model.request.UserRequest;
 import org.etf.webshopbackend.model.response.UserResponse;
+import org.etf.webshopbackend.security.model.JwtUserDetails;
 import org.etf.webshopbackend.service.FileService;
 import org.etf.webshopbackend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,11 +56,18 @@ public class UserController {
   // TODO: user can only update his own profile (cant update username)
 
   @PutMapping("{id}")
-  public ResponseEntity<UserResponse> update(@PathVariable Long id, @Valid @RequestBody UserRequest userRequest) {
+  public ResponseEntity<UserResponse> update(@PathVariable Long id,
+                                             @Valid @RequestBody UserRequest userRequest,
+                                             @AuthenticationPrincipal JwtUserDetails jwtUser
+  ) {
+    if (!id.equals(jwtUser.getId()) && !RoleEnum.admin.name().equals(jwtUser.getRole())) {
+      throw new UnAuthorizedException();
+    }
     UserResponse user = userService.update(id, userRequest);
     return ResponseEntity.ok(user);
   }
 
+  //TODO: not needed
   @DeleteMapping("{id}")
   public ResponseEntity<UserResponse> delete(@PathVariable Long id) {
     UserResponse user = userService.delete(id);

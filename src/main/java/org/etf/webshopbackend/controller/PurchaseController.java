@@ -6,6 +6,8 @@ import org.etf.webshopbackend.model.entity.Purchase;
 import org.etf.webshopbackend.model.mapper.GenericMapper;
 import org.etf.webshopbackend.model.response.PurchaseResponse;
 import org.etf.webshopbackend.repository.PurchaseRepository;
+import org.etf.webshopbackend.security.model.JwtUserDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,12 +23,9 @@ public class PurchaseController {
   private final PurchaseRepository purchaseRepository;
   private final GenericMapper<Purchase, Purchase, PurchaseResponse> purchaseMapper;
 
-  // TODO: only can get his own purchases
-
-  //@AuthenticationPrincipal JwtUserDetails user
   @GetMapping
-  public List<PurchaseResponse> findAllPurchasedProducts() {
-    List<Purchase> purchases = purchaseRepository.findByUserId(1L);
+  public List<PurchaseResponse> findUserPurchaseHistory(@AuthenticationPrincipal JwtUserDetails user) {
+    List<Purchase> purchases = purchaseRepository.findByUserId(user.getId());
     return purchaseMapper.toResponses(purchases, PurchaseResponse.class);
   }
 

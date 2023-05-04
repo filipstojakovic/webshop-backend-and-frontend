@@ -1,10 +1,21 @@
-<button *ngIf="!image" mat-icon-button>
+<button *ngIf="!id" mat-icon-button>
   <mat-icon>person</mat-icon>
 </button>
-<img *ngIf="image" class="avatar-image"
-     src="{{image}}"
-     (click)="imageClick()"
-     alt="Avatar">
+
+<img *ngIf="id" class="avatar-image"
+     src="http://localhost:8080/users/{{id}}/image"
+     [cdkMenuTriggerFor]="menu"
+     alt="Avatar"
+>
+
+<ng-template #menu>
+  <div class="example-menu" cdkMenu>
+    <button class="example-menu-item" cdkMenuItem>Refresh</button>
+    <button class="example-menu-item" cdkMenuItem>Settings</button>
+    <button class="example-menu-item" cdkMenuItem>Help</button>
+    <button class="example-menu-item" cdkMenuItem>Sign out</button>
+  </div>
+</ng-template>
 
 <!--TODO probaj sa ovim:-->
 <!--<div mat-card-avatar class="example-header-image"></div>-->
