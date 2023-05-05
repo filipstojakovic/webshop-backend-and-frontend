@@ -16,4 +16,10 @@ public class ProductSpecifications {
       return criteriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
     };
   }
+
+  public static Specification<Product> notPurchased() {
+    return (root, query, criteriaBuilder) -> {
+      return criteriaBuilder.isFalse(root.get(Product_.IS_PURCHASED));
+    };
+  }
 }

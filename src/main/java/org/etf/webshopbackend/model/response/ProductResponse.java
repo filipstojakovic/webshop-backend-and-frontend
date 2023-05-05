@@ -23,6 +23,6 @@ public class ProductResponse {
   private Boolean isNew;
   private UserResponse seller;
   private List<ProductImageResponse> productImages;
-  private ProductCategoryResponse productCategory;
-  private List<ProductAttributesResponse> productAttributesResponses;
+  private ProductCategoryResponse category;
+  private List<ProductAttributesResponse> productAttributes;
 }

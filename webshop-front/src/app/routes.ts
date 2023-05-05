@@ -9,6 +9,7 @@ import {SellProductComponent} from './page/sell-product/sell-product.component';
 import {ProductDetailsComponent} from './page/product/product-details/product-details.component';
 import {ProductComponent} from './page/product/product.component';
 import {PurchaseHistoryComponent} from './page/purchase-history/purchase-history.component';
+import {AuthGuard} from './service/auth-guard';
 
 export const routes: Routes = [
   {
@@ -37,7 +38,7 @@ export const routes: Routes = [
     path: paths.PRODUCTS,
     pathMatch: 'full',
     component: ProductComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   {

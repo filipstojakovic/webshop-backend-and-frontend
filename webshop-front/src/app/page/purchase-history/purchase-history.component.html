@@ -1,1 +1,15 @@
-<p>purchase-history works!</p>
+<div class="product-list" style="padding: 10px">
+  <ng-container *ngIf="purcases; else loadingState">
+    <ng-container *ngIf="purcases.length; else noDataState">
+      <app-product-card class="card-pointer" *ngFor="let purchase of purcases"
+                        [product]="purchase.product"
+                        (click)="productCardClick(purchase.product)"></app-product-card>
+    </ng-container>
+    <ng-template #noDataState>
+      <h2>There are no purchased products</h2>
+    </ng-template>
+  </ng-container>
+  <ng-template #loadingState>
+    <h2>Loading...</h2>
+  </ng-template>
+</div>

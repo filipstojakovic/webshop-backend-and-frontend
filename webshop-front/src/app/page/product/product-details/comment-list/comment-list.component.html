@@ -1,8 +1,8 @@
-<ng-container *ngIf="isLoggedIn()">
-  <form class="post-comment-form" [formGroup]="form" (ngSubmit)="postComment()">
+<ng-container *ngIf="isLoggedIn()" style="width: 100%">
+  <form class="post-comment-form" [formGroup]="form" (ngSubmit)="postComment()" style="width: 100%">
     <app-input style="width: 100%"
                label="Post comment"
-               errorMessage="Price is required"
+               errorMessage="Message is required"
                [required]="true"
                [control]="$any(form.get('message'))"
     >

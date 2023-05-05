@@ -15,4 +15,5 @@ public class SecurityConstants {
 
   public static final String IS_ACTIVE = "isActive";
 
+    public static final String CLIENT_SECRET_JSON = "/client_secret.json";
 }

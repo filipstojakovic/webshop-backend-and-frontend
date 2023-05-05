@@ -1,16 +1,6 @@
 package org.etf.webshopbackend.model.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +27,8 @@ public class Product {
   private String location;
   @Column(nullable = false, columnDefinition = "TINYINT(1)")
   private Boolean isNew;
+  @Column(nullable = false, columnDefinition = "TINYINT(1)")
+  private Boolean isPurchased = false;
   private LocalDateTime date = LocalDateTime.now();
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -53,9 +45,5 @@ public class Product {
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
   private List<ProductHasAttribute> productHasAttributes = new ArrayList<>();
-
-  @OneToOne(mappedBy = "product", fetch = FetchType.LAZY)
-  // TODO: maybe not nessery, try product repository query where purchase_id is null
-  private Purchase purchase;
 
 }

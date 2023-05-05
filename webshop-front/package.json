@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
     "angular-toastify": "^1.0.4",
+    "carousel-angular": "^1.5.3",
     "jwt-decode": "^3.1.2",
     "ngx-dropzone": "^3.1.0",
     "postcss-loader": "^7.1.0",

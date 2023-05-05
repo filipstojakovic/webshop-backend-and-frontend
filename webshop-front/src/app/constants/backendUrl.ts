@@ -4,7 +4,9 @@ export const backendUrl = {
   WHOAMI: "user/me",
   REGISTER: 'register',
   PIN: 'pins',
-  PRODUCTS:'products',
+  PRODUCTS: 'products',
   CATEGORIES: 'categories',
+  PURCHASES: 'purchases',
+
 
 } as const;

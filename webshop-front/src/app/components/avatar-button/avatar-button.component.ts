@@ -9,9 +9,14 @@ import {User} from '../../model/User';
 export class AvatarButtonComponent {
   @Input() id: number | null = null;
   @Output() click = new EventEmitter();
+  showFallbackImage = false;
 
   imageClick() {
     console.log("avatar-button.component.ts > imageClick(): " + "image clicked");
     this.click.emit();
+  }
+
+  onImageError() {
+    this.showFallbackImage = true;
   }
 }

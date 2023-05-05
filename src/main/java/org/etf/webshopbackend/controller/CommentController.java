@@ -25,7 +25,7 @@ public class CommentController {
   private final CommentService commentService;
 
   @GetMapping
-  public ResponseEntity<List<CommentResponse>> insertProductComment(@PathVariable("id") Long productId
+  public ResponseEntity<List<CommentResponse>> findAllProductComments(@PathVariable("id") Long productId
   ) {
     List<CommentResponse> commentResponses = commentService.findCommentsByProductId(productId);
     return ResponseEntity.ok(commentResponses);
@@ -33,8 +33,8 @@ public class CommentController {
 
   @PostMapping
   public ResponseEntity<CommentResponse> insertProductComment(@PathVariable("id") Long productId,
-                                                      @RequestBody @Valid CommentRequest commentRequest,
-                                                      @AuthenticationPrincipal JwtUserDetails user
+                                                              @RequestBody @Valid CommentRequest commentRequest,
+                                                              @AuthenticationPrincipal JwtUserDetails user
   ) {
     CommentResponse commentResponse = commentService.insertProductComment(user.getId(), productId, commentRequest);
     return ResponseEntity.ok(commentResponse);

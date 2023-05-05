@@ -43,13 +43,13 @@ public class ProductMapper extends GenericMapper<ProductRequest, Product, Produc
   public ProductResponse toResponse(Product product) {
     ProductResponse productResponse = super.toResponse(product, ProductResponse.class);
     Category category = product.getCategory();
-    productResponse.setProductCategory(new ProductCategoryResponse(category.getId(), category.getName()));
+    productResponse.setCategory(new ProductCategoryResponse(category.getId(), category.getName()));
 
     UserResponse sellerResponse = userMapper.toResponse(product.getSeller(), UserResponse.class);
     productResponse.setSeller(sellerResponse);
 
     List<ProductAttributesResponse> productAttributesResponse = productAttributesMapper.toResponse(product.getProductHasAttributes());
-    productResponse.setProductAttributesResponses(productAttributesResponse);
+    productResponse.setProductAttributes(productAttributesResponse);
     return productResponse;
   }
 

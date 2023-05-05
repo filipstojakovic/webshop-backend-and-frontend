@@ -27,6 +27,7 @@ import {SellProductComponent} from './page/sell-product/sell-product.component';
 import {ProductDetailsComponent} from './page/product/product-details/product-details.component';
 import { CommentListComponent } from './page/product/product-details/comment-list/comment-list.component';
 import { PurchaseHistoryComponent } from './page/purchase-history/purchase-history.component';
+import {IvyCarouselModule} from 'carousel-angular';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { PurchaseHistoryComponent } from './page/purchase-history/purchase-histo
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
+    IvyCarouselModule,
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,

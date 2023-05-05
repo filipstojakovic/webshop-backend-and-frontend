@@ -18,8 +18,11 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
 
-    //TODO: remove me
-    return true;
+
+    return true; //TODO: remove me ////////////////////////
+
+
+
     const routeRoles: RoleEnum[] = route.data['role'];
     const token = tokenService.getTokenFromStorage();
 

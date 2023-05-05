@@ -14,14 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -67,7 +60,7 @@ public class UserController {
     return ResponseEntity.ok(user);
   }
 
-  //TODO: not needed
+  // TODO: not needed
   @DeleteMapping("{id}")
   public ResponseEntity<UserResponse> delete(@PathVariable Long id) {
     UserResponse user = userService.delete(id);
@@ -79,11 +72,13 @@ public class UserController {
   public CompletableFuture<ResponseEntity<byte[]>> downloadUserProfileImage(@PathVariable Long id) {
     try {
       UserResponse user = userService.findById(id);
-      var image = fileService.loadImageBytesFromPath(user.getAvatarPath());
-      return CompletableFuture.completedFuture(ResponseEntity.ok(image));
+      if (user.getAvatarPath() != null) {
+        var image = fileService.loadImageBytesFromPath(user.getAvatarPath());
+        return CompletableFuture.completedFuture(ResponseEntity.ok(image));
+      }
     } catch (Exception ex) {
       log.error("Unable to load avatar image");
     }
-    return null;
+    return CompletableFuture.completedFuture(ResponseEntity.noContent().build());
   }
 }

@@ -2,11 +2,14 @@
   <mat-icon>person</mat-icon>
 </button>
 
-<img *ngIf="id" class="avatar-image"
+<img *ngIf="id && !showFallbackImage" class="avatar-image"
      src="http://localhost:8080/users/{{id}}/image"
      [cdkMenuTriggerFor]="menu"
-     alt="Avatar"
->
+     (error)="onImageError()" >
+
+<button *ngIf="id && showFallbackImage" mat-icon-button>
+  <mat-icon>person</mat-icon>
+</button>
 
 <ng-template #menu>
   <div class="example-menu" cdkMenu>

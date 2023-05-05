@@ -5,11 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.exceptions.BadRequestException;
 import org.etf.webshopbackend.exceptions.NotFoundException;
-import org.etf.webshopbackend.model.entity.Attribute;
-import org.etf.webshopbackend.model.entity.Product;
-import org.etf.webshopbackend.model.entity.ProductHasAttribute;
-import org.etf.webshopbackend.model.entity.ProductImage;
-import org.etf.webshopbackend.model.entity.User;
+import org.etf.webshopbackend.model.entity.*;
 import org.etf.webshopbackend.model.entity.specification.ProductSpecifications;
 import org.etf.webshopbackend.model.mapper.ProductMapper;
 import org.etf.webshopbackend.model.request.AttributeNameValueRequest;
@@ -51,7 +47,7 @@ public class ProductService {
   public Page<ProductResponse> findAllPageable(Pageable page) {
     Pageable sortedPage = defaultSortPageIfNotExists(page);
     final Specification<Product> productNotPurchased = ProductSpecifications.productHasNameWith(null);
-    return productRepository.findAll(productNotPurchased, sortedPage)
+    return productRepository.findAll(ProductSpecifications.notPurchased(), sortedPage)
         .map(productMapper::toResponse);
   }
 
