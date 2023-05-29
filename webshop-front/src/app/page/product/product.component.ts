@@ -6,7 +6,6 @@ import {ProductService} from '../../service/product.service';
 import {Product} from '../../model/Product';
 import tokenService from '../../service/TokenService';
 import {ToastService} from 'angular-toastify';
-import {routes} from '../../routes';
 import {Router} from '@angular/router';
 import {paths} from '../../constants/paths';
 
@@ -40,20 +39,21 @@ export class ProductComponent implements OnInit {
     this.searchTextUpdate.pipe(
         debounceTime(constant.DEBOUNCE_TIME),
         distinctUntilChanged())
-        .subscribe(value => {
-          console.log("product.component.ts > searchTextUpdate(): " + value);
-          //TODO: send seach request.
-          // Text + Selected category
+        .subscribe(searchText => {
+          //TODO:  add Selected category to search
+          console.log("product.component.ts > searchTextUpdate(): " + searchText);
+          this.currentPageNumber = 0;
+          this.getProducts(searchText);
         });
   }
 
-  getProducts() {
-    this.productService.getProducts(this.currentPageNumber, this.pageSize).subscribe({
+  getProducts(searchText = "") {
+    this.productService.getProducts(this.currentPageNumber, this.pageSize, searchText).subscribe({
           next: (res: any) => {
             this.totalNumber = res.totalElements;
             this.products = res.content;
           },
-          error: (err) => {
+          error: () => {
             this.products = [];
             this.toastService.error("Error showing products");
           },

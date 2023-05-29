@@ -1,0 +1,22 @@
+<form [formGroup]="dialogForm">
+  <div mat-dialog-content>
+    <h2 style="text-align: center">Purchase details</h2>
+    <div class="form-control">
+      <mat-form-field appearance="fill">
+        <mat-label>Product name</mat-label>
+        <input matInput formControlName="productName" readonly>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Card number</mat-label>
+        <input matInput formControlName="cardNumber" required>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div mat-dialog-actions style="float: right">
+    <button mat-button type="button" (click)="onNoClick()">No Thanks</button>
+    <button type="submit" mat-raised-button color="primary"
+            (click)="saveTask(dialogForm)">Submit
+    </button>
+  </div>
+</form>

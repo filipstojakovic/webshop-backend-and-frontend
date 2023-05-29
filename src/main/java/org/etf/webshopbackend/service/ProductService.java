@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.exceptions.BadRequestException;
 import org.etf.webshopbackend.exceptions.NotFoundException;
 import org.etf.webshopbackend.model.entity.*;
-import org.etf.webshopbackend.model.entity.specification.ProductSpecifications;
 import org.etf.webshopbackend.model.mapper.ProductMapper;
 import org.etf.webshopbackend.model.request.AttributeNameValueRequest;
 import org.etf.webshopbackend.model.request.ProductRequest;
@@ -15,6 +14,7 @@ import org.etf.webshopbackend.repository.AttributeRespository;
 import org.etf.webshopbackend.repository.ProductImageRepository;
 import org.etf.webshopbackend.repository.ProductRepository;
 import org.etf.webshopbackend.repository.UserRepository;
+import org.etf.webshopbackend.specification.ProductSpecifications;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -44,10 +44,13 @@ public class ProductService {
 //         .param("size", "10")
 //         .param("sort", "id,desc")   // <-- no space after comma!
 //         .param("sort", "name,asc")) //
-  public Page<ProductResponse> findAllPageable(Pageable page) {
+  public Page<ProductResponse> findAllPageable(Pageable page, String searchText) {
     Pageable sortedPage = defaultSortPageIfNotExists(page);
-    final Specification<Product> productNotPurchased = ProductSpecifications.productHasNameWith(null);
-    return productRepository.findAll(ProductSpecifications.notPurchased(), sortedPage)
+    Specification<Product> productByName = ProductSpecifications.productByName(searchText);
+    Specification<Product> productByCategoryName = ProductSpecifications.byCategoryName(searchText); // testing
+    Specification<Product> productByAttributeValue = ProductSpecifications.byAttributeNameAndValue("gramaza",searchText); // testing
+
+    return productRepository.findAll(ProductSpecifications.notPurchased().and(productByAttributeValue), sortedPage)
         .map(productMapper::toResponse);
   }
 

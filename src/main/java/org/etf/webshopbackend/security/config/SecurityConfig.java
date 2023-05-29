@@ -99,7 +99,7 @@ public class SecurityConfig {
   private void contactSupportAuthorizationRule(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests()
         .requestMatchers(HttpMethod.POST, EndpointConstants.CONTACT_SUPPORT)
-        .hasAnyAuthority(RoleEnum.user.toString());
+        .hasAnyAuthority(RoleEnum.user.toString(), RoleEnum.admin.toString());
   }
 
   private void activatePinAuthorizationRule(final HttpSecurity http) throws Exception {
@@ -116,6 +116,8 @@ public class SecurityConfig {
         .requestMatchers(HttpMethod.POST, EndpointConstants.REGISTER)
         .permitAll()
         .requestMatchers(HttpMethod.GET, EndpointConstants.WHOAMI)
+        .permitAll()
+        .requestMatchers(HttpMethod.GET, EndpointConstants.PAYMENT_METHOD)
         .permitAll();
   }
 
@@ -124,7 +126,7 @@ public class SecurityConfig {
         requests
             .requestMatchers(HttpMethod.GET, EndpointConstants.USERS + EndpointConstants.ALL_PATHS)
             .permitAll()
-            //TODO: permit post and put but only for them selfs
+            // TODO: permit post and put but only for them selfs
             .requestMatchers(HttpMethod.POST, EndpointConstants.USERS)
             .hasAnyAuthority(RoleEnum.admin.toString())
             .requestMatchers(HttpMethod.PUT, EndpointConstants.USERS)

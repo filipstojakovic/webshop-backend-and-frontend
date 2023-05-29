@@ -21,6 +21,7 @@ export class AuthGuard implements CanActivate {
 
     return true; //TODO: remove me ////////////////////////
 
+    //TODO: check if account activated. If not active ask for activation pin
 
 
     const routeRoles: RoleEnum[] = route.data['role'];

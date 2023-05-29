@@ -10,6 +10,7 @@ import {ProductDetailsComponent} from './page/product/product-details/product-de
 import {ProductComponent} from './page/product/product.component';
 import {PurchaseHistoryComponent} from './page/purchase-history/purchase-history.component';
 import {AuthGuard} from './service/auth-guard';
+import {ProfileComponent} from './page/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -50,6 +51,13 @@ export const routes: Routes = [
     path: paths.SELL_PRODUCT,
     pathMatch: 'full',
     component: SellProductComponent,
+    // canActivate: [AuthGuard],
+    data: { role: [RoleEnum.admin, RoleEnum.user] },
+  },
+  {
+    path: paths.PROFILE, //TODO: maybe disable click if not logged in
+    pathMatch: 'full',
+    component: ProfileComponent,
     // canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },

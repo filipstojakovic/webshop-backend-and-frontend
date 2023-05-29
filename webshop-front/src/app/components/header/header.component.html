@@ -16,7 +16,8 @@
 
   <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loading">
     <div>Logged in</div>
-    <app-avatar-button style="margin: 0" [id]="id"></app-avatar-button>
+    <app-avatar-button style="margin: 0" [id]="id"
+                       [routerLink]="[paths.PROFILE]"></app-avatar-button>
     <app-button (click)="logoutClick()">Logout</app-button>
     <!--    TODO: logout button-->
   </ng-template>

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {GenericCrudService} from '../../service/GenericCrudService';
+import {GenericCrudService} from '../../service/GenericCrud.service';
 import {Category} from '../../model/Category';
 import {backendUrl} from '../../constants/backendUrl';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';

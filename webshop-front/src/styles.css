@@ -4,21 +4,23 @@ html {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 *, *:before, *:after {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit;
 }
 
-img {
-  opacity: 1 !important;
-}
-
 body {
   height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+img {
+  opacity: 1 !important;
 }
 
 /*router-outlet + app-login, app-activate-account {*/
@@ -45,10 +47,37 @@ router-outlet + * {
   flex-direction: column;
 }
 
+.full-width {
+  width: 100%;
+}
+
+.full-height{
+  height: 100%;
+}
+
+.full-height-vh{
+  height: 100vh;
+}
+
 .center-items {
+  display: flex;
+  align-items: center;
+}
+
+.perfect-center-items {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .main-grid {
@@ -92,4 +121,11 @@ router-outlet + * {
   width: 30%;
   height: 1px;
   margin: 0 10px;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 10px 0;
 }

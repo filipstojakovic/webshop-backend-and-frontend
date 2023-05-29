@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import tokenService from './TokenService';
 import {HttpClient} from '@angular/common/http';
 import {ToastService} from 'angular-toastify';
 import {Router} from '@angular/router';
+import {LoginEmitterService} from './login-emitter.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
 
@@ -13,7 +14,8 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private toastService: ToastService,
-              private router: Router
+              private router: Router,
+              private loginEmiterService: LoginEmitterService
   ) {
     this.token = this.getToken();
   }
@@ -31,12 +33,13 @@ export class AuthService {
                   this.logout();
 
                 tokenService.setTokenInStorage(this.token!);
+                this.loginEmiterService.loggedInEvent.emit();
                 return callback && callback();
               },
               error: () => {
                 this.toastService.error("Error signing in");
-              }
-            }
+              },
+            },
         );
   }
 

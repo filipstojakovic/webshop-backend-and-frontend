@@ -18,24 +18,19 @@ public class ProductRequest {
   @NotNull
   @NotBlank
   private String name;
-
   private String description;
-
   @NotNull
   @NotBlank
   private Double price;
-
   @NotNull
   @NotBlank
   private Boolean isNew;
   @NotNull
   @NotBlank
   private String location;
-
   @NotNull
   @NotBlank
   @Valid
   private CategoryDto category;
-
   private List<String> images;
 }

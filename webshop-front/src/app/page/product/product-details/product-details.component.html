@@ -1,4 +1,6 @@
+
 <div class="default-style" style="padding: 10px">
+  <app-button (btnClick)="purchaseButtonClicked()">Purchase</app-button>
   <div style="display: flex; flex-direction: row">
     <div style="width: 50%">
       <ng-container *ngIf="form">
@@ -60,10 +62,10 @@
       </ng-container>
     </div>
     <div style="padding: 10px; margin: 10px; width: 50%">
-      <carousel *ngIf="product && product.productImages">
+      <carousel style="z-index: 10" arrowsTheme="dark" [autoplay]=false  *ngIf="product && product.productImages">
         <div *ngFor="let image of product.productImages" class="carousel-cell">
           <img src="http://localhost:8080/products/{{image.id}}/image"
-               alt="no image"> <!-- Or any other HTML content -->
+               alt="no image">
         </div>
       </carousel>
     </div>

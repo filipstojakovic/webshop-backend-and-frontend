@@ -4,7 +4,7 @@ export const paths = {
   REGISTER: "register",
   PIN: "pin",
   SELL_PRODUCT: "sell-product",
-  // PROFILE: "profile",
+  PROFILE: "profile",
   PURCHASE_HISTORY: "purchase-history",
   CONTACT_SUPPORT: "contact-support",
   ERROR: "error",

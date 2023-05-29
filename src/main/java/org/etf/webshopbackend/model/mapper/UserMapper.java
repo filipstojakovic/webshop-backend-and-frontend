@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper extends GenericMapper<UserRequest, User, UserResponse> {
 
-
   public UserMapper(final ModelMapper modelMapper) {
     super(modelMapper);
   }

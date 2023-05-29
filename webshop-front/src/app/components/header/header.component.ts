@@ -3,6 +3,7 @@ import tokenService from '../../service/TokenService';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../../service/auth.service';
 import {paths} from '../../constants/paths';
+import {LoginEmitterService} from '../../service/login-emitter.service';
 
 @Component({
   selector: 'app-header',
@@ -12,11 +13,17 @@ import {paths} from '../../constants/paths';
 export class HeaderComponent implements OnInit {
   id: number | null = null;
 
-  constructor(private http: HttpClient, private auth: AuthService) {
+  constructor(private http: HttpClient,
+              private auth: AuthService,
+              private loginEmiterService: LoginEmitterService,
+  ) {
   }
 
   ngOnInit(): void {
-    this.id = tokenService.getIdFromToken() ?? null;
+    this.loginEmiterService.loggedInEvent.subscribe(() => {
+      this.id = tokenService.getIdFromToken();
+    })
+
   }
 
   isLoggedIn(): boolean {

@@ -14,20 +14,12 @@ import lombok.Setter;
 public class UserResponse {
 
   private Long id;
-
   private String username;
-
   private String firstName;
-
   private String lastName;
-
   private String email;
-
   private String city;
-
   private String avatarPath;
-
   private Boolean isDeleted;
-
   private String roleName;
 }

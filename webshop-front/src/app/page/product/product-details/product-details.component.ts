@@ -1,12 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {GenericCrudService} from '../../../service/GenericCrudService';
+import {GenericCrudService} from '../../../service/GenericCrud.service';
 import {Product} from '../../../model/Product';
 import {backendUrl} from '../../../constants/backendUrl';
 import {ToastService} from 'angular-toastify';
 import {paths} from '../../../constants/paths';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {PaymentModalComponent} from '../../../components/payment-modal/payment-modal.component';
+import {PurchaseRequest} from '../../../model/request/PurchaseRequest';
 
 @Component({
   selector: 'app-product-details',
@@ -24,6 +27,7 @@ export class ProductDetailsComponent implements OnInit {
               private toastService: ToastService,
               private router: Router,
               private fb: FormBuilder,
+              private dialog: MatDialog,
   ) {
     this.productService = new GenericCrudService<Product>(backendUrl.PRODUCTS, http);
   }
@@ -53,4 +57,23 @@ export class ProductDetailsComponent implements OnInit {
     )
   }
 
+  purchaseButtonClicked() {
+
+    console.log("product-details.component.ts > purchaseButtonClicked(): " + "purchuse btn clicked");
+    const dialogRef = this.dialog.open(
+        PaymentModalComponent,
+        {
+          data: { dialogData: this.product },
+        });
+
+    dialogRef.afterClosed().subscribe((result: PurchaseRequest) => {
+      if (!result) {
+        console.log("header.component.ts > headerBtnClicked(): " + "result undefined");
+        return;
+      }
+
+      console.log("product-details.component.ts > (): " + JSON.stringify(result, null, 2));
+      // TODO: call service to purchase product
+    });
+  }
 }

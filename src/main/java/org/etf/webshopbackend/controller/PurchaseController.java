@@ -29,4 +29,6 @@ public class PurchaseController {
     return purchaseMapper.toResponses(purchases, PurchaseResponse.class);
   }
 
+
+
 }

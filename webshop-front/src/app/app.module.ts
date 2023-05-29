@@ -28,6 +28,8 @@ import {ProductDetailsComponent} from './page/product/product-details/product-de
 import { CommentListComponent } from './page/product/product-details/comment-list/comment-list.component';
 import { PurchaseHistoryComponent } from './page/purchase-history/purchase-history.component';
 import {IvyCarouselModule} from 'carousel-angular';
+import { PaymentModalComponent } from './components/payment-modal/payment-modal.component';
+import { ProfileComponent } from './page/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import {IvyCarouselModule} from 'carousel-angular';
     ProductDetailsComponent,
     CommentListComponent,
     PurchaseHistoryComponent,
+    PaymentModalComponent,
+    ProfileComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

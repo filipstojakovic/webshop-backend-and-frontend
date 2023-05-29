@@ -4,21 +4,11 @@
 
 <img *ngIf="id && !showFallbackImage" class="avatar-image"
      src="http://localhost:8080/users/{{id}}/image"
-     [cdkMenuTriggerFor]="menu"
      (error)="onImageError()" >
 
 <button *ngIf="id && showFallbackImage" mat-icon-button>
   <mat-icon>person</mat-icon>
 </button>
-
-<ng-template #menu>
-  <div class="example-menu" cdkMenu>
-    <button class="example-menu-item" cdkMenuItem>Refresh</button>
-    <button class="example-menu-item" cdkMenuItem>Settings</button>
-    <button class="example-menu-item" cdkMenuItem>Help</button>
-    <button class="example-menu-item" cdkMenuItem>Sign out</button>
-  </div>
-</ng-template>
 
 <!--TODO probaj sa ovim:-->
 <!--<div mat-card-avatar class="example-header-image"></div>-->

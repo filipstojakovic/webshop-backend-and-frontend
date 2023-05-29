@@ -6,7 +6,7 @@ import {AuthService} from '../../service/auth.service';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {ToastService} from 'angular-toastify';
-import {GenericCrudService} from '../../service/GenericCrudService';
+import {GenericCrudService} from '../../service/GenericCrud.service';
 import formUtils from '../../utils/formUtils';
 
 @Component({

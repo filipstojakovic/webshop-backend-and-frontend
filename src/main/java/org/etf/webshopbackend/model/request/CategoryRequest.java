@@ -20,9 +20,7 @@ public class CategoryRequest {
   @NotNull
   @NotBlank
   private String name;
-
   private Long parentCategoryId;
-
   @Valid
   List<AttributeRequest> attributes = new ArrayList<>();
 }

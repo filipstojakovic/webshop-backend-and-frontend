@@ -35,6 +35,7 @@ public class Attribute {
   @JoinColumn(name = "category_id",nullable=false)
   private Category category;
 
+  //TODO: maybe delete
 //   @JsonIgnore
 //   @OneToMany(mappedBy = "attribute", cascade= CascadeType.ALL, fetch= FetchType.LAZY)
 //   private List<ProductHasAttribute> attributeHasProducts = new ArrayList<>();
