@@ -9,6 +9,7 @@ import org.etf.webshopbackend.model.entity.*;
 import org.etf.webshopbackend.model.mapper.ProductMapper;
 import org.etf.webshopbackend.model.request.AttributeNameValueRequest;
 import org.etf.webshopbackend.model.request.ProductRequest;
+import org.etf.webshopbackend.model.request.SearchProductRequest;
 import org.etf.webshopbackend.model.response.ProductResponse;
 import org.etf.webshopbackend.repository.AttributeRespository;
 import org.etf.webshopbackend.repository.ProductImageRepository;
@@ -44,13 +45,12 @@ public class ProductService {
 //         .param("size", "10")
 //         .param("sort", "id,desc")   // <-- no space after comma!
 //         .param("sort", "name,asc")) //
-  public Page<ProductResponse> findAllPageable(Pageable page, String searchText) {
-    Pageable sortedPage = defaultSortPageIfNotExists(page);
-    Specification<Product> productByName = ProductSpecifications.productByName(searchText);
-    Specification<Product> productByCategoryName = ProductSpecifications.byCategoryName(searchText); // testing
-    Specification<Product> productByAttributeValue = ProductSpecifications.byAttributeNameAndValue("gramaza",searchText); // testing
+  public Page<ProductResponse> findAllPageable(Pageable page, SearchProductRequest searchProductRequest) {
 
-    return productRepository.findAll(ProductSpecifications.notPurchased().and(productByAttributeValue), sortedPage)
+    Specification<Product> searchProductSpecificatio = createSpecificationFromRequest(searchProductRequest);
+    Pageable sortedPage = defaultSortPageIfNotExists(page);
+
+    return productRepository.findAll(ProductSpecifications.notPurchased().and(searchProductSpecificatio), sortedPage)
         .map(productMapper::toResponse);
   }
 
@@ -123,6 +123,32 @@ public class ProductService {
       e.printStackTrace();
       throw new BadRequestException("Unable to load image");
     }
+  }
+
+  private Specification<Product> createSpecificationFromRequest(SearchProductRequest searchProductRequest) {
+    if (searchProductRequest == null) {
+      return ProductSpecifications.emptySpecification();
+    }
+
+    Specification<Product> productNameSpecification = ProductSpecifications.productByName(searchProductRequest.getNameSearch());
+    Specification<Product> productCategorySpecification = ProductSpecifications.byCategoryName(searchProductRequest.getCategorySearch());
+    Specification<Product> productAttributeSpecificaiton = createSpecificationFromArray(searchProductRequest.getAttributeNameValueRequests());
+    return productNameSpecification
+        .and(productCategorySpecification)
+        .and(productAttributeSpecificaiton);
+  }
+
+  private Specification<Product> createSpecificationFromArray(List<AttributeNameValueRequest> attributeNameValueRequests) {
+    if (attributeNameValueRequests == null) {
+      return ProductSpecifications.emptySpecification();
+    }
+
+    return attributeNameValueRequests.stream()
+        .map(attributeNameValueRequest ->
+            ProductSpecifications.hasAttributeWithValue(attributeNameValueRequest.getName(),
+                attributeNameValueRequest.getValue()))
+        .reduce(Specification::and).orElseThrow(BadRequestException::new);
+
   }
 
   private Pageable defaultSortPageIfNotExists(Pageable page) {

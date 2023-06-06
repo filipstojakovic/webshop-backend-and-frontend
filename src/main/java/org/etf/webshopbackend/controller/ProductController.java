@@ -3,6 +3,7 @@ package org.etf.webshopbackend.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.model.request.ProductRequest;
+import org.etf.webshopbackend.model.request.SearchProductRequest;
 import org.etf.webshopbackend.model.response.ProductResponse;
 import org.etf.webshopbackend.security.model.JwtUserDetails;
 import org.etf.webshopbackend.service.ProductService;
@@ -25,8 +26,8 @@ public class ProductController {
   private final ProductService productService;
 
   @GetMapping
-  public Page<ProductResponse> findAllPageable(Pageable page, @RequestParam(required = false) String searchText) {
-    return productService.findAllPageable(page, searchText);
+  public Page<ProductResponse> findAllPageable(Pageable page, @RequestBody(required = false) SearchProductRequest searchProductRequest) {
+    return productService.findAllPageable(page, searchProductRequest);
   }
 
   // TODO: delete, use for testing

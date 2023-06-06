@@ -2,11 +2,7 @@ package org.etf.webshopbackend.specification;
 
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
-import org.etf.webshopbackend.model.entity.Attribute;
-import org.etf.webshopbackend.model.entity.Category_;
-import org.etf.webshopbackend.model.entity.Product;
-import org.etf.webshopbackend.model.entity.ProductHasAttribute;
-import org.etf.webshopbackend.model.entity.Product_;
+import org.etf.webshopbackend.model.entity.*;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Objects;
@@ -48,11 +44,13 @@ public class ProductSpecifications {
 
   public static Specification<Product> hasAttributeWithValue(String attributeName, String attributeValue) {
     return (root, query, criteriaBuilder) -> {
-      Join<Product, ProductHasAttribute> join = root.join("productHasAttributes");
-      Join<ProductHasAttribute, Attribute> attributeJoin = join.join("attribute");
+      Join<Product, ProductHasAttribute> join = root.join(Product_.PRODUCT_HAS_ATTRIBUTES);
+      Join<ProductHasAttribute, Attribute> attributeJoin = join.join(ProductHasAttribute_.ATTRIBUTE);
 
-      Predicate attributePredicate = criteriaBuilder.equal(attributeJoin.get("name"), attributeName);
-      Predicate valuePredicate = criteriaBuilder.equal(join.get("value"), attributeValue);
+      Predicate attributePredicate = criteriaBuilder.equal(attributeJoin.get(Attribute_.NAME), attributeName);
+      Predicate valuePredicate = criteriaBuilder.like(
+          criteriaBuilder.lower(join.get(ProductHasAttribute_.VALUE)), "%" + attributeValue.toLowerCase() + "%"
+      );
 
       return criteriaBuilder.and(attributePredicate, valuePredicate);
     };
