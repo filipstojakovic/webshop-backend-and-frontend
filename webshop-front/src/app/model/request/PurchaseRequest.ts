@@ -1,4 +1,4 @@
 
-export class PurchaseRequest {
+export interface PurchaseRequest {
   cardNumber: string;
 }

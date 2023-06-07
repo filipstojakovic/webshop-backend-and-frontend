@@ -1,17 +1,26 @@
 <div style="width: 100%">
-  <mat-form-field appearance="fill" class="search-input-style">
-    <mat-label>Search product</mat-label>
-    <input matInput
-           (keydown)="onKeyDown($event)"
-           [(ngModel)]="searchText"
-           (ngModelChange)="this.searchTextUpdate.next($event)"
-    />
-  </mat-form-field>
+
+  <form class="center-container" [formGroup]="form">
+    <mat-form-field appearance="fill" class="search-input-style">
+      <mat-label>Search product</mat-label>
+      <input matInput
+             (keydown.enter)="onKeyDown()"
+             formControlName="nameSearch"
+             type="text"
+      />
+    </mat-form-field>
+
+    <app-category-dropdown
+        [selectedCategoryIdControl]="$any(form.get('categoryIdSearch'))">
+    </app-category-dropdown>
+
+  </form>
 
   <div class="product-list">
     <ng-container *ngIf="products; else loadingState">
       <ng-container *ngIf="products.length; else noDataState">
-        <app-product-card class="card-pointer" *ngFor="let product of products" [product]="product"
+        <app-product-card class="card-pointer" *ngFor="let product of products"
+                          [product]="product"
                           (click)="productCardClick(product)"></app-product-card>
       </ng-container>
       <ng-template #noDataState>

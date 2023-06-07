@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {backendUrl} from '../constants/backendUrl';
+import {ProductSearchRequest} from '../model/request/ProductSearchRequest';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +11,10 @@ export class ProductService {
   constructor(private http: HttpClient) {
   }
 
-  getProducts(currentPageIndex: number, pageSize: number, searchText = "") {
-    console.log("product.service.ts > getProducts(): " + JSON.stringify(searchText, null, 2));
-    const url = `${backendUrl.PRODUCTS}?page=${currentPageIndex}&size=${pageSize}&searchText=${searchText}`;
-    return this.http.get(url);
+  searchProducts(currentPageIndex: number, pageSize: number, body?: ProductSearchRequest) {
+    console.log("product.service.ts > getProducts(): BODY" + JSON.stringify(body, null, 2));
+    const url = `${backendUrl.PRODUCTS_SEARCH}?page=${currentPageIndex}&size=${pageSize}`;
+    return this.http.post(url, body);
   }
 
 }

@@ -131,8 +131,8 @@ public class ProductService {
     }
 
     Specification<Product> productNameSpecification = ProductSpecifications.productByName(searchProductRequest.getNameSearch());
-    Specification<Product> productCategorySpecification = ProductSpecifications.byCategoryName(searchProductRequest.getCategorySearch());
-    Specification<Product> productAttributeSpecificaiton = createSpecificationFromArray(searchProductRequest.getAttributeNameValueRequests());
+    Specification<Product> productCategorySpecification = ProductSpecifications.byCategoryId(searchProductRequest.getCategoryIdSearch());
+    Specification<Product> productAttributeSpecificaiton = createSpecificationFromArray(searchProductRequest.getAttributeNameValueSearches());
     return productNameSpecification
         .and(productCategorySpecification)
         .and(productAttributeSpecificaiton);

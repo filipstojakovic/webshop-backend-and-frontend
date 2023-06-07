@@ -30,6 +30,7 @@ import { PurchaseHistoryComponent } from './page/purchase-history/purchase-histo
 import {IvyCarouselModule} from 'carousel-angular';
 import { PaymentModalComponent } from './components/payment-modal/payment-modal.component';
 import { ProfileComponent } from './page/profile/profile.component';
+import { CategoryDropdownComponent } from './components/category-dropdown/category-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ProfileComponent } from './page/profile/profile.component';
     PurchaseHistoryComponent,
     PaymentModalComponent,
     ProfileComponent,
+    CategoryDropdownComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

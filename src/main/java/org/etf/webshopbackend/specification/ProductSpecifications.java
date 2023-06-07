@@ -28,17 +28,15 @@ public class ProductSpecifications {
     return (root, query, criteriaBuilder) -> criteriaBuilder.isFalse(root.get(Product_.IS_PURCHASED));
   }
 
-  public static Specification<Product> byCategoryName(String categoryName) { // should use categoryId
-    if (Objects.isNull(categoryName)) {
+  public static Specification<Product> byCategoryId(Long categoryId) {
+    if (Objects.isNull(categoryId)) {
       return emptySpecification();
     }
     return (root, query, criteriaBuilder) -> {
       // Join the category entity
       root.join(Product_.CATEGORY);
 
-      return criteriaBuilder.like(
-          criteriaBuilder.lower(root.get(Product_.CATEGORY).get(Category_.NAME)), "%" + categoryName.toLowerCase() + "%"
-      );
+      return criteriaBuilder.equal(root.get(Product_.CATEGORY).get(Category_.ID), categoryId);
     };
   }
 

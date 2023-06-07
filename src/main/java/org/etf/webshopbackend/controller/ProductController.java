@@ -25,15 +25,14 @@ public class ProductController {
 
   private final ProductService productService;
 
-  @GetMapping
-  public Page<ProductResponse> findAllPageable(Pageable page, @RequestBody(required = false) SearchProductRequest searchProductRequest) {
-    return productService.findAllPageable(page, searchProductRequest);
-  }
-
-  // TODO: delete, use for testing
-  @GetMapping("all")
+  @GetMapping()
   public List<ProductResponse> findAll() {
     return productService.findAll();
+  }
+
+  @PostMapping("search")
+  public Page<ProductResponse> findAllPageable(Pageable page, @RequestBody(required = false) SearchProductRequest searchProductRequest) {
+    return productService.findAllPageable(page, searchProductRequest);
   }
 
   @GetMapping("{id}")

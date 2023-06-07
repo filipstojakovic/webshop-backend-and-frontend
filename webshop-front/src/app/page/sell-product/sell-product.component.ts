@@ -9,8 +9,9 @@ import {Router} from '@angular/router';
 import {ToastService} from 'angular-toastify';
 import {map, Observable, startWith} from 'rxjs';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {Attribute, AttributeNameValue} from '../../model/Attribute';
+import {Attribute} from '../../model/Attribute';
 import myUtils from '../../utils/myUtils';
+import {AttributeNameValue} from '../../model/request/AttributeNameValue';
 
 @Component({
   selector: 'app-sell-product',
@@ -40,7 +41,7 @@ export class SellProductComponent implements OnInit {
   ngOnInit(): void {
     var defaultFieldValue = "a"; // TODO: remove when not needed
     this.form = this.fb.group({
-      category: [new FormControl<Category | null>(null), Validators.required],
+      categorySearch: [new FormControl<Category | null>(null), Validators.required],
       attributes: [],
       name: [defaultFieldValue, Validators.required],
       description: [defaultFieldValue],

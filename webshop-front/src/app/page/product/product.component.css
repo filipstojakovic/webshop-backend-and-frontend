@@ -18,7 +18,4 @@
   padding: 20px;
 }
 
-.card-pointer:hover {
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(103, 58, 183, 0.6);
-}
+

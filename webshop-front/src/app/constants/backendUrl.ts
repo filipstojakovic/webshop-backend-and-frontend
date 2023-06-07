@@ -5,6 +5,7 @@ export const backendUrl = {
   REGISTER: 'register',
   PIN: 'pins',
   PRODUCTS: 'products',
+  PRODUCTS_SEARCH: 'products/search',
   CATEGORIES: 'categories',
   PURCHASES: 'purchases',
 

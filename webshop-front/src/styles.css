@@ -129,3 +129,8 @@ router-outlet + * {
   width: 400px;
   margin: 10px 0;
 }
+
+.card-pointer:hover {
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(103, 58, 183, 0.6);
+}

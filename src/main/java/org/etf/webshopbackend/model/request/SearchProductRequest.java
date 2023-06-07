@@ -1,6 +1,5 @@
 package org.etf.webshopbackend.model.request;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,10 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class SearchProductRequest {
 
-  @NotNull
   private String nameSearch;
-  @NotNull
-  private String categorySearch;
-  @NotNull
-  private List<AttributeNameValueRequest> attributeNameValueRequests;
+  private Long categoryIdSearch;
+  private List<AttributeNameValueRequest> attributeNameValueSearches;
 }
