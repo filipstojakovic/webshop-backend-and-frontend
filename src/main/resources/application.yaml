@@ -13,12 +13,6 @@ server:
     enabled: true
     min-response-size: 1024 # min size to use compression for responses
 
-logging:
-  level:
-    root: info
-  file:
-    path: logs
-
 app:
   imagesDir: "images"
   image:
@@ -34,3 +28,9 @@ app:
   auth:
     tokenSecret: privatluk # lijen za generisanje secret-a
     tokenExpirationMillis: 86400000
+
+logging:
+  level:
+    root: info #TRACE
+  file:
+    path: logs

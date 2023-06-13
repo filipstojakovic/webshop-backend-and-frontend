@@ -8,6 +8,7 @@ import org.etf.webshopbackend.model.entity.Role;
 import org.etf.webshopbackend.model.entity.User;
 import org.etf.webshopbackend.model.enums.RoleEnum;
 import org.etf.webshopbackend.model.mapper.UserMapper;
+import org.etf.webshopbackend.model.request.UserPasswordRequest;
 import org.etf.webshopbackend.model.request.UserRequest;
 import org.etf.webshopbackend.model.response.UserResponse;
 import org.etf.webshopbackend.repository.RoleRepository;
@@ -54,7 +55,6 @@ public class UserService {
       throw new NotFoundException(User.class, id);
     }
 
-    // TODO: check if admin update or user update his own profile
     // TODO: store image on system, get path
     User user = storeUser(userRequest);
     return userMapper.toResponse(user, UserResponse.class);
@@ -71,6 +71,15 @@ public class UserService {
     }
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     return userRepository.saveAndFlush(user);
+  }
+
+  public UserResponse changePassword(Long id, UserPasswordRequest userPasswordRequest) {
+    User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(User.class, id));
+    if (!passwordEncoder.matches(userPasswordRequest.getOldPassword(), user.getPassword())) {
+      throw new BadRequestException("Old password does not match");
+    }
+    user.setPassword(passwordEncoder.encode(userPasswordRequest.getNewPassword()));
+    return userMapper.toResponse(user, UserResponse.class);
   }
 
   private void setDefaultUserRole(User updatedUser) {

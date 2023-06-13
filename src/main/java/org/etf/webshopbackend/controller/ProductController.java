@@ -25,7 +25,7 @@ public class ProductController {
 
   private final ProductService productService;
 
-  @GetMapping()
+  @GetMapping
   public List<ProductResponse> findAll() {
     return productService.findAll();
   }
@@ -51,7 +51,6 @@ public class ProductController {
   @Async
   @GetMapping("{id}/image")
   public CompletableFuture<ResponseEntity<byte[]>> getProductImage(@PathVariable("id") Long imageId) {
-    log.info("Current Thread Name: " + Thread.currentThread().getName());
     var image = productService.getProductImage(imageId);
     return CompletableFuture.completedFuture(ResponseEntity.ok(image));
   }

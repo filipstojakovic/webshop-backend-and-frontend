@@ -3,6 +3,20 @@
   margin-bottom: 10px;
 }
 
+.white-background{
+  background-color: white;
+}
+
+.gray-background{
+  background-color: lightgray;
+}
+
 .post-comment-form {
   margin-bottom: 20px;
+}
+
+.comment-header{
+  display:flex;
+  justify-content: space-between;
+  width: 100%;
 }

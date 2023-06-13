@@ -19,3 +19,22 @@
 }
 
 
+.search-container {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.name-search {
+  width: 70%;
+}
+
+.category-search {
+  width: 30%;
+}
+
+@media screen and (max-width: 650px) {
+  .name-search, .category-search {
+    width: 100%;
+  }
+}

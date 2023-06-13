@@ -129,8 +129,8 @@ public class SecurityConfig {
             // TODO: permit post and put but only for them selfs
             .requestMatchers(HttpMethod.POST, EndpointConstants.USERS)
             .hasAnyAuthority(RoleEnum.admin.toString())
-            .requestMatchers(HttpMethod.PUT, EndpointConstants.USERS)
-            .hasAnyAuthority(RoleEnum.admin.toString())
+            .requestMatchers(HttpMethod.PUT, EndpointConstants.USERS+ EndpointConstants.ALL_PATHS)
+            .hasAnyAuthority(RoleEnum.admin.toString(),RoleEnum.user.toString())
             .requestMatchers(HttpMethod.DELETE, EndpointConstants.USERS)
             .hasAnyAuthority(RoleEnum.admin.toString())
     );

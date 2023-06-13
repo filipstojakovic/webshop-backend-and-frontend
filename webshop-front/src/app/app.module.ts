@@ -25,12 +25,14 @@ import {ProductCardComponent} from './page/product/product-card/product-card.com
 import {ContactSupportComponent} from './page/contact-support/contact-support.component';
 import {SellProductComponent} from './page/sell-product/sell-product.component';
 import {ProductDetailsComponent} from './page/product/product-details/product-details.component';
-import { CommentListComponent } from './page/product/product-details/comment-list/comment-list.component';
-import { PurchaseHistoryComponent } from './page/purchase-history/purchase-history.component';
+import {CommentListComponent} from './page/product/product-details/comment-list/comment-list.component';
+import {PurchaseHistoryComponent} from './page/purchase-history/purchase-history.component';
 import {IvyCarouselModule} from 'carousel-angular';
-import { PaymentModalComponent } from './components/payment-modal/payment-modal.component';
-import { ProfileComponent } from './page/profile/profile.component';
-import { CategoryDropdownComponent } from './components/category-dropdown/category-dropdown.component';
+import {PaymentModalComponent} from './components/payment-modal/payment-modal.component';
+import {ProfileComponent} from './page/profile/profile.component';
+import {CategoryDropdownComponent} from './components/category-dropdown/category-dropdown.component';
+import {ChangePasswordComponent} from './page/change-password/change-password.component';
+import {UserService} from './service/user.service';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import { CategoryDropdownComponent } from './components/category-dropdown/catego
     PaymentModalComponent,
     ProfileComponent,
     CategoryDropdownComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -68,6 +71,7 @@ import { CategoryDropdownComponent } from './components/category-dropdown/catego
   ],
   providers: [
     AuthGuard,
+    UserService,
     AuthService,
     ToastService,
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true },

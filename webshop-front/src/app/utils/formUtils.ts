@@ -1,4 +1,4 @@
-import {FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 function createObjectData(formData: FormData, parentKey: string, value: Object) {
   for (const key in value) {
@@ -23,6 +23,16 @@ export function formGroupToFormDataConverter(formGroup: FormGroup) {
   return formData;
 }
 
+export function createFormFromObject(fb:FormBuilder, object:any){
+  const form = fb.group({});
+  Object.keys(object).forEach(key => {
+    const control = new FormControl(object[key]);
+    form.addControl(key, control);
+  });
+
+  return form;
+}
+
 export function clearFormErrors(formGroup: FormGroup) {
   Object.keys(formGroup.value).forEach(key => {
     formGroup.get(key)?.setErrors(null);
@@ -32,6 +42,7 @@ export function clearFormErrors(formGroup: FormGroup) {
 const formUtils = {
   formGroupToFormDataConverter,
   clearFormErrors,
+  createFormFromObject
 }
 
 export default formUtils;

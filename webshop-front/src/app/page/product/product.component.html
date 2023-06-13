@@ -1,19 +1,21 @@
 <div style="width: 100%">
+  <form [formGroup]="form">
+    <div class="search-container">
+      <mat-form-field appearance="fill" class="name-search">
+        <mat-label>Search product</mat-label>
+        <input matInput
+               (keydown.enter)="onKeyDown()"
+               formControlName="nameSearch"
+               type="text"
+        />
+      </mat-form-field>
 
-  <form class="center-container" [formGroup]="form">
-    <mat-form-field appearance="fill" class="search-input-style">
-      <mat-label>Search product</mat-label>
-      <input matInput
-             (keydown.enter)="onKeyDown()"
-             formControlName="nameSearch"
-             type="text"
-      />
-    </mat-form-field>
+      <app-category-dropdown
+          class="category-search"
+          [selectedCategoryIdControl]="$any(form.get('categoryIdSearch'))">
+      </app-category-dropdown>
 
-    <app-category-dropdown
-        [selectedCategoryIdControl]="$any(form.get('categoryIdSearch'))">
-    </app-category-dropdown>
-
+    </div>
   </form>
 
   <div class="product-list">

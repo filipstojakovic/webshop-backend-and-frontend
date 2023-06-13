@@ -1,5 +1,6 @@
 <ng-container *ngIf="isLoggedIn()" style="width: 100%">
-  <form class="post-comment-form" [formGroup]="form" (ngSubmit)="postComment()" style="width: 100%">
+  <form class="post-comment-form" [formGroup]="form" (ngSubmit)="postComment()"
+        style="width: 100%">
     <app-input style="width: 100%"
                label="Post comment"
                errorMessage="Message is required"
@@ -13,10 +14,13 @@
 
 <ng-container *ngIf="comments; else loadingState">
   <ng-container *ngIf="comments.length; else noDataState">
-    <mat-card class="comment-card" *ngFor="let comment of comments">
+    <mat-card class="comment-card" [ngClass]="getClassBasedOnUser(comment)"
+              *ngFor="let comment of comments">
       <mat-card-header>
-        <mat-card-subtitle>{{comment.userFirstName + ' ' + comment.userLastName }}</mat-card-subtitle>
-        <!--    <mat-card-title>Shiba Inu</mat-card-title>-->
+        <div class="comment-header">
+          <mat-card-subtitle>{{comment.userFirstName + ' ' + comment.userLastName }}</mat-card-subtitle>
+          <mat-card-subtitle>{{myUtils.customDateFormat(comment.date)}}</mat-card-subtitle>
+        </div>
       </mat-card-header>
       <mat-card-content>
         <p>{{comment.message}}</p>

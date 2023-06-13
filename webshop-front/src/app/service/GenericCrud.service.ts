@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 
 export class GenericCrudService<T> {
   private readonly path: string;
-  private readonly http: HttpClient;
+  protected http: HttpClient;
 
   constructor(path: string, http: HttpClient) {
     this.path = path;

@@ -5,10 +5,10 @@ export const paths = {
   PIN: "pin",
   SELL_PRODUCT: "sell-product",
   PROFILE: "profile",
+  CHANGE_PASSWORD:"profile/change-password",
   PURCHASE_HISTORY: "purchase-history",
   CONTACT_SUPPORT: "contact-support",
   ERROR: "error",
   PRODUCTS: "products",
-
 
 } as const;

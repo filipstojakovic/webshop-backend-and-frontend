@@ -6,6 +6,9 @@ import tokenService from '../../../../service/TokenService';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastService} from 'angular-toastify';
 import formUtils from '../../../../utils/formUtils';
+import {Product} from '../../../../model/Product';
+import {formatDate} from '@angular/common';
+import myUtils from '../../../../utils/myUtils';
 
 @Component({
   selector: 'app-comment-list',
@@ -13,14 +16,18 @@ import formUtils from '../../../../utils/formUtils';
   styleUrls: ['./comment-list.component.css'],
 })
 export class CommentListComponent implements OnInit {
-  @Input() productId!: number
+  @Input() product!: Product
   comments: CommentResponse[] = [];
   form!: FormGroup;
+
+  url:string;
 
   constructor(private http: HttpClient, private fb: FormBuilder, private toastService: ToastService) {
   }
 
   ngOnInit(): void {
+    this.url = backendUrl.PRODUCTS + `/${this.product.id}/comments`;
+
     this.form = this.fb.group({
       message: ["", Validators.required],
     });
@@ -29,8 +36,7 @@ export class CommentListComponent implements OnInit {
   }
 
   getAllComments() {
-    const url = backendUrl.PRODUCTS + `/${this.productId}/comments`;
-    this.http.get<CommentResponse[]>(url).subscribe({
+    this.http.get<CommentResponse[]>(this.url).subscribe({
           next: (res) => {
             this.comments = res;
           },
@@ -41,13 +47,19 @@ export class CommentListComponent implements OnInit {
     )
   }
 
+  getClassBasedOnUser(comment: CommentResponse) {
+    return {
+      'gray-background': this.product.id === comment.userId,
+      'white-background': this.product.id !== comment.userId,
+    }
+  }
+
 
   postComment() {
     if (!this.form.valid) {
       return;
     }
-    const url = backendUrl.PRODUCTS + `/${this.productId}/comments`;
-    this.http.post<CommentResponse>(url, this.form.value).subscribe({
+    this.http.post<CommentResponse>(this.url, this.form.value).subscribe({
           next: (res) => {
             this.comments.unshift(res);
             this.form.reset();
@@ -64,6 +76,5 @@ export class CommentListComponent implements OnInit {
     return tokenService.getTokenFromStorage();
   }
 
-  protected readonly JSON = JSON;
-
+  protected readonly myUtils = myUtils;
 }

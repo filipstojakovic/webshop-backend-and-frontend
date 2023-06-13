@@ -39,7 +39,7 @@ export class ProductDetailsComponent implements OnInit {
           next: (res) => {
             this.product = res;
             this.form = this.fb.group({
-              categorySearch: this.product.category?.name,
+              category: this.product.category?.name,
               attributes: [], /*TODO: do something with attributes*/
               name: this.product.name,
               description: this.product.description,
