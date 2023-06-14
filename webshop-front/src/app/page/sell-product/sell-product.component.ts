@@ -41,7 +41,7 @@ export class SellProductComponent implements OnInit {
   ngOnInit(): void {
     var defaultFieldValue = "a"; // TODO: remove when not needed
     this.form = this.fb.group({
-      categorySearch: [new FormControl<Category | null>(null), Validators.required],
+      category: [new FormControl<Category | null>(null), Validators.required],
       attributes: [],
       name: [defaultFieldValue, Validators.required],
       description: [defaultFieldValue],

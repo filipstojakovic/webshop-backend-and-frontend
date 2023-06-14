@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {User} from '../../model/User';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-avatar-button',

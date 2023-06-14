@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {paths} from '../../constants/paths';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import tokenService from '../../service/TokenService';
-import {AuthService} from '../../service/auth.service';
-import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {ToastService} from 'angular-toastify';
 import {GenericCrudService} from '../../service/GenericCrud.service';

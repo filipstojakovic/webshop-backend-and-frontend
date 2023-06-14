@@ -26,4 +26,7 @@ export class InputComponent {
     return (touched && errors) || !this.control.valid;
   }
 
+  getAppearance() {
+    return !this.readonly? "fill" : "outline";
+  }
 }

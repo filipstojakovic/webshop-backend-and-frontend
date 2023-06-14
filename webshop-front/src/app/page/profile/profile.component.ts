@@ -1,14 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {GenericCrudService} from '../../service/GenericCrud.service';
 import {User} from '../../model/User';
-import {backendUrl} from '../../constants/backendUrl';
 import tokenService from '../../service/TokenService';
 import {ToastService} from 'angular-toastify';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {UserRequest} from '../../model/UserRequest';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {paths} from '../../constants/paths';
 import {Router} from '@angular/router';
+import {UserService} from '../../service/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -20,11 +18,16 @@ export class ProfileComponent implements OnInit {
   currentUser: User;
   form!: FormGroup;
   isReadOnly = true;
+  tmpFormValue: any;
 
-  userService: GenericCrudService<UserRequest, User>
+  protected readonly paths = paths;
 
-  constructor(private http: HttpClient, private toastService: ToastService, private fb: FormBuilder, private router: Router) {
-    this.userService = new GenericCrudService<UserRequest, User>(backendUrl.USERS, http);
+  constructor(private http: HttpClient,
+              private toastService: ToastService,
+              private userService: UserService,
+              private fb: FormBuilder,
+              private router: Router,
+  ) {
   }
 
   ngOnInit(): void {
@@ -34,11 +37,12 @@ export class ProfileComponent implements OnInit {
             this.currentUser = res;
             this.form = this.fb.group({
               username: this.currentUser.username,
-              email: this.currentUser.email,
-              firstName: this.currentUser.firstName,
-              lastName: this.currentUser.lastName,
-              city: this.currentUser.city,
+              email: [this.currentUser.email, [Validators.required, Validators.email]],
+              firstName: [this.currentUser.firstName, Validators.required],
+              lastName: [this.currentUser.lastName, Validators.required],
+              city: [this.currentUser.city, Validators.required],
             });
+            this.tmpFormValue = this.form.value;
             console.log("profile.component.ts > next(): " + JSON.stringify(this.currentUser, null, 2));
           },
           error: (err) => {
@@ -48,13 +52,37 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  editMode() {
-    this.isReadOnly = false;
+  changeEditMode() {
+
+    this.isReadOnly = !this.isReadOnly;
+    if (!this.isReadOnly) {
+      this.tmpFormValue = this.form.value;
+    } else {
+      this.form.patchValue(this.tmpFormValue);
+    }
   }
 
-  protected readonly paths = paths;
 
   changePasswordClick() {
     this.router.navigateByUrl(paths.CHANGE_PASSWORD);
+  }
+
+  saveChanges() {
+    if (this.form.invalid)
+      return;
+
+    const newUserRequest = this.form.value;
+    const userId = tokenService.getIdFromToken();
+    this.userService.update(userId, newUserRequest).subscribe({
+          next: (res) => {
+            this.toastService.success("User update successfully!")
+          },
+          error: (err) => {
+            this.toastService.error("Error user update!")
+          },
+        },
+    )
+
+    this.isReadOnly = true;
   }
 }

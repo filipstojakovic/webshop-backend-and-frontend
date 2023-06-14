@@ -92,7 +92,7 @@ public class SecurityConfig {
 
   private void categoryAuthorizationRule(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests()
-        .requestMatchers(HttpMethod.GET, EndpointConstants.CATEGORIES)
+        .requestMatchers(HttpMethod.GET, EndpointConstants.CATEGORIES + EndpointConstants.ALL_PATHS)
         .permitAll();
   }
 

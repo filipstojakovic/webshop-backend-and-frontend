@@ -2,7 +2,13 @@ package org.etf.webshopbackend.specification;
 
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
-import org.etf.webshopbackend.model.entity.*;
+import org.etf.webshopbackend.model.entity.Attribute;
+import org.etf.webshopbackend.model.entity.Attribute_;
+import org.etf.webshopbackend.model.entity.Category_;
+import org.etf.webshopbackend.model.entity.Product;
+import org.etf.webshopbackend.model.entity.ProductHasAttribute;
+import org.etf.webshopbackend.model.entity.ProductHasAttribute_;
+import org.etf.webshopbackend.model.entity.Product_;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Objects;

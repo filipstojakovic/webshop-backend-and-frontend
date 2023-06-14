@@ -10,6 +10,7 @@ import org.etf.webshopbackend.model.enums.RoleEnum;
 import org.etf.webshopbackend.model.mapper.UserMapper;
 import org.etf.webshopbackend.model.request.UserPasswordRequest;
 import org.etf.webshopbackend.model.request.UserRequest;
+import org.etf.webshopbackend.model.request.UserUpdateRequest;
 import org.etf.webshopbackend.model.response.UserResponse;
 import org.etf.webshopbackend.repository.RoleRepository;
 import org.etf.webshopbackend.repository.UserRepository;
@@ -50,13 +51,16 @@ public class UserService {
     return userMapper.toResponse(user, UserResponse.class);
   }
 
-  public UserResponse update(final Long id, UserRequest userRequest) {
-    if (!userRepository.existsById(id)) {
-      throw new NotFoundException(User.class, id);
-    }
+  public UserResponse update(final Long id, UserUpdateRequest userRequest) {
 
-    // TODO: store image on system, get path
-    User user = storeUser(userRequest);
+    User user = userRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(User.class, id));
+
+    user.setFirstName(userRequest.getFirstName());
+    user.setLastName(userRequest.getLastName());
+    user.setEmail(userRequest.getEmail());
+    user.setCity(userRequest.getCity());
+
     return userMapper.toResponse(user, UserResponse.class);
   }
 

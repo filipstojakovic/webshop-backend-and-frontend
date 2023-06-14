@@ -7,6 +7,7 @@ import org.etf.webshopbackend.exceptions.UnAuthorizedException;
 import org.etf.webshopbackend.model.enums.RoleEnum;
 import org.etf.webshopbackend.model.request.UserPasswordRequest;
 import org.etf.webshopbackend.model.request.UserRequest;
+import org.etf.webshopbackend.model.request.UserUpdateRequest;
 import org.etf.webshopbackend.model.response.UserResponse;
 import org.etf.webshopbackend.security.model.JwtUserDetails;
 import org.etf.webshopbackend.service.FileService;
@@ -58,7 +59,7 @@ public class UserController {
 
   @PutMapping("{id}")
   public ResponseEntity<UserResponse> update(@PathVariable Long id,
-                                             @Valid @RequestBody UserRequest userRequest,
+                                             @Valid @RequestBody UserUpdateRequest userRequest,
                                              @AuthenticationPrincipal JwtUserDetails jwtUser
   ) {
     if (!id.equals(jwtUser.getId()) && !RoleEnum.admin.name().equals(jwtUser.getRole())) {
@@ -81,7 +82,6 @@ public class UserController {
   }
 
 
-  // TODO: not needed
   @DeleteMapping("{id}")
   public ResponseEntity<UserResponse> delete(@PathVariable Long id) {
     UserResponse user = userService.delete(id);

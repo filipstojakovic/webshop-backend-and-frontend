@@ -7,7 +7,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastService} from 'angular-toastify';
 import formUtils from '../../../../utils/formUtils';
 import {Product} from '../../../../model/Product';
-import {formatDate} from '@angular/common';
 import myUtils from '../../../../utils/myUtils';
 
 @Component({

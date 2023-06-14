@@ -14,6 +14,7 @@ import {backendUrl} from '../../constants/backendUrl';
 import {HttpClient} from '@angular/common/http';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ProductSearchRequest} from '../../model/request/ProductSearchRequest';
+import {Attribute} from '../../model/Attribute';
 
 @Component({
   selector: 'app-product',
@@ -24,7 +25,7 @@ export class ProductComponent implements OnInit {
 
   form!: FormGroup;
 
-  categoryService!: GenericCrudService<Category, Category>
+  categoryService!: GenericCrudService<Category, Category>;
 
   totalNumber: number = 0;
   private currentPageNumber: number = 0;
@@ -40,13 +41,14 @@ export class ProductComponent implements OnInit {
   ) {
 
     this.categoryService = new GenericCrudService<Category, Category>(backendUrl.CATEGORIES, http);
+
     const userId: number = tokenService.getIdFromToken();
     this.pageSize = Number.parseInt(sessionStorage.getItem(userId + "") ?? "5");
 
     this.form = this.fb.group({
       nameSearch: "",
-      attributeNameValueRequests: [],
       categoryIdSearch: "",
+      attributeNameValueRequests: [],
     });
   }
 
@@ -100,6 +102,15 @@ export class ProductComponent implements OnInit {
   }
 
   categoryChangeEvent(category: any) {
-    console.log("Category change event" + JSON.stringify(category, null, 2));
+    if (!category)
+      return; //TODO: remove/clear attributes
+
+    const categoryId = category.id;
+    this.http.get<Attribute[]>(backendUrl.CATEGORIES + `/${categoryId}/attributes`).subscribe({
+          next: (res) => {
+            console.log("product.component.ts > next(): "+ JSON.stringify(res, null, 2));
+          },
+        },
+    )
   }
 }

@@ -1,4 +1,4 @@
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 function createObjectData(formData: FormData, parentKey: string, value: Object) {
   for (const key in value) {

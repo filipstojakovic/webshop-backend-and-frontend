@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import tokenService from './TokenService';
 import {HttpClient} from '@angular/common/http';
 import {ToastService} from 'angular-toastify';

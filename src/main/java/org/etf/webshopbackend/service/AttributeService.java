@@ -34,4 +34,10 @@ public class AttributeService {
   private void setAttributesCategory(Category category, List<Attribute> attributesRequest) {
     attributesRequest.forEach(attribute -> attribute.setCategory(category));
   }
+
+  public List<Attribute> findAllCategoryAttributes(Long categoryId) {
+    Category category = categoryRepository.findById(categoryId)
+        .orElseThrow(() -> new NotFoundException(Category.class, categoryId));
+    return category.getAttributes();
+  }
 }

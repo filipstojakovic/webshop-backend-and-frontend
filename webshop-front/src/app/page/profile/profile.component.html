@@ -1,10 +1,11 @@
 <div class="default-style">
   <div class="profile-container">
-    <form *ngIf="form" class="center-container" [formGroup]="form">
+    <form *ngIf="form" class="center-container" (ngSubmit)="saveChanges()" [formGroup]="form">
       <app-input
           style="width: 100%"
           label="Username"
           type="text"
+          [readonly]="true"
           [control]="$any(form.get('username'))"
       >
       </app-input>
@@ -52,7 +53,17 @@
     </div>
   </div>
   <div class="profile-button-container">
-    <app-button type="button" (btnClick)="editMode()">Edit profile</app-button>
-    <app-button (btnClick)="changePasswordClick()">Change password</app-button>
+    <ng-container *ngIf="isReadOnly">
+      <app-button type="button" (btnClick)="changeEditMode()">Edit profile
+      </app-button>
+      <app-button (btnClick)="changePasswordClick()">Change password
+      </app-button>
+    </ng-container>
+    <ng-container *ngIf="!isReadOnly">
+      <app-button type="submit" (btnClick)="saveChanges()">Save changes
+      </app-button>
+      <app-button (btnClick)="changeEditMode()">Cancle
+      </app-button>
+    </ng-container>
   </div>
 </div>

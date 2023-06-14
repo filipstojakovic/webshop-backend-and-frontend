@@ -1,5 +1,3 @@
-import {User} from './User';
-
 export class UserRequest {
   username: string = "";
   password: string = "";
