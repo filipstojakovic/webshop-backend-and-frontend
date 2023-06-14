@@ -1,5 +1,5 @@
 export interface UserPasswordRequest {
 
-  newPassword: string;
   oldPassword: string;
+  newPassword: string;
 }

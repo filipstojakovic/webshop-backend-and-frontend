@@ -28,14 +28,14 @@ export class SellProductComponent implements OnInit {
   filteredOptions!: Observable<Category[]>;
   attributesValue: AttributeNameValue[] = [];
 
-  categoryService!: GenericCrudService<Category>
+  categoryService!: GenericCrudService<Category, Category>
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private router: Router,
               private http: HttpClient,
               private toastService: ToastService) {
-    this.categoryService = new GenericCrudService<Category>(backendUrl.CATEGORIES, http);
+    this.categoryService = new GenericCrudService<Category, Category>(backendUrl.CATEGORIES, http);
   }
 
   ngOnInit(): void {

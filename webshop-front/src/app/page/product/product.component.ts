@@ -24,7 +24,7 @@ export class ProductComponent implements OnInit {
 
   form!: FormGroup;
 
-  categoryService!: GenericCrudService<Category>
+  categoryService!: GenericCrudService<Category, Category>
 
   totalNumber: number = 0;
   private currentPageNumber: number = 0;
@@ -39,7 +39,7 @@ export class ProductComponent implements OnInit {
               private fb: FormBuilder,
   ) {
 
-    this.categoryService = new GenericCrudService<Category>(backendUrl.CATEGORIES, http);
+    this.categoryService = new GenericCrudService<Category, Category>(backendUrl.CATEGORIES, http);
     const userId: number = tokenService.getIdFromToken();
     this.pageSize = Number.parseInt(sessionStorage.getItem(userId + "") ?? "5");
 
@@ -97,5 +97,9 @@ export class ProductComponent implements OnInit {
   onKeyDown() {
     console.log("product.component.ts > onKeyDown(): " + JSON.stringify("enter clicked", null, 2));
     //   //TODO: do something with enter search box in focus?
+  }
+
+  categoryChangeEvent(category: any) {
+    console.log("Category change event" + JSON.stringify(category, null, 2));
   }
 }

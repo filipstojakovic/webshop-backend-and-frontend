@@ -6,6 +6,9 @@ import {backendUrl} from '../../constants/backendUrl';
 import tokenService from '../../service/TokenService';
 import {ToastService} from 'angular-toastify';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {UserRequest} from '../../model/UserRequest';
+import {paths} from '../../constants/paths';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -18,10 +21,10 @@ export class ProfileComponent implements OnInit {
   form!: FormGroup;
   isReadOnly = true;
 
-  userService: GenericCrudService<User>
+  userService: GenericCrudService<UserRequest, User>
 
-  constructor(private http: HttpClient, private toastService: ToastService, private fb: FormBuilder) {
-    this.userService = new GenericCrudService<User>(backendUrl.USERS, http);
+  constructor(private http: HttpClient, private toastService: ToastService, private fb: FormBuilder, private router: Router) {
+    this.userService = new GenericCrudService<UserRequest, User>(backendUrl.USERS, http);
   }
 
   ngOnInit(): void {
@@ -47,5 +50,11 @@ export class ProfileComponent implements OnInit {
 
   editMode() {
     this.isReadOnly = false;
+  }
+
+  protected readonly paths = paths;
+
+  changePasswordClick() {
+    this.router.navigateByUrl(paths.CHANGE_PASSWORD);
   }
 }

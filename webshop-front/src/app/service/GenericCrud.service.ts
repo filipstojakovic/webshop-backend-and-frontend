@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 
-export class GenericCrudService<T> {
+export class GenericCrudService<REQ, RESP> {
   private readonly path: string;
   protected http: HttpClient;
 
@@ -10,20 +10,20 @@ export class GenericCrudService<T> {
   }
 
   getAll() {
-    return this.http.get<T[]>(this.path);
+    return this.http.get<RESP[]>(this.path);
   }
 
   getById(id: number) {
     const uriId = this.path + `/${id}`;
-    return this.http.get<T>(uriId);
+    return this.http.get<RESP>(uriId);
   }
 
-  create(entity: T) {
-    return this.http.post<T>(this.path, entity);
+  create(entity: REQ) {
+    return this.http.post<RESP>(this.path, entity);
   }
 
-  update(id: number, entity: T) {
-    return this.http.put<T>(`${this.path}/${id}`, entity);
+  update(id: number, entity: REQ) {
+    return this.http.put<RESP>(`${this.path}/${id}`, entity);
   }
 
   delete(id: number) {

@@ -31,6 +31,6 @@ app:
 
 logging:
   level:
-    root: info #TRACE
+    root: trace #info #TRACE
   file:
     path: logs

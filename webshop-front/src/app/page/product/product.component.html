@@ -12,7 +12,9 @@
 
       <app-category-dropdown
           class="category-search"
-          [selectedCategoryIdControl]="$any(form.get('categoryIdSearch'))">
+          [selectedCategoryIdControl]="$any(form.get('categoryIdSearch'))"
+          (categoryChangeEvent)="categoryChangeEvent($event)"
+      >
       </app-category-dropdown>
 
     </div>

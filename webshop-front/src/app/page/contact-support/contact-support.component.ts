@@ -17,14 +17,14 @@ import formUtils from '../../utils/formUtils';
 export class ContactSupportComponent implements OnInit {
   protected readonly paths = paths;
   form!: FormGroup;
-  contactSupportService!: GenericCrudService<any>
+  contactSupportService!: GenericCrudService<any,any>
 
   constructor(
       private fb: FormBuilder,
       private http: HttpClient,
       private toastService: ToastService,
   ) {
-    this.contactSupportService = new GenericCrudService<any>(paths.CONTACT_SUPPORT, http);
+    this.contactSupportService = new GenericCrudService<any,any>(paths.CONTACT_SUPPORT, http);
   }
 
   ngOnInit(): void {

@@ -17,7 +17,7 @@ import {PurchaseRequest} from '../../../model/request/PurchaseRequest';
   styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit {
-  productService!: GenericCrudService<Product>
+  productService!: GenericCrudService<Product,Product>
   product: Product | null = null;
   form: FormGroup;
 
@@ -29,7 +29,7 @@ export class ProductDetailsComponent implements OnInit {
               private fb: FormBuilder,
               private dialog: MatDialog,
   ) {
-    this.productService = new GenericCrudService<Product>(backendUrl.PRODUCTS, http);
+    this.productService = new GenericCrudService<Product,Product>(backendUrl.PRODUCTS, http);
   }
 
   ngOnInit(): void {

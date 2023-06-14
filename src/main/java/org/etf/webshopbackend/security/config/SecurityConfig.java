@@ -126,7 +126,6 @@ public class SecurityConfig {
         requests
             .requestMatchers(HttpMethod.GET, EndpointConstants.USERS + EndpointConstants.ALL_PATHS)
             .permitAll()
-            // TODO: permit post and put but only for them selfs
             .requestMatchers(HttpMethod.POST, EndpointConstants.USERS)
             .hasAnyAuthority(RoleEnum.admin.toString())
             .requestMatchers(HttpMethod.PUT, EndpointConstants.USERS+ EndpointConstants.ALL_PATHS)

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Category} from '../../model/Category';
 import {HttpClient} from '@angular/common/http';
@@ -13,11 +13,14 @@ import {backendUrl} from '../../constants/backendUrl';
 export class CategoryDropdownComponent implements OnInit {
   @Input() selectedCategoryIdControl: FormControl;
 
+  @Output() categoryChangeEvent = new EventEmitter();
+
+
   categories: Category[] = []
-  categoryService: GenericCrudService<Category>;
+  categoryService: GenericCrudService<Category, Category>;
 
   constructor(private http: HttpClient) {
-    this.categoryService = new GenericCrudService<Category>(backendUrl.CATEGORIES, http);
+    this.categoryService = new GenericCrudService<Category, Category>(backendUrl.CATEGORIES, http);
   }
 
   ngOnInit(): void {
@@ -27,5 +30,13 @@ export class CategoryDropdownComponent implements OnInit {
           },
         },
     )
+  }
+
+  onSelectionChange(event: any) {
+
+    const categoryId = event.value;
+    const category = this.categories.find(x => x.id === categoryId);
+    this.categoryChangeEvent.emit(category);
+
   }
 }
