@@ -54,6 +54,8 @@ public class ProductService {
     Specification<Product> searchProductSpecificatio = createSpecificationFromRequest(searchProductRequest);
     Pageable sortedPage = defaultSortPageIfNotExists(page);
 
+    //TODO: some attribute values can be null, check that condition
+    //TODO: maybe send attribute id?
     return productRepository.findAll(ProductSpecifications.notPurchased().and(searchProductSpecificatio), sortedPage)
         .map(productMapper::toResponse);
   }
@@ -134,7 +136,7 @@ public class ProductService {
       return ProductSpecifications.emptySpecification();
     }
 
-    Specification<Product> productNameSpecification = ProductSpecifications.productByName(searchProductRequest.getNameSearch());
+    Specification<Product> productNameSpecification = ProductSpecifications.productByName(searchProductRequest.getNameSearch().trim());
     Specification<Product> productCategorySpecification = ProductSpecifications.byCategoryId(searchProductRequest.getCategoryIdSearch());
     Specification<Product> productAttributeSpecificaiton = createSpecificationFromArray(searchProductRequest.getAttributeNameValueSearches());
     return productNameSpecification
@@ -143,14 +145,14 @@ public class ProductService {
   }
 
   private Specification<Product> createSpecificationFromArray(List<AttributeNameValueRequest> attributeNameValueRequests) {
-    if (attributeNameValueRequests == null) {
+    if (attributeNameValueRequests == null || attributeNameValueRequests.isEmpty()) {
       return ProductSpecifications.emptySpecification();
     }
 
     return attributeNameValueRequests.stream()
         .map(attributeNameValueRequest ->
             ProductSpecifications.hasAttributeWithValue(attributeNameValueRequest.getName(),
-                attributeNameValueRequest.getValue()))
+                attributeNameValueRequest.getValue().trim()))
         .reduce(Specification::and).orElseThrow(BadRequestException::new);
 
   }

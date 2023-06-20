@@ -2,8 +2,10 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastService} from 'angular-toastify';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {PurchaseRequest} from '../../model/request/PurchaseRequest';
 import {Product} from '../../model/Product';
+import {HttpClient} from '@angular/common/http';
+import {PaymentService} from '../../service/payment.service';
+import {PurchaseRequest} from '../../model/request/PurchaseRequest';
 
 @Component({
   selector: 'app-payment-modal',
@@ -15,22 +17,23 @@ export class PaymentModalComponent implements OnInit {
   dialogForm: FormGroup = new FormGroup({});
   product: Product;
 
-
   constructor(
       public fb: FormBuilder,
       public dialogRef: MatDialogRef<PaymentModalComponent>,
       private _toastService: ToastService,
+      private http: HttpClient,
+      private paymentService: PaymentService,
       @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    console.log("payment-modal.component.ts > constructor(): " + JSON.stringify(data, null, 2));
     this.product = data.dialogData;
   }
 
 
   ngOnInit(): void {
+
     this.dialogForm = this.fb.group({
-      productName: this.product.name,
-      cardNumber: ["", Validators.required],
+      paymentMethodId: ["", Validators.required],
+      value: ["", Validators.required],
     });
   }
 
@@ -38,12 +41,12 @@ export class PaymentModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  saveTask({ value, valid }: { value: PurchaseRequest, valid: boolean }) {
+  purchaseSubmit({ value, valid }: { value: PurchaseRequest, valid: boolean }) {
+    console.log("payment-modal.component.ts > saveTask(): " + JSON.stringify(value, null, 2));
     if (!this.dialogForm.valid) {
-      this._toastService.error("form not valid");
+      this._toastService.error("Form not valid");
       return;
     }
-    console.log("payment-modal.component.ts > saveTask(): " + JSON.stringify(value, null, 2));
     this.dialogForm.reset();
     this.dialogRef.close(value);
   }

@@ -4,11 +4,14 @@
     <div class="form-control">
       <mat-form-field appearance="fill">
         <mat-label>Product name</mat-label>
-        <input matInput formControlName="productName" readonly>
+        <input matInput value="{{product.name}}" readonly>
       </mat-form-field>
+
+      <app-payment-method-dropdown [selectedPaymentMethodIdControl]="$any(dialogForm.get('paymentMethodId'))"/>
+
       <mat-form-field appearance="fill">
         <mat-label>Card number</mat-label>
-        <input matInput formControlName="cardNumber" required>
+        <input matInput formControlName="value" required>
       </mat-form-field>
     </div>
   </div>
@@ -16,7 +19,7 @@
   <div mat-dialog-actions style="float: right">
     <button mat-button type="button" (click)="onNoClick()">No Thanks</button>
     <button type="submit" mat-raised-button color="primary"
-            (click)="saveTask(dialogForm)">Submit
+            (click)="purchaseSubmit(dialogForm)">Submit
     </button>
   </div>
 </form>

@@ -1,23 +1,30 @@
 <div style="width: 100%">
-  <form [formGroup]="form">
+  <form [formGroup]="searchForm">
     <div class="search-container">
-      <mat-form-field appearance="fill" class="name-search">
-        <mat-label>Search product</mat-label>
-        <input matInput
-               (keydown.enter)="onKeyDown()"
-               formControlName="nameSearch"
-               type="text"
-        />
-      </mat-form-field>
+      <app-input
+          class="name-search"
+          label="Search product"
+          type="text"
+          errorMessage="Username is required"
+          [required]="false"
+          [control]="$any(searchForm.get('nameSearch'))"
+      ></app-input>
 
       <app-category-dropdown
           class="category-search"
-          [selectedCategoryIdControl]="$any(form.get('categoryIdSearch'))"
+          [selectedCategoryIdControl]="$any(searchForm.get('categoryIdSearch'))"
           (categoryChangeEvent)="categoryChangeEvent($event)"
       >
       </app-category-dropdown>
-
     </div>
+    <form style="display: flex; flex-wrap: wrap" *ngIf="showAttributeFields()" [formGroup]="attributeForm">
+      <app-input *ngFor="let attribute of attributes"
+                 label="{{attribute.name}}"
+                 type="text"
+                 [control]="$any(attributeForm.get(attribute.name))"
+      >
+      </app-input>
+    </form>
   </form>
 
   <div class="product-list">

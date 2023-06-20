@@ -19,5 +19,6 @@ public class PurchaseResponse {
   private ProductResponse product;
 //   private UserResponse user;
   private PaymentMethod paymentMethod;
+  private String value;
   private LocalDateTime date;
 }

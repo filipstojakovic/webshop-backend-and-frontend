@@ -1,4 +1,5 @@
 
 export interface PurchaseRequest {
-  cardNumber: string;
+  paymentMethodId: number,
+  value: string;
 }

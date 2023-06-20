@@ -9,6 +9,7 @@ import {paths} from '../../../constants/paths';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {PaymentModalComponent} from '../../../components/payment-modal/payment-modal.component';
+import {PurchaseService} from '../../../service/purchase.service';
 import {PurchaseRequest} from '../../../model/request/PurchaseRequest';
 
 @Component({
@@ -17,7 +18,7 @@ import {PurchaseRequest} from '../../../model/request/PurchaseRequest';
   styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit {
-  productService!: GenericCrudService<Product,Product>
+  productService!: GenericCrudService<Product, Product>
   product: Product | null = null;
   form: FormGroup;
 
@@ -28,8 +29,9 @@ export class ProductDetailsComponent implements OnInit {
               private router: Router,
               private fb: FormBuilder,
               private dialog: MatDialog,
+              private purchaseService: PurchaseService,
   ) {
-    this.productService = new GenericCrudService<Product,Product>(backendUrl.PRODUCTS, http);
+    this.productService = new GenericCrudService<Product, Product>(backendUrl.PRODUCTS, http);
   }
 
   ngOnInit(): void {
@@ -68,12 +70,18 @@ export class ProductDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: PurchaseRequest) => {
       if (!result) {
-        console.log("header.component.ts > headerBtnClicked(): " + "result undefined");
         return;
       }
 
-      console.log("product-details.component.ts > (): " + JSON.stringify(result, null, 2));
-      // TODO: call service to purchase product
+      this.purchaseService.purchaseProduct(this.product!.id!, result).subscribe({
+            next: (res) => {
+              console.log("product-details.component.ts > next(): "+ JSON.stringify(res, null, 2));
+            },
+            error: (err) => {
+              console.error("nesto ne valja"); //TODO: finish if not working, look up
+            },
+          },
+      )
     });
   }
 }

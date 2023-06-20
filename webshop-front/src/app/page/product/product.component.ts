@@ -12,9 +12,10 @@ import {Category} from '../../model/Category';
 import {GenericCrudService} from '../../service/GenericCrud.service';
 import {backendUrl} from '../../constants/backendUrl';
 import {HttpClient} from '@angular/common/http';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ProductSearchRequest} from '../../model/request/ProductSearchRequest';
 import {Attribute} from '../../model/Attribute';
+import {AttributeNameValue} from '../../model/request/AttributeNameValue';
 
 @Component({
   selector: 'app-product',
@@ -23,7 +24,8 @@ import {Attribute} from '../../model/Attribute';
 })
 export class ProductComponent implements OnInit {
 
-  form!: FormGroup;
+  searchForm: FormGroup;
+  attributeForm: FormGroup;
 
   categoryService!: GenericCrudService<Category, Category>;
 
@@ -32,6 +34,7 @@ export class ProductComponent implements OnInit {
   pageSize: number = 5;
 
   products: Product[] | undefined | null;
+  attributes: Attribute[] | undefined | null;
 
   constructor(private productService: ProductService,
               private router: Router,
@@ -45,21 +48,32 @@ export class ProductComponent implements OnInit {
     const userId: number = tokenService.getIdFromToken();
     this.pageSize = Number.parseInt(sessionStorage.getItem(userId + "") ?? "5");
 
-    this.form = this.fb.group({
+    this.searchForm = this.fb.group({
       nameSearch: "",
       categoryIdSearch: "",
-      attributeNameValueRequests: [],
+      attributeNameValueSearches: this.fb.group({}),
     });
+
+    this.attributeForm = this.fb.group({});
   }
 
   ngOnInit(): void {
     this.getProducts();
 
-    this.form.valueChanges
+    this.searchForm.valueChanges
         .pipe(debounceTime(constant.DEBOUNCE_TIME))
         .subscribe(() => {
+          console.table(this.searchForm.value);
           this.currentPageNumber = 0;
-          this.getProducts(this.form.value);
+
+
+          let { attributeNameValueSearches } = this.searchForm.value;
+          let attributeReq = Object.keys(attributeNameValueSearches).map(key => {
+            return new AttributeNameValue(key, attributeNameValueSearches[key])
+          })
+
+          this.searchForm.value.attributeNameValueSearches = attributeReq;
+          this.getProducts(this.searchForm.value);
         });
   }
 
@@ -96,21 +110,32 @@ export class ProductComponent implements OnInit {
     this.getProducts();
   }
 
-  onKeyDown() {
-    console.log("product.component.ts > onKeyDown(): " + JSON.stringify("enter clicked", null, 2));
-    //   //TODO: do something with enter search box in focus?
+  createAttributeForm(attributes: Attribute[]) {
+    this.attributeForm = this.fb.group({});
+    attributes.map(attribute => {
+      this.attributeForm?.addControl(attribute.name, new FormControl(""))// new FormControl<Attribute | null>(null))
+    });
+    this.searchForm.setControl("attributeNameValueSearches", this.attributeForm);
   }
 
   categoryChangeEvent(category: any) {
-    if (!category)
-      return; //TODO: remove/clear attributes
+    if (!category) {
+      this.attributeForm = this.fb.group({});
+      return;
+    }
 
     const categoryId = category.id;
     this.http.get<Attribute[]>(backendUrl.CATEGORIES + `/${categoryId}/attributes`).subscribe({
-          next: (res) => {
-            console.log("product.component.ts > next(): "+ JSON.stringify(res, null, 2));
+          next: (attributes) => {
+            this.attributes = attributes;
+            console.log("product.component.ts > next(): " + JSON.stringify(attributes, null, 2));
+            this.createAttributeForm(attributes);
           },
         },
     )
+  }
+
+  showAttributeFields() {
+    return this.attributeForm != null && Object.keys(this.attributeForm.controls).length > 0;
   }
 }

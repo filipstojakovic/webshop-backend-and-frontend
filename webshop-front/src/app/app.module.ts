@@ -33,6 +33,8 @@ import {ProfileComponent} from './page/profile/profile.component';
 import {CategoryDropdownComponent} from './components/category-dropdown/category-dropdown.component';
 import {ChangePasswordComponent} from './page/change-password/change-password.component';
 import {UserService} from './service/user.service';
+import {PaymentService} from './service/payment.service';
+import { PaymentMethodDropdownComponent } from './components/payment-method-dropdown/payment-method-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import {UserService} from './service/user.service';
     ProfileComponent,
     CategoryDropdownComponent,
     ChangePasswordComponent,
+    PaymentMethodDropdownComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -73,6 +76,7 @@ import {UserService} from './service/user.service';
     AuthGuard,
     UserService,
     AuthService,
+    PaymentService,
     ToastService,
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true },
   ],

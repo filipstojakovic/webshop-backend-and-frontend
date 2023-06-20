@@ -47,6 +47,9 @@ public class ProductSpecifications {
   }
 
   public static Specification<Product> hasAttributeWithValue(String attributeName, String attributeValue) {
+      if(attributeName.isEmpty())
+        return emptySpecification();
+
     return (root, query, criteriaBuilder) -> {
       Join<Product, ProductHasAttribute> join = root.join(Product_.PRODUCT_HAS_ATTRIBUTES);
       Join<ProductHasAttribute, Attribute> attributeJoin = join.join(ProductHasAttribute_.ATTRIBUTE);

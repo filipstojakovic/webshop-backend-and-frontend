@@ -2,6 +2,14 @@
   <form class="center-container" [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Product information</h2>
 
+<!--    TODO: use this commented -->
+<!--    <app-category-dropdown-->
+<!--        class="category-search"-->
+<!--        [selectedCategoryIdControl]="$any(searchForm.get('categoryIdSearch'))"-->
+<!--        (categoryChangeEvent)="categoryChangeEvent($event)"-->
+<!--    >-->
+<!--    </app-category-dropdown>-->
+
     <mat-form-field style="width: 100%" appearance="fill">
       <mat-label>Category</mat-label>
       <input type="text"
@@ -20,7 +28,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <div style="border: 2px solid black; width: 100%" *ngIf="attributeForm">
+    <div style="width: 100%" *ngIf="attributeForm">
       <form class="center-container" [formGroup]="attributeForm">
         <app-input *ngFor="let attributeValue of attributesValue"
                    style="width: 100%"

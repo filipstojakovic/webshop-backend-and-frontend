@@ -8,6 +8,6 @@ export const backendUrl = {
   PRODUCTS_SEARCH: 'products/search',
   CATEGORIES: 'categories',
   PURCHASES: 'purchases',
-
+  PAYMENT_METHODS: "payment-methods",
 
 } as const;
