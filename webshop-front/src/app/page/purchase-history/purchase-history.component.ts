@@ -5,7 +5,7 @@ import {ToastService} from 'angular-toastify';
 import {Purchase} from '../../model/Purchase';
 import {Product} from '../../model/Product';
 import {paths} from '../../constants/paths';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-purchase-history',
@@ -15,10 +15,13 @@ import {Router} from '@angular/router';
 export class PurchaseHistoryComponent implements OnInit {
   purcases: Purchase[] = [];
 
-  constructor(private http: HttpClient, private toast: ToastService, private router: Router) {
+  constructor(private http: HttpClient,private activatedroute:ActivatedRoute, private toast: ToastService, private router: Router) {
   }
 
   ngOnInit() {
+    this.activatedroute.data.subscribe(data => {
+      console.log("purchase-history.component.ts > (): "+ JSON.stringify(data, null, 2));
+    })
     this.getPurchases()
   }
 
