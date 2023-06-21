@@ -22,6 +22,7 @@
       <h4>
         Seller: {{product.seller!.firstName + ' ' + product.seller!.lastName}}</h4>
     </div>
-    <div class="product-price">${{product.price}}</div>
+    <div
+        class="product-price">{{product.price | currency:'EUR': "symbol"}}</div>
   </div>
 </div>

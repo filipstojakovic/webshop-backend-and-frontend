@@ -12,7 +12,9 @@
   <button mat-raised-button [routerLink]="[paths.PURCHASE_HISTORY]"
           routerLinkActive="selected-button">Purchase history
   </button>
-
+  <button mat-raised-button [routerLink]="[paths.YOUR_PRODUCTS]"
+          routerLinkActive="selected-button">Your products
+  </button>
 
   <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loading">
     <div>Logged in</div>

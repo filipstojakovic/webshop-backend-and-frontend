@@ -3,9 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastService} from 'angular-toastify';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Product} from '../../model/Product';
-import {HttpClient} from '@angular/common/http';
-import {PaymentService} from '../../service/payment.service';
 import {PurchaseRequest} from '../../model/request/PurchaseRequest';
+import {PaymentMethod} from '../../model/PaymentMethod';
 
 @Component({
   selector: 'app-payment-modal',
@@ -16,13 +15,12 @@ export class PaymentModalComponent implements OnInit {
 
   dialogForm: FormGroup = new FormGroup({});
   product: Product;
+  currentPaymentMethod: PaymentMethod;
 
   constructor(
       public fb: FormBuilder,
       public dialogRef: MatDialogRef<PaymentModalComponent>,
       private _toastService: ToastService,
-      private http: HttpClient,
-      private paymentService: PaymentService,
       @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.product = data.dialogData;
@@ -49,5 +47,16 @@ export class PaymentModalComponent implements OnInit {
     }
     this.dialogForm.reset();
     this.dialogRef.close(value);
+  }
+
+  checkPaymentMethod() {
+    if (this.currentPaymentMethod) {
+      return this.currentPaymentMethod.name.toLowerCase().includes('card');
+    }
+    return false;
+  }
+
+  selectedPaymentMethod(paymentMethod: PaymentMethod) {
+    this.currentPaymentMethod = paymentMethod;
   }
 }

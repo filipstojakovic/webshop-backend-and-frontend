@@ -1,6 +1,7 @@
 <mat-form-field style="width: 100%">
-  <mat-label>Choose Category</mat-label>
-  <mat-select [formControl]="selectedPaymentMethodIdControl">
+  <mat-label>Choose payment method</mat-label>
+  <mat-select [formControl]="selectedPaymentMethodIdControl"
+              (selectionChange)="onSelectionChange($event)">
     <mat-option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod.id">
       {{paymentMethod.name}}
     </mat-option>

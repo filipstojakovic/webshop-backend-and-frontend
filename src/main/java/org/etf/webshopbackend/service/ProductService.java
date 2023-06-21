@@ -60,7 +60,6 @@ public class ProductService {
         .map(productMapper::toResponse);
   }
 
-  // TODO: this is for testing purposes
   public List<ProductResponse> findAll() {
     return productRepository.findAll()
         .stream()

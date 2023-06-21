@@ -17,7 +17,7 @@
       >
       </app-category-dropdown>
     </div>
-    <form style="display: flex; flex-wrap: wrap" *ngIf="showAttributeFields()" [formGroup]="attributeForm">
+    <form style="display: flex; flex-wrap: wrap; gap: 10px" *ngIf="showAttributeFields()" [formGroup]="attributeForm">
       <app-input *ngFor="let attribute of attributes"
                  label="{{attribute.name}}"
                  type="text"

@@ -12,7 +12,6 @@ import {backendUrl} from '../../constants/backendUrl';
 })
 export class CategoryDropdownComponent implements OnInit {
   @Input() selectedCategoryIdControl: FormControl;
-
   @Output() categoryChangeEvent = new EventEmitter();
 
 
@@ -33,7 +32,6 @@ export class CategoryDropdownComponent implements OnInit {
   }
 
   onSelectionChange(event: any) {
-
     const categoryId = event.value;
     const category = this.categories.find(x => x.id === categoryId);
     this.categoryChangeEvent.emit(category);

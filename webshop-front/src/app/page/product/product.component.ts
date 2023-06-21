@@ -31,7 +31,7 @@ export class ProductComponent implements OnInit {
 
   totalNumber: number = 0;
   private currentPageNumber: number = 0;
-  pageSize: number = 5;
+  pageSize: number = 1;
 
   products: Product[] | undefined | null;
   attributes: Attribute[] | undefined | null;
@@ -46,7 +46,7 @@ export class ProductComponent implements OnInit {
     this.categoryService = new GenericCrudService<Category, Category>(backendUrl.CATEGORIES, http);
 
     const userId: number = tokenService.getIdFromToken();
-    this.pageSize = Number.parseInt(sessionStorage.getItem(userId + "") ?? "5");
+    this.pageSize = Number.parseInt(sessionStorage.getItem(userId + "") ?? "1");
 
     this.searchForm = this.fb.group({
       nameSearch: "",
@@ -105,6 +105,7 @@ export class ProductComponent implements OnInit {
 
     this.pageSize = pageSize;
     sessionStorage.setItem(tokenService.getIdFromToken() + "", pageSize + "");
+
     this.currentPageNumber = pageIndex;
 
     this.getProducts();

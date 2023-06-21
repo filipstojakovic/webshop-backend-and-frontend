@@ -2,13 +2,10 @@ package org.etf.webshopbackend.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.etf.webshopbackend.model.entity.Purchase;
-import org.etf.webshopbackend.model.mapper.GenericMapper;
 import org.etf.webshopbackend.model.request.PurchaseRequest;
 import org.etf.webshopbackend.model.response.PurchaseResponse;
-import org.etf.webshopbackend.repository.PurchaseRepository;
 import org.etf.webshopbackend.security.model.JwtUserDetails;
-import org.hibernate.cfg.NotYetImplementedException;
+import org.etf.webshopbackend.service.PurchaseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,19 +21,19 @@ import java.util.List;
 @RestController
 public class PurchaseController {
 
-  private final PurchaseRepository purchaseRepository;
-  private final GenericMapper<Purchase, Purchase, PurchaseResponse> purchaseMapper;
+  private final PurchaseService purchaseService;
 
   @GetMapping("purchases")
-  public List<PurchaseResponse> findUserPurchaseHistory(@AuthenticationPrincipal JwtUserDetails user) {
-    List<Purchase> purchases = purchaseRepository.findByUserId(user.getId());
-    return purchaseMapper.toResponses(purchases, PurchaseResponse.class);
+  public ResponseEntity<List<PurchaseResponse>> findUserPurchaseHistory(@AuthenticationPrincipal JwtUserDetails user) {
+    List<PurchaseResponse> purchasesResponse = purchaseService.findById(user.getId());
+    return ResponseEntity.ok(purchasesResponse);
   }
 
   @PostMapping("products/{id}/purchases")
   public ResponseEntity<PurchaseResponse> purchaseProduct(@PathVariable(name = "id") Long productId,
                                                           @RequestBody PurchaseRequest purchaseRequest,
                                                           @AuthenticationPrincipal JwtUserDetails user) {
-    throw new NotYetImplementedException("asd"); //TODO: finish this
+    PurchaseResponse purchaseResponse = purchaseService.purchaseProduct(productId,purchaseRequest, user.getId());
+    return ResponseEntity.ok(purchaseResponse);
   }
 }

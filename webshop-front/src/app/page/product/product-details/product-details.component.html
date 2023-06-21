@@ -1,4 +1,3 @@
-
 <div class="default-style" style="padding: 10px">
   <app-button (btnClick)="purchaseButtonClicked()">Purchase</app-button>
   <div style="display: flex; flex-direction: row">
@@ -17,10 +16,8 @@
           </app-input>
           <app-input
               style="width: 100%"
-              label="Product name"
+              label="Description"
               type="text"
-              errorMessage="Product name is required"
-              [required]="true"
               [readonly]=true
               [control]="$any(form.get('description'))"
           >
@@ -28,10 +25,8 @@
 
           <app-input
               style="width: 100%"
-              label="Product name"
-              type="text"
-              errorMessage="Product name is required"
-              [required]="true"
+              label="Price"
+              type="number"
               [readonly]=true
               [control]="$any(form.get('price'))"
           >
@@ -39,10 +34,8 @@
 
           <app-input
               style="width: 100%"
-              label="Product name"
+              label="Location"
               type="text"
-              errorMessage="Product name is required"
-              [required]="true"
               [readonly]=true
               [control]="$any(form.get('location'))"
           >
@@ -52,8 +45,6 @@
               style="width: 100%"
               label="Category name"
               type="text"
-              errorMessage="Product name is required"
-              [required]="true"
               [readonly]=true
               [control]="$any(form.get('category'))"
           >
@@ -62,7 +53,8 @@
       </ng-container>
     </div>
     <div style="padding: 10px; margin: 10px; width: 50%">
-      <carousel style="z-index: 10" arrowsTheme="dark" [autoplay]=false  *ngIf="product && product.productImages">
+      <carousel style="z-index: 10" arrowsTheme="dark" [autoplay]=false
+                *ngIf="product && product.productImages">
         <div *ngFor="let image of product.productImages" class="carousel-cell">
           <img src="http://localhost:8080/products/{{image.id}}/image"
                alt="no image">

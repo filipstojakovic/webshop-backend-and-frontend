@@ -77,6 +77,13 @@ export const routes: Routes = [
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   {
+    path: paths.YOUR_PRODUCTS,
+    pathMatch: 'full',
+    component: PurchaseHistoryComponent,
+    // canActivate: [AuthGuard],
+    data: { role: [RoleEnum.admin, RoleEnum.user] },
+  },
+  {
     path: paths.CONTACT_SUPPORT,
     pathMatch: 'full',
     component: ContactSupportComponent,

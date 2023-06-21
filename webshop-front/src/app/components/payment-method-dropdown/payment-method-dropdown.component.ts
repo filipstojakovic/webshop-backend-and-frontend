@@ -10,7 +10,6 @@ import {FormControl} from '@angular/forms';
 })
 export class PaymentMethodDropdownComponent implements OnInit {
   @Input() selectedPaymentMethodIdControl: FormControl;
-
   @Output() paymentMethodChangeEvent = new EventEmitter();
 
   paymentMethods: PaymentMethod[] = [];
@@ -28,4 +27,10 @@ export class PaymentMethodDropdownComponent implements OnInit {
     )
   }
 
+  onSelectionChange(event: any) {
+    const paymentMethodId = event.value;
+    const paymentMethod = this.paymentMethods.find(x => x.id === paymentMethodId);
+    this.paymentMethodChangeEvent.emit(paymentMethod);
+
+  }
 }

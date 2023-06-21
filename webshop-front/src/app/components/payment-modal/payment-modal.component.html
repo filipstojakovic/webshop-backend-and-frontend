@@ -6,13 +6,23 @@
         <mat-label>Product name</mat-label>
         <input matInput value="{{product.name}}" readonly>
       </mat-form-field>
-
-      <app-payment-method-dropdown [selectedPaymentMethodIdControl]="$any(dialogForm.get('paymentMethodId'))"/>
-
       <mat-form-field appearance="fill">
-        <mat-label>Card number</mat-label>
-        <input matInput formControlName="value" required>
+        <mat-label>Price</mat-label>
+        <input matInput value="{{product.price|currency:'EUR':'symbol'}}"
+               readonly>
       </mat-form-field>
+
+      <app-payment-method-dropdown
+          [selectedPaymentMethodIdControl]="$any(dialogForm.get('paymentMethodId'))"
+          (paymentMethodChangeEvent)="selectedPaymentMethod($event)"
+      />
+
+      <ng-container *ngIf='checkPaymentMethod()'>
+        <mat-form-field appearance="fill">
+          <mat-label>{{currentPaymentMethod.name}} number</mat-label>
+          <input matInput formControlName="value" required>
+        </mat-form-field>
+      </ng-container>
     </div>
   </div>
 
