@@ -11,9 +11,9 @@ export class ProductService {
   constructor(private http: HttpClient) {
   }
 
-  searchProducts(currentPageIndex: number, pageSize: number, body?: ProductSearchRequest) {
+  searchProducts(currentPageIndex: number, pageSize: number, searchUrl:string, body?: ProductSearchRequest) {
     // console.log("product.service.ts > getProducts(): BODY" + JSON.stringify(body, null, 2));
-    const url = `${backendUrl.PRODUCTS_SEARCH}?page=${currentPageIndex}&size=${pageSize}`;
+    const url = `${searchUrl}?page=${currentPageIndex}&size=${pageSize}`;
     return this.http.post(url, body);
   }
 

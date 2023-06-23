@@ -5,11 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.exceptions.BadRequestException;
 import org.etf.webshopbackend.exceptions.NotFoundException;
-import org.etf.webshopbackend.model.entity.Attribute;
-import org.etf.webshopbackend.model.entity.Product;
-import org.etf.webshopbackend.model.entity.ProductHasAttribute;
-import org.etf.webshopbackend.model.entity.ProductImage;
-import org.etf.webshopbackend.model.entity.User;
+import org.etf.webshopbackend.model.entity.*;
 import org.etf.webshopbackend.model.mapper.ProductMapper;
 import org.etf.webshopbackend.model.request.AttributeNameValueRequest;
 import org.etf.webshopbackend.model.request.ProductRequest;
@@ -46,17 +42,44 @@ public class ProductService {
   private final static String DEFAULT_SORT_COLUMN = "date";
 
   //       .param("page", "5")
-//         .param("size", "10")
-//         .param("sort", "id,desc")   // <-- no space after comma!
-//         .param("sort", "name,asc")) //
+  //       .param("size", "10")
+  //       .param("sort", "id,desc")   // <-- no space after comma!
+  //       .param("sort", "name,asc")) //
   public Page<ProductResponse> findAllPageable(Pageable page, SearchProductRequest searchProductRequest) {
 
-    Specification<Product> searchProductSpecificatio = createSpecificationFromRequest(searchProductRequest);
     Pageable sortedPage = defaultSortPageIfNotExists(page);
 
-    //TODO: some attribute values can be null, check that condition
-    //TODO: maybe send attribute id?
-    return productRepository.findAll(ProductSpecifications.notPurchased().and(searchProductSpecificatio), sortedPage)
+    Specification<Product> searchProductSpecification = createSpecificationFromRequest(searchProductRequest);
+    searchProductSpecification = ProductSpecifications.notPurchased().and(searchProductSpecification);
+
+    return productRepository.findAll(searchProductSpecification, sortedPage)
+        .map(productMapper::toResponse);
+  }
+
+  // users purchase history
+  public Page<ProductResponse> findAllUserPurchaseHistoryPageable(Pageable page,
+                                                                  SearchProductRequest searchProductRequest,
+                                                                  Long userId) {
+
+    Pageable sortedPage = defaultSortPageIfNotExists(page);
+
+    Specification<Product> searchProductSpecification = createSpecificationFromRequest(searchProductRequest);
+    searchProductSpecification = ProductSpecifications.userPurchased(userId).and(searchProductSpecification);
+
+    return productRepository.findAll(searchProductSpecification, sortedPage)
+        .map(productMapper::toResponse);
+  }
+
+  // prdocuts that user is selling
+  public Page<ProductResponse> findAllUserProductsPageable(Pageable page,
+                                                           SearchProductRequest searchProductRequest,
+                                                           Long userId) {
+    Pageable sortedPage = defaultSortPageIfNotExists(page);
+
+    Specification<Product> searchProductSpecification = createSpecificationFromRequest(searchProductRequest);
+    searchProductSpecification = ProductSpecifications.userSelling(userId).and(searchProductSpecification);
+
+    return productRepository.findAll(searchProductSpecification, sortedPage)
         .map(productMapper::toResponse);
   }
 
@@ -135,7 +158,8 @@ public class ProductService {
       return ProductSpecifications.emptySpecification();
     }
 
-    Specification<Product> productNameSpecification = ProductSpecifications.productByName(searchProductRequest.getNameSearch().trim());
+    Specification<Product> productNameSpecification = ProductSpecifications.productByName(searchProductRequest.getNameSearch()
+        .trim());
     Specification<Product> productCategorySpecification = ProductSpecifications.byCategoryId(searchProductRequest.getCategoryIdSearch());
     Specification<Product> productAttributeSpecificaiton = createSpecificationFromArray(searchProductRequest.getAttributeNameValueSearches());
     return productNameSpecification
@@ -162,4 +186,5 @@ public class ProductService {
         page.getPageSize(),
         Sort.by(DEFAULT_SORT_COLUMN).descending());
   }
+
 }

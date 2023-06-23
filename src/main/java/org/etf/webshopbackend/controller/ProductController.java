@@ -12,12 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -38,6 +33,20 @@ public class ProductController {
   @PostMapping("search")
   public Page<ProductResponse> findAllPageable(Pageable page, @RequestBody(required = false) SearchProductRequest searchProductRequest) {
     return productService.findAllPageable(page, searchProductRequest);
+  }
+
+  @PostMapping("purchase-history/search")
+  public Page<ProductResponse> findAllUserPurchaseHistoryPageable(Pageable page,
+                                                                  @RequestBody(required = false) SearchProductRequest searchProductRequest,
+                                                                  @AuthenticationPrincipal JwtUserDetails user) {
+    return productService.findAllUserPurchaseHistoryPageable(page, searchProductRequest, user.getId());
+  }
+
+  @PostMapping("user/search")
+  public Page<ProductResponse> findAllUserProductsPageable(Pageable page,
+                                                           @RequestBody(required = false) SearchProductRequest searchProductRequest,
+                                                           @AuthenticationPrincipal JwtUserDetails user) {
+    return productService.findAllUserProductsPageable(page, searchProductRequest, user.getId());
   }
 
   @GetMapping("{id}")

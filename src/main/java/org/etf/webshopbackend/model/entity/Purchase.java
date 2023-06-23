@@ -22,7 +22,7 @@ public class Purchase {
   private Long id;
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
-  private User user;
+  private User user; // buyer
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "payment_method_id")
   private PaymentMethod paymentMethod;

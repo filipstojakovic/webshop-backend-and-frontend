@@ -12,6 +12,7 @@ import {PurchaseHistoryComponent} from './page/purchase-history/purchase-history
 import {AuthGuard} from './service/auth-guard';
 import {ProfileComponent} from './page/profile/profile.component';
 import {ChangePasswordComponent} from './page/change-password/change-password.component';
+import {backendUrl} from './constants/backendUrl';
 
 export const routes: Routes = [
   {
@@ -37,16 +38,30 @@ export const routes: Routes = [
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   {
+    path: paths.PRODUCTS + "/:id",
+    pathMatch: 'full',
+    component: ProductDetailsComponent,
+  },
+  {
     path: paths.PRODUCTS,
     pathMatch: 'full',
     component: ProductComponent,
     canActivate: [AuthGuard],
-    data: { role: [RoleEnum.admin, RoleEnum.user] },
+    data: { url: backendUrl.PRODUCTS_SEARCH },
   },
   {
-    path: paths.PRODUCTS + "/:id",
+    path: paths.PURCHASE_HISTORY,
     pathMatch: 'full',
-    component: ProductDetailsComponent,
+    component: ProductComponent,
+    // canActivate: [AuthGuard],
+    data: { role: [RoleEnum.admin, RoleEnum.user], url: backendUrl.PRODUCT_PURCHASE_HISTORY_SEARCH },
+  },
+  {
+    path: paths.USER_PRODUCTS,
+    pathMatch: 'full',
+    component: ProductComponent,
+    // canActivate: [AuthGuard],
+    data: { role: [RoleEnum.admin, RoleEnum.user], url: backendUrl.PRODUCTS_USER_SEARCH },
   },
   {
     path: paths.SELL_PRODUCT,
@@ -66,20 +81,6 @@ export const routes: Routes = [
     path: paths.CHANGE_PASSWORD, //TODO: maybe disable click if not logged in
     pathMatch: 'full',
     component: ChangePasswordComponent,
-    // canActivate: [AuthGuard],
-    data: { role: [RoleEnum.admin, RoleEnum.user] },
-  },
-  {
-    path: paths.PURCHASE_HISTORY,
-    pathMatch: 'full',
-    component: PurchaseHistoryComponent,
-    // canActivate: [AuthGuard],
-    data: { role: [RoleEnum.admin, RoleEnum.user] },
-  },
-  {
-    path: paths.YOUR_PRODUCTS,
-    pathMatch: 'full',
-    component: PurchaseHistoryComponent,
     // canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },

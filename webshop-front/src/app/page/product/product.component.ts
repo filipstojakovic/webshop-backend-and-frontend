@@ -6,7 +6,7 @@ import {ProductService} from '../../service/product.service';
 import {Product} from '../../model/Product';
 import tokenService from '../../service/TokenService';
 import {ToastService} from 'angular-toastify';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {paths} from '../../constants/paths';
 import {Category} from '../../model/Category';
 import {GenericCrudService} from '../../service/GenericCrud.service';
@@ -31,22 +31,26 @@ export class ProductComponent implements OnInit {
 
   totalNumber: number = 0;
   private currentPageNumber: number = 0;
-  pageSize: number = 1;
+  pageSize: number = 5;
 
   products: Product[] | undefined | null;
   attributes: Attribute[] | undefined | null;
 
+  searchUrl: string;
+
   constructor(private productService: ProductService,
               private router: Router,
+              private route:ActivatedRoute,
               private toastService: ToastService,
               private http: HttpClient,
               private fb: FormBuilder,
   ) {
-
+    this.searchUrl = route.snapshot.data['url'];
+    console.log("product.component.ts > searchUrl: "+ JSON.stringify(this.searchUrl, null, 2));
     this.categoryService = new GenericCrudService<Category, Category>(backendUrl.CATEGORIES, http);
 
     const userId: number = tokenService.getIdFromToken();
-    this.pageSize = Number.parseInt(sessionStorage.getItem(userId + "") ?? "1");
+    this.pageSize = Number.parseInt(sessionStorage.getItem(userId + "") ?? "5");
 
     this.searchForm = this.fb.group({
       nameSearch: "",
@@ -79,7 +83,7 @@ export class ProductComponent implements OnInit {
 
   getProducts(body?: ProductSearchRequest) {
     //TODO: use form to send attributes
-    this.productService.searchProducts(this.currentPageNumber, this.pageSize, body).subscribe({
+    this.productService.searchProducts(this.currentPageNumber, this.pageSize,this.searchUrl, body).subscribe({
       next: (res: any) => {
         this.totalNumber = res.totalElements;
         this.products = res.content;
