@@ -1,5 +1,5 @@
 <div class="default-style" style="padding: 10px">
-  <app-button (btnClick)="purchaseButtonClicked()">Purchase</app-button>
+  <app-button *ngIf="!product!.isPurchased" (btnClick)="purchaseButtonClicked()">Purchase</app-button>
   <div style="display: flex; flex-direction: row">
     <div style="width: 50%">
       <ng-container *ngIf="form">

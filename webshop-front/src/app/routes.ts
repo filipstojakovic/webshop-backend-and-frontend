@@ -53,14 +53,14 @@ export const routes: Routes = [
     path: paths.PURCHASE_HISTORY,
     pathMatch: 'full',
     component: ProductComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user], url: backendUrl.PRODUCT_PURCHASE_HISTORY_SEARCH },
   },
   {
     path: paths.USER_PRODUCTS,
     pathMatch: 'full',
     component: ProductComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user], url: backendUrl.PRODUCTS_USER_SEARCH },
   },
   {

@@ -48,7 +48,6 @@ export class ProductDetailsComponent implements OnInit {
               price: this.product.price,
               location: this.product.location,
               isNew: this.product.isNew,
-              images: [], /*TODO: do something with images*/
             });
           },
           error: (err) => {

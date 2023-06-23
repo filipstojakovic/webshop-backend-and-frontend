@@ -12,6 +12,7 @@ import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Attribute} from '../../model/Attribute';
 import myUtils from '../../utils/myUtils';
 import {AttributeNameValue} from '../../model/request/AttributeNameValue';
+import {paths} from '../../constants/paths';
 
 @Component({
   selector: 'app-sell-product',
@@ -86,9 +87,9 @@ export class SellProductComponent implements OnInit {
     console.log("sell-product.component.ts > onSubmit() request: " + JSON.stringify(request, null, 2));
     this.http.post(backendUrl.PRODUCTS, request).subscribe({
           next: (res) => {
+            this.form.reset();
             this.toastService.success("Product created successfully!");
-
-            //TODO: clear form or navigate home
+            this.router.navigateByUrl(paths.PRODUCTS);
           },
           error: (err) => {
             console.log("registration.component.ts > error(): " + JSON.stringify(err, null, 2));

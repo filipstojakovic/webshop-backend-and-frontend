@@ -9,6 +9,7 @@ export class Product {
   price: number = 0;
   location: string = "";
   isNew: boolean = true;
+  isPurchased: boolean = false;
   productImages: ProductImage[] = [];
   seller: User | null = null;
   category: Category | null = null;

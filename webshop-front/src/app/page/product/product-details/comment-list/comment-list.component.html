@@ -1,4 +1,4 @@
-<ng-container *ngIf="isLoggedIn()" style="width: 100%">
+<ng-container *ngIf="isLoggedIn() && !product!.isPurchased" style="width: 100%">
   <form class="post-comment-form" [formGroup]="form" (ngSubmit)="postComment()"
         style="width: 100%">
     <app-input style="width: 100%"

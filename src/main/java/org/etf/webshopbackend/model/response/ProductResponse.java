@@ -21,6 +21,7 @@ public class ProductResponse {
   private Double price;
   private String location;
   private Boolean isNew;
+  private Boolean isPurchased;
   private UserResponse seller;
   private List<ProductImageResponse> productImages;
   private ProductCategoryResponse category;
