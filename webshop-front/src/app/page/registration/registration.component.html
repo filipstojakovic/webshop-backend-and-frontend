@@ -1,7 +1,7 @@
 <div class="main-grid login-image">
   <form class="center-container" [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Registration</h2>
-    <app-input
+    <app-form-input
         style="width: 100%"
         label="Username"
         type="text"
@@ -9,8 +9,8 @@
         [required]="true"
         [control]="$any(form.get('username'))"
     >
-    </app-input>
-    <app-input
+    </app-form-input>
+    <app-form-input
         style="width: 100%"
         label="Password"
         type="password"
@@ -18,8 +18,8 @@
         [required]="true"
         [control]="$any(form.get('password'))"
     >
-    </app-input>
-    <app-input
+    </app-form-input>
+    <app-form-input
         style="width: 100%"
         label="Confirm password"
         type="password"
@@ -27,11 +27,11 @@
         [required]="true"
         [control]="$any(form.get('confirm_password'))"
     >
-    </app-input>
+    </app-form-input>
 
     <div class="or">User info</div>
 
-    <app-input
+    <app-form-input
         style="width: 100%"
         label="First name"
         type="text"
@@ -39,9 +39,9 @@
         [required]="true"
         [control]="$any(form.get('firstName'))"
     >
-    </app-input>
+    </app-form-input>
 
-    <app-input
+    <app-form-input
         style="width: 100%"
         label="Last name"
         type="text"
@@ -49,9 +49,9 @@
         [required]="true"
         [control]="$any(form.get('lastName'))"
     >
-    </app-input>
+    </app-form-input>
 
-    <app-input
+    <app-form-input
         style="width: 100%"
         label="Email"
         type="text"
@@ -59,8 +59,8 @@
         [required]="true"
         [control]="$any(form.get('email'))"
     >
-    </app-input>
-    <app-input
+    </app-form-input>
+    <app-form-input
         style="width: 100%"
         label="City"
         type="text"
@@ -68,11 +68,11 @@
         [required]="true"
         [control]="$any(form.get('city'))"
     >
-    </app-input>
+    </app-form-input>
 
     <ngx-dropzone class="main-grid" style="min-height: 200px"
                   accept="image/jpeg,image/jpg,image/png"
-                  [multiple]="false" [maxFileSize]="5000000"
+                  [multiple]="false" [maxFileSize]="10000000"
                   (change)="onSelect($event)">
       <ngx-dropzone-label>Drop & Drop!</ngx-dropzone-label>
       <ng-container *ngIf="imageFile" style="flex-direction: row">

@@ -1,14 +1,17 @@
-<ng-container *ngIf="isLoggedIn() && product!=null && !product.isPurchased" style="width: 100%">
-  <form class="post-comment-form" [formGroup]="form" (ngSubmit)="postComment()"
-        style="width: 100%">
-    <app-input style="width: 100%"
-               label="Post comment"
-               errorMessage="Message is required"
-               [required]="true"
-               [control]="$any(form.get('message'))"
+<h2>Comments</h2>
+<ng-container *ngIf="isLoggedIn() && product!=null && !product.isPurchased"
+              style="width: 100%">
+  <form class="center-container post-comment-form full-width" [formGroup]="form"
+        (ngSubmit)="postComment()">
+    <app-form-input style="width: 100%"
+                    label="Post comment"
+                    hint="Ex. This product sucks because..."
+                    errorMessage="Message is required"
+                    [required]="true"
+                    [control]="$any(form.get('message'))"
     >
-    </app-input>
-    <app-button type="submit">Post comment</app-button>
+    </app-form-input>
+    <app-button class="center-items full-width container-max-width" type="submit">Post comment</app-button>
   </form>
 </ng-container>
 

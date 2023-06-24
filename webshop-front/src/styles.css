@@ -19,10 +19,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-img {
-  opacity: 1 !important;
-}
-
 /*router-outlet + app-login, app-activate-account {*/
 
 router-outlet + * {
@@ -49,6 +45,20 @@ router-outlet + * {
 
 .default-gap {
   gap: 10px;
+}
+
+.default-padding {
+  padding: 10px;
+}
+
+.default-margin {
+  margin: 10px;
+}
+
+.flex-wrap {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .full-width {
@@ -128,6 +138,10 @@ router-outlet + * {
   width: 30%;
   height: 1px;
   margin: 0 10px;
+}
+
+img {
+  opacity: 1 !important;
 }
 
 .form-control {

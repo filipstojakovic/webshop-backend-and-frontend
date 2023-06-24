@@ -1,15 +1,16 @@
-<div class="default-style">
+<div class="default-style default-margin">
+  <h2 class="center-container">Profile information</h2>
   <div class="profile-container">
-    <form *ngIf="form" class="center-container" (ngSubmit)="saveChanges()" [formGroup]="form">
-      <app-input
+    <form *ngIf="form" class="center-container flex-wrap container-max-width" (ngSubmit)="saveChanges()" [formGroup]="form">
+      <app-form-input
           style="width: 100%"
           label="Username"
           type="text"
           [readonly]="true"
           [control]="$any(form.get('username'))"
       >
-      </app-input>
-      <app-input
+      </app-form-input>
+      <app-form-input
           style="width: 100%"
           label="Email"
           [required]="true"
@@ -17,7 +18,7 @@
           type="text"
           [control]="$any(form.get('email'))"
       />
-      <app-input
+      <app-form-input
           style="width: 100%"
           label="First Name"
           type="text"
@@ -25,7 +26,7 @@
           [readonly]="isReadOnly"
           [control]="$any(form.get('firstName'))"
       />
-      <app-input
+      <app-form-input
           style="width: 100%"
           label="Last Name"
           type="text"
@@ -33,7 +34,7 @@
           [readonly]="isReadOnly"
           [control]="$any(form.get('lastName'))"
       />
-      <app-input
+      <app-form-input
           style="width: 100%"
           label="City"
           type="text"

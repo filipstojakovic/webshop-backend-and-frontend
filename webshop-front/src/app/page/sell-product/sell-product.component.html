@@ -1,4 +1,4 @@
-<div class="main-grid">
+<div class="main-grid default-padding">
   <form class="center-container container-max-width" [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Product information</h2>
 
@@ -30,13 +30,13 @@
 
     <div style="width: 100%" *ngIf="attributeForm">
       <form class="center-container" [formGroup]="attributeForm">
-        <app-input *ngFor="let attributeValue of attributesValue"
+        <app-form-input *ngFor="let attributeValue of attributesValue"
                    style="width: 100%"
                    label="{{attributeValue.name}}"
                    type="text"
                    [control]="$any(attributeForm.get(attributeValue.name))"
         >
-        </app-input>
+        </app-form-input>
 
       </form>
     </div>
@@ -47,7 +47,7 @@
       </mat-checkbox>
     </div>
 
-    <app-input
+    <app-form-input
         style="width: 100%"
         label="Product name"
         type="text"
@@ -55,7 +55,7 @@
         [required]="true"
         [control]="$any(form.get('name'))"
     >
-    </app-input>
+    </app-form-input>
 
     <mat-form-field class="multiline-style"
                     style="width: 100%; max-height: 400px">
@@ -65,7 +65,7 @@
                 placeholder="Ex. This product is..."></textarea>
     </mat-form-field>
 
-    <app-input
+    <app-form-input
         style="width: 100%"
         label="Price"
         type="number"
@@ -73,9 +73,9 @@
         [required]="true"
         [control]="$any(form.get('price'))"
     >
-    </app-input>
+    </app-form-input>
 
-    <app-input
+    <app-form-input
         style="width: 100%"
         label="Location"
         type="text"
@@ -83,7 +83,7 @@
         [required]="true"
         [control]="$any(form.get('location'))"
     >
-    </app-input>
+    </app-form-input>
 
     <ngx-dropzone style="min-height: 200px; width: 100%"
                   accept="image/jpeg,image/jpg,image/png"

@@ -2,14 +2,15 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 
 @Component({
-  selector: 'app-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.css'],
+  selector: 'app-form-input',
+  templateUrl: './form-input.component.html',
+  styleUrls: ['./form-input.component.css'],
 })
-export class InputComponent {
+export class FormInputComponent {
   @Input() control!: FormControl;
   @Input() type = "text";
   @Input() label = '';
+  @Input() hint = '';
   @Input() errorMessage = 'Field is required';
   @Input() required: boolean = false;
   @Input() readonly: boolean = false;

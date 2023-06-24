@@ -1,6 +1,7 @@
 import {Category} from './Category';
 import {User} from './User';
 import {ProductImage} from './ProductImage';
+import {AttributeNameValue} from './request/AttributeNameValue';
 
 export class Product {
   id?: number;
@@ -13,5 +14,5 @@ export class Product {
   productImages: ProductImage[] = [];
   seller: User | null = null;
   category: Category | null = null;
-
+  productAttributes: AttributeNameValue[]
 }

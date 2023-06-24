@@ -5,7 +5,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.etf.webshopbackend.exceptions.BadRequestException;
 import org.etf.webshopbackend.exceptions.NotFoundException;
-import org.etf.webshopbackend.model.entity.*;
+import org.etf.webshopbackend.model.entity.Attribute;
+import org.etf.webshopbackend.model.entity.Product;
+import org.etf.webshopbackend.model.entity.ProductHasAttribute;
+import org.etf.webshopbackend.model.entity.ProductImage;
+import org.etf.webshopbackend.model.entity.User;
 import org.etf.webshopbackend.model.mapper.ProductMapper;
 import org.etf.webshopbackend.model.request.AttributeNameValueRequest;
 import org.etf.webshopbackend.model.request.ProductRequest;
@@ -139,6 +143,18 @@ public class ProductService {
     return productMapper.toResponse(product);
   }
 
+  public void delete(Long productId, Long userId) {
+    Product product = productRepository.findById(productId)
+        .orElseThrow(() -> new NotFoundException(Product.class, productId));
+
+    User seller = product.getSeller();
+    if (!seller.getId().equals(userId)) {
+      log.error("User with id: " + userId + " can not delete this product because he isn't selling it");
+      throw new BadRequestException("You can not delete this product");
+    }
+    productRepository.deleteById(productId);
+  }
+
   public byte[] getProductImage(Long productImageId) {
 
     ProductImage productImage = productImageRepository.findById(productImageId)
@@ -165,10 +181,10 @@ public class ProductService {
     }
 
     Specification<Product> productCategorySpecification = ProductSpecifications.byCategoryId(searchProductRequest.getCategoryIdSearch());
-    Specification<Product> productAttributeSpecificaiton = createSpecificationFromArray(searchProductRequest.getAttributeNameValueSearches());
+    Specification<Product> productAttributeSpecification = createSpecificationFromArray(searchProductRequest.getAttributeNameValueSearches());
     return productNameSpecification
         .and(productCategorySpecification)
-        .and(productAttributeSpecificaiton);
+        .and(productAttributeSpecification);
   }
 
   private Specification<Product> createSpecificationFromArray(List<AttributeNameValueRequest> attributeNameValueRequests) {

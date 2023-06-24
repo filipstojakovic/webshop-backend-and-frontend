@@ -10,7 +10,7 @@ import {AngularToastifyModule, ToastService} from 'angular-toastify';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '../material.module';
 import {ButtonComponent} from './components/button/button.component';
-import {InputComponent} from './components/input/input.component';
+import {FormInputComponent} from './components/form-input/form-input.component';
 import {HeaderComponent} from './components/header/header.component';
 import {AuthService} from './service/auth.service';
 import {AuthGuard} from './service/auth-guard';
@@ -35,13 +35,14 @@ import {ChangePasswordComponent} from './page/change-password/change-password.co
 import {UserService} from './service/user.service';
 import {PaymentService} from './service/payment.service';
 import { PaymentMethodDropdownComponent } from './components/payment-method-dropdown/payment-method-dropdown.component';
+import { MatInputComponent } from './components/mat-input/mat-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ButtonComponent,
-    InputComponent,
+    FormInputComponent,
     HeaderComponent,
     RegistrationComponent,
     ActivateAccountComponent,
@@ -58,6 +59,7 @@ import { PaymentMethodDropdownComponent } from './components/payment-method-drop
     CategoryDropdownComponent,
     ChangePasswordComponent,
     PaymentMethodDropdownComponent,
+    MatInputComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

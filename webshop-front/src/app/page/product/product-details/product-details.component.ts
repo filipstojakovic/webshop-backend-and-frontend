@@ -6,11 +6,12 @@ import {Product} from '../../../model/Product';
 import {backendUrl, baseUrl} from '../../../constants/backendUrl';
 import {ToastService} from 'angular-toastify';
 import {paths} from '../../../constants/paths';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {PaymentModalComponent} from '../../../components/payment-modal/payment-modal.component';
 import {PurchaseService} from '../../../service/purchase.service';
 import {PurchaseRequest} from '../../../model/request/PurchaseRequest';
+import tokenService from '../../../service/TokenService';
 
 @Component({
   selector: 'app-product-details',
@@ -20,7 +21,6 @@ import {PurchaseRequest} from '../../../model/request/PurchaseRequest';
 export class ProductDetailsComponent implements OnInit {
   productService!: GenericCrudService<Product, Product>
   product: Product | null = null;
-  form: FormGroup;
 
   constructor(private activeRoute: ActivatedRoute,
               private http: HttpClient,
@@ -35,22 +35,13 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.activeRoute.snapshot.paramMap.get('id');
-    const productId: number = parseInt(id || "");
+    const productId: number = parseInt(id || "-1");
     this.productService.getById(productId).subscribe({
           next: (res) => {
             this.product = res;
-            this.form = this.fb.group({
-              category: this.product.category?.name,
-              attributes: [], /*TODO: do something with attributes*/
-              name: this.product.name,
-              description: this.product.description,
-              price: this.product.price,
-              location: this.product.location,
-              isNew: this.product.isNew,
-            });
           },
           error: (err) => {
-            this.toastService.error("Error geting the product details");
+            this.toastService.error("Error getting the product details");
             this.router.navigateByUrl(paths.PRODUCTS);
           },
         },
@@ -58,8 +49,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   purchaseButtonClicked() {
-
-    console.log("product-details.component.ts > purchaseButtonClicked(): " + "purchuse btn clicked");
     const dialogRef = this.dialog.open(
         PaymentModalComponent,
         {
@@ -73,14 +62,36 @@ export class ProductDetailsComponent implements OnInit {
 
       this.purchaseService.purchaseProduct(this.product!.id!, result).subscribe({
             next: (res) => {
-              console.log("product-details.component.ts > next(): "+ JSON.stringify(res, null, 2));
+              this.toastService.success("Product purchased!");
+              this.router.navigateByUrl(paths.PURCHASE_HISTORY);
             },
             error: (err) => {
-              console.error("nesto ne valja"); //TODO: finish if not working, look up
+              this.toastService.error(err.error);
             },
           },
       )
     });
+  }
+
+  deleteButtonClicked() {
+    this.productService.delete(this.product?.id!).subscribe({
+          next: (res) => {
+            this.toastService.success("Product deleted!")
+            this.router.navigateByUrl(paths.USER_PRODUCTS);
+          },
+          error: (err) => {
+            this.toastService.error(err.error)
+          },
+        },
+    )
+  }
+
+  shouldShowDeleteButton(): boolean {
+    const userId = tokenService.getIdFromToken();
+    if (!userId)
+      return false;
+
+    return this.product?.seller?.id === userId;
   }
 
   protected readonly baseUrl = baseUrl;

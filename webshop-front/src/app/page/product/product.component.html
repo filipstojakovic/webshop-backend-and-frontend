@@ -1,14 +1,14 @@
 <div style="width: 100%">
   <form [formGroup]="searchForm">
     <div class="search-container">
-      <app-input
+      <app-form-input
           class="name-search"
           label="Search product"
           type="text"
           errorMessage="Username is required"
           [required]="false"
           [control]="$any(searchForm.get('nameSearch'))"
-      ></app-input>
+      ></app-form-input>
 
       <app-category-dropdown
           class="category-search"
@@ -17,13 +17,13 @@
       >
       </app-category-dropdown>
     </div>
-    <form style="display: flex; flex-wrap: wrap; gap: 10px" *ngIf="showAttributeFields()" [formGroup]="attributeForm">
-      <app-input *ngFor="let attribute of attributes"
+    <form class="flex-wrap default-gap default-padding" style="padding-top: 0" *ngIf="showAttributeFields()" [formGroup]="attributeForm">
+      <app-form-input *ngFor="let attribute of attributes"
                  label="{{attribute.name}}"
                  type="text"
                  [control]="$any(attributeForm.get(attribute.name))"
       >
-      </app-input>
+      </app-form-input>
     </form>
   </form>
 

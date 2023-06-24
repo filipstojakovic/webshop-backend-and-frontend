@@ -1,7 +1,7 @@
 <div class="main-grid login-image">
   <form class="center-container container-max-width" [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Login</h2>
-    <app-input
+    <app-form-input
         style="width: 100%"
         label="Username"
         type="text"
@@ -10,8 +10,8 @@
         [control]="$any(form.get('username'))"
         (keyDown)="onKeyDown($event)"
     >
-    </app-input>
-    <app-input
+    </app-form-input>
+    <app-form-input
         style="width: 100%"
         label="Password"
         type="password"
@@ -20,7 +20,7 @@
         [control]="$any(form.get('password'))"
         (keyDown)="onKeyDown($event)"
     >
-    </app-input>
+    </app-form-input>
 
     <div class="default-style default-gap" style="align-items: center">
       <app-button type="submit">Sign in</app-button>

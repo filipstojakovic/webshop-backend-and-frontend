@@ -27,6 +27,6 @@ export class GenericCrudService<REQ, RESP> {
   }
 
   delete(id: number) {
-    this.http.delete(`${this.path}/${id}`);
+    return this.http.delete(`${this.path}/${id}`);
   }
 }

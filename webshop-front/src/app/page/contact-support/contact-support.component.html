@@ -1,6 +1,6 @@
-<form class="center-container container-max-width" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form class="center-container container-max-width default-margin" [formGroup]="form" (ngSubmit)="onSubmit()">
   <h2>Contact customer support</h2>
-  <app-input
+  <app-form-input
       style="width: 100%"
       label="Title"
       type="text"
@@ -8,7 +8,7 @@
       [required]="true"
       [control]="$any(form.get('title'))"
   >
-  </app-input>
+  </app-form-input>
 
   <mat-form-field class="multiline-style">
     <mat-label>Leave a comment</mat-label>
@@ -19,7 +19,7 @@
   </mat-form-field>
 
 
-  <div class="default-style" style="align-items: center">
+  <div class="default-style default-gap" style="align-items: center">
     <app-button type="submit">Submit</app-button>
     <app-button (btnClick)="clearClick()">Clear</app-button>
   </div>

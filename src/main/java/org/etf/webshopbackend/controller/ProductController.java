@@ -9,10 +9,17 @@ import org.etf.webshopbackend.security.model.JwtUserDetails;
 import org.etf.webshopbackend.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -59,7 +66,16 @@ public class ProductController {
   public ResponseEntity<ProductResponse> insert(@RequestBody ProductRequest productRequest,
                                                 @AuthenticationPrincipal JwtUserDetails user) {
     ProductResponse productResponse = productService.insert(productRequest, user.getId());
+    log.info("product with id: " + productResponse.getId() + " created");
     return ResponseEntity.ok(productResponse);
+  }
+
+  @DeleteMapping("{id}")
+  public ResponseEntity<Void> delete(@PathVariable Long id,
+                                     @AuthenticationPrincipal JwtUserDetails user) {
+    productService.delete(id, user.getId());
+    log.info("product with id: " + id + " deleted");
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   @Async

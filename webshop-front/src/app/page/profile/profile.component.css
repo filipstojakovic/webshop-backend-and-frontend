@@ -1,5 +1,5 @@
 
-.profile-container{
+.profile-container {
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
@@ -7,14 +7,14 @@
   justify-content: center;
 }
 
-.profile-button-container{
+.profile-button-container {
   display: flex;
   width: 100%;
   justify-content: center;
   gap: 10px;
 }
 
-.half-screen{
+.half-screen {
   width: 50%;
 }
 
@@ -24,7 +24,7 @@
   height: 450px;
 }
 
-.max-image-size{
+.max-image-size {
   max-width: 450px;
   max-height: 450px;
 }

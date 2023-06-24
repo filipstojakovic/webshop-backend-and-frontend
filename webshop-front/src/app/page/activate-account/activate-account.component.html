@@ -1,7 +1,7 @@
 <div class="main-grid login-image">
   <form class="center-container" [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Activate account</h2>
-    <app-input
+    <app-form-input
         style="width: 100%"
         label="Username"
         type="text"
@@ -9,8 +9,8 @@
         [readonly]="true"
         [control]="$any(form.get('username'))"
     >
-    </app-input>
-    <app-input
+    </app-form-input>
+    <app-form-input
         style="width: 100%"
         label="Activation pin"
         type="password"
@@ -19,7 +19,7 @@
         [control]="$any(form.get('pin'))"
         (keyDown)="onKeyDown($event)"
     >
-    </app-input>
+    </app-form-input>
 
     <app-button type="submit">Activate</app-button>
     <div class="or">or</div>

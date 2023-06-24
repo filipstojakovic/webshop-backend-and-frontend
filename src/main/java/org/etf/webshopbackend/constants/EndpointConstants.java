@@ -13,6 +13,7 @@ public final class EndpointConstants {
   public static final String PIN = "/pins";
   public static final String WHOAMI = "/user/me";
   public static final String PRODUCTS = "/products";
+  public static final String PRODUCTS_SEARCH = PRODUCTS + "/search";
   public static final String PURCHASES = "/purchases";
   public static final String CONTACT_SUPPORT = "/contact-support";
   public static final String CATEGORIES = "/categories";

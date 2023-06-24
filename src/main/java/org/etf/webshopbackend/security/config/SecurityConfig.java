@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -80,14 +79,46 @@ public class SecurityConfig {
   }
 
   private void createAuthorizationRules(HttpSecurity http) throws Exception {
-    userAuthorizationRule(http);
     publicAuthorizationRule(http);
+    userAuthorizationRule(http);
     activatePinAuthorizationRule(http);
     categoryAuthorizationRule(http);
-    procutAuthorizationRule(http);
+    productAuthorizationRule(http);
     contactSupportAuthorizationRule(http);
     purchaseAuthorizationRule(http);
-    // TODO: authrorize other endpoints
+    paymentMethodAuthorizationRule(http);
+  }
+
+  private void publicAuthorizationRule(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests().requestMatchers(HttpMethod.OPTIONS, EndpointConstants.ALL_PATHS).permitAll();
+    http.authorizeHttpRequests()
+        .requestMatchers(HttpMethod.POST, EndpointConstants.LOGIN)
+        .permitAll()
+        .requestMatchers(HttpMethod.POST, EndpointConstants.REGISTER)
+        .permitAll()
+        .requestMatchers(HttpMethod.GET, EndpointConstants.WHOAMI)
+        .permitAll();
+
+  }
+
+  private void userAuthorizationRule(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests(requests ->
+        requests
+            .requestMatchers(HttpMethod.GET, EndpointConstants.USERS + EndpointConstants.ALL_PATHS)
+            .permitAll()
+            .requestMatchers(HttpMethod.POST, EndpointConstants.USERS)
+            .hasAnyAuthority(RoleEnum.admin.toString())
+            .requestMatchers(HttpMethod.PUT, EndpointConstants.USERS + EndpointConstants.ALL_PATHS)
+            .hasAnyAuthority(RoleEnum.admin.toString(), RoleEnum.user.toString())
+            .requestMatchers(HttpMethod.DELETE, EndpointConstants.USERS)
+            .hasAnyAuthority(RoleEnum.admin.toString())
+    );
+  }
+
+  private void paymentMethodAuthorizationRule(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests()
+        .requestMatchers(HttpMethod.GET, EndpointConstants.PAYMENT_METHOD)
+        .permitAll();
   }
 
   private void categoryAuthorizationRule(HttpSecurity http) throws Exception {
@@ -108,40 +139,19 @@ public class SecurityConfig {
         .hasAnyAuthority(RoleEnum.user.toString(), RoleEnum.admin.toString());
   }
 
-  private void publicAuthorizationRule(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests().requestMatchers(HttpMethod.OPTIONS, EndpointConstants.ALL_PATHS).permitAll();
-    http.authorizeHttpRequests()
-        .requestMatchers(HttpMethod.POST, EndpointConstants.LOGIN)
-        .permitAll()
-        .requestMatchers(HttpMethod.POST, EndpointConstants.REGISTER)
-        .permitAll()
-        .requestMatchers(HttpMethod.GET, EndpointConstants.WHOAMI)
-        .permitAll()
-        .requestMatchers(HttpMethod.GET, EndpointConstants.PAYMENT_METHOD)
-        .permitAll();
-  }
-
-  private void userAuthorizationRule(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(requests ->
-        requests
-            .requestMatchers(HttpMethod.GET, EndpointConstants.USERS + EndpointConstants.ALL_PATHS)
-            .permitAll()
-            .requestMatchers(HttpMethod.POST, EndpointConstants.USERS)
-            .hasAnyAuthority(RoleEnum.admin.toString())
-            .requestMatchers(HttpMethod.PUT, EndpointConstants.USERS+ EndpointConstants.ALL_PATHS)
-            .hasAnyAuthority(RoleEnum.admin.toString(),RoleEnum.user.toString())
-            .requestMatchers(HttpMethod.DELETE, EndpointConstants.USERS)
-            .hasAnyAuthority(RoleEnum.admin.toString())
-    );
-  }
-
-  private void procutAuthorizationRule(HttpSecurity http) throws Exception {
+  private void productAuthorizationRule(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(requests ->
         requests
             .requestMatchers(HttpMethod.GET, EndpointConstants.PRODUCTS + EndpointConstants.ALL_PATHS)
             .permitAll()
+            .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS_SEARCH)
+            .permitAll()
             .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS + EndpointConstants.ALL_PATHS)
-            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name()));
+            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
+            .requestMatchers(HttpMethod.DELETE, EndpointConstants.PRODUCTS + EndpointConstants.SINGLE_PATH)
+            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
+    );
+
   }
 
   private void purchaseAuthorizationRule(HttpSecurity http) throws Exception {
@@ -151,11 +161,6 @@ public class SecurityConfig {
             .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
             .requestMatchers(HttpMethod.POST, EndpointConstants.PURCHASES + EndpointConstants.ALL_PATHS)
             .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name()));
-  }
-
-  @Bean
-  GrantedAuthorityDefaults grantedAuthorityDefaults() {
-    return new GrantedAuthorityDefaults(""); // Remove the ROLE_ prefix
   }
 
   @Bean
