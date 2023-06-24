@@ -67,16 +67,13 @@ export class ProductComponent implements OnInit {
     this.searchForm.valueChanges
         .pipe(debounceTime(constant.DEBOUNCE_TIME))
         .subscribe(() => {
-          console.table(this.searchForm.value);
           this.currentPageNumber = 0;
 
 
           let { attributeNameValueSearches } = this.searchForm.value;
-          let attributeReq = Object.keys(attributeNameValueSearches).map(key => {
+          this.searchForm.value.attributeNameValueSearches = Object.keys(attributeNameValueSearches).map(key => {
             return new AttributeNameValue(key, attributeNameValueSearches[key])
-          })
-
-          this.searchForm.value.attributeNameValueSearches = attributeReq;
+          });
           this.getProducts(this.searchForm.value);
         });
   }
@@ -97,7 +94,6 @@ export class ProductComponent implements OnInit {
 
   productCardClick(product: Product) {
     const productId = product ? product.id : null;
-    console.log("product.component.ts > productCardClick(): " + JSON.stringify(productId, null, 2));
     this.router.navigateByUrl(paths.PRODUCTS + "/" + productId);
   }
 

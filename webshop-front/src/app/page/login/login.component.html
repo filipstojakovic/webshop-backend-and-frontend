@@ -1,5 +1,5 @@
 <div class="main-grid login-image">
-  <form class="center-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form class="center-container container-max-width" [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Login</h2>
     <app-input
         style="width: 100%"
@@ -22,7 +22,7 @@
     >
     </app-input>
 
-    <div class="default-style" style="align-items: center">
+    <div class="default-style default-gap" style="align-items: center">
       <app-button type="submit">Sign in</app-button>
       <app-button routerLink='/{{paths.PRODUCTS}}'>Continue as guest</app-button>
       <div class="or">or</div>

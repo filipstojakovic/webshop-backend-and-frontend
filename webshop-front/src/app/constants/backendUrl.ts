@@ -13,3 +13,5 @@ export const backendUrl = {
   PAYMENT_METHODS: "payment-methods",
 
 } as const;
+
+export const baseUrl = 'http://localhost:8080';

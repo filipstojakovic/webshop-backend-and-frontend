@@ -7,18 +7,20 @@
             [ngIfElse]="altImage">
           <img mat-card-image
                class="product-card-img"
-               src="http://localhost:8080/products/{{product.productImages[0].id}}/image"
+               src="{{baseUrl}}/products/{{product.productImages[0].id}}/image"
                alt="/assets/product-default-image.png"
           />
         </ng-template>
         <ng-template #altImage>
           <img mat-card-image
                class="product-card-img"
-               src="/assets/product-default-image.png" alt="image"
+               src="/assets/product-default-image.png"
+               alt="image"
           >
         </ng-template>
       </div>
       <h2 class="product-name">{{product.name}}</h2>
+      <mat-chip-option>{{product.isNew ? "New" : "Used"}}</mat-chip-option>
       <h4>
         Seller: {{product.seller!.firstName + ' ' + product.seller!.lastName}}</h4>
     </div>

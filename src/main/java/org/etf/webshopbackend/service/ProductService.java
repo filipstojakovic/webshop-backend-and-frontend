@@ -160,6 +160,10 @@ public class ProductService {
 
     Specification<Product> productNameSpecification = ProductSpecifications.productByName(searchProductRequest.getNameSearch()
         .trim());
+    if (searchProductRequest.getCategoryIdSearch() == null) {
+      return productNameSpecification;
+    }
+
     Specification<Product> productCategorySpecification = ProductSpecifications.byCategoryId(searchProductRequest.getCategoryIdSearch());
     Specification<Product> productAttributeSpecificaiton = createSpecificationFromArray(searchProductRequest.getAttributeNameValueSearches());
     return productNameSpecification

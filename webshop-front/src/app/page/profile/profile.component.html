@@ -44,7 +44,7 @@
     </form>
     <div>
       <img *ngIf="currentUser && currentUser.avatarPath" class="max-image-size"
-           src="http://localhost:8080/users/{{currentUser.id}}/image"
+           src="{{baseUrl}}/users/{{currentUser.id}}/image"
            alt="image">
       <img *ngIf="currentUser && currentUser.avatarPath==null"
            class="image-size"

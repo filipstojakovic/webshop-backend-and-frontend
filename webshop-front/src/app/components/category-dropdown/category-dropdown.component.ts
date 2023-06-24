@@ -33,7 +33,7 @@ export class CategoryDropdownComponent implements OnInit {
 
   onSelectionChange(event: any) {
     const categoryId = event.value;
-    const category = this.categories.find(x => x.id === categoryId);
+    const category = this.categories.find(x => x.id === categoryId) || null;
     this.categoryChangeEvent.emit(category);
 
   }

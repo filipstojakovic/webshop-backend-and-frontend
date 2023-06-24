@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Product} from '../../../model/Product';
+import {baseUrl} from '../../../constants/backendUrl';
 
 @Component({
   selector: 'app-product-card',
@@ -12,4 +13,6 @@ export class ProductCardComponent {
 
   constructor() {
   }
+
+  protected readonly baseUrl = baseUrl;
 }

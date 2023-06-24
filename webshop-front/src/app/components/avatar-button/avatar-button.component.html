@@ -3,7 +3,7 @@
 </button>
 
 <img *ngIf="id && !showFallbackImage" class="avatar-image"
-     src="http://localhost:8080/users/{{id}}/image"
+     src="{{baseUrl}}/users/{{id}}/image"
      (error)="onImageError()" >
 
 <button *ngIf="id && showFallbackImage" mat-icon-button>

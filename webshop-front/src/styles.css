@@ -47,15 +47,19 @@ router-outlet + * {
   flex-direction: column;
 }
 
+.default-gap {
+  gap: 10px;
+}
+
 .full-width {
   width: 100%;
 }
 
-.full-height{
+.full-height {
   height: 100%;
 }
 
-.full-height-vh{
+.full-height-vh {
   height: 100vh;
 }
 
@@ -101,7 +105,10 @@ router-outlet + * {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 300px;
+}
+
+.container-max-width {
+  max-width: 400px;
 }
 
 .or {

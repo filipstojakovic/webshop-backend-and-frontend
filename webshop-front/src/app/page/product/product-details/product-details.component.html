@@ -1,5 +1,4 @@
 <div class="default-style" style="padding: 10px">
-  <app-button *ngIf="!product!.isPurchased" (btnClick)="purchaseButtonClicked()">Purchase</app-button>
   <div style="display: flex; flex-direction: row">
     <div style="width: 50%">
       <ng-container *ngIf="form">
@@ -14,6 +13,7 @@
               [control]="$any(form.get('name'))"
           >
           </app-input>
+          <mat-chip-option *ngIf="product" style="margin-bottom: 22px">{{product.isNew ? "New" : "Used"}}</mat-chip-option>
           <app-input
               style="width: 100%"
               label="Description"
@@ -56,14 +56,21 @@
       <carousel style="z-index: 10" arrowsTheme="dark" [autoplay]=false
                 *ngIf="product && product.productImages">
         <div *ngFor="let image of product.productImages" class="carousel-cell">
-          <img src="http://localhost:8080/products/{{image.id}}/image"
+          <img src='{{baseUrl}}/products/{{image.id}}/image'
                alt="no image">
         </div>
       </carousel>
     </div>
   </div>
+  <div class="full-width center-container">
+    <app-button class="center-items"
+                *ngIf="product!=null && !product.isPurchased"
+                (btnClick)="purchaseButtonClicked()">Purchase
+    </app-button>
+  </div>
 
   <!------------product comments------------------>
+  <h2>Comments</h2>
   <div>
     <app-comment-list class="comments-list"
                       style="width: 100%"

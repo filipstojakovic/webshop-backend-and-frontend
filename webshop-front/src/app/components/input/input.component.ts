@@ -4,7 +4,7 @@ import {FormControl} from '@angular/forms';
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.css']
+  styleUrls: ['./input.component.css'],
 })
 export class InputComponent {
   @Input() control!: FormControl;
@@ -27,6 +27,6 @@ export class InputComponent {
   }
 
   getAppearance() {
-    return !this.readonly? "fill" : "outline";
+    return !this.readonly ? "fill" : "outline";
   }
 }

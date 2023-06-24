@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {baseUrl} from '../../constants/backendUrl';
 
 @Component({
   selector: 'app-avatar-button',
@@ -12,4 +13,6 @@ export class AvatarButtonComponent {
   onImageError() {
     this.showFallbackImage = true;
   }
+
+  protected readonly baseUrl = baseUrl;
 }

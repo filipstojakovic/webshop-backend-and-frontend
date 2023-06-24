@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {GenericCrudService} from '../../../service/GenericCrud.service';
 import {Product} from '../../../model/Product';
-import {backendUrl} from '../../../constants/backendUrl';
+import {backendUrl, baseUrl} from '../../../constants/backendUrl';
 import {ToastService} from 'angular-toastify';
 import {paths} from '../../../constants/paths';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -21,7 +21,6 @@ export class ProductDetailsComponent implements OnInit {
   productService!: GenericCrudService<Product, Product>
   product: Product | null = null;
   form: FormGroup;
-
 
   constructor(private activeRoute: ActivatedRoute,
               private http: HttpClient,
@@ -83,4 +82,6 @@ export class ProductDetailsComponent implements OnInit {
       )
     });
   }
+
+  protected readonly baseUrl = baseUrl;
 }

@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {paths} from '../../constants/paths';
 import {Router} from '@angular/router';
 import {UserService} from '../../service/user.service';
+import {baseUrl} from '../../constants/backendUrl';
 
 @Component({
   selector: 'app-profile',
@@ -85,4 +86,6 @@ export class ProfileComponent implements OnInit {
 
     this.isReadOnly = true;
   }
+
+  protected readonly baseUrl = baseUrl;
 }
