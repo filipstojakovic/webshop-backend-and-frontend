@@ -73,7 +73,6 @@ export class ActivateAccountComponent implements OnInit {
             this.router.navigateByUrl(paths.PRODUCTS, { replaceUrl: true });
           },
           error: (err) => {
-            console.log("activate-account.component.ts > error(): " + JSON.stringify(err, null, 2));
             this.toastService.error("Incorrect pin! Sending new pin")
           },
         },

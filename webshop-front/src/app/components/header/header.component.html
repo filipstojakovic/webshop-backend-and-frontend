@@ -2,33 +2,32 @@
   <button mat-raised-button [routerLink]="[paths.PRODUCTS]"
           routerLinkActive="selected-button">Products
   </button>
-  <button mat-raised-button [routerLink]="[paths.CONTACT_SUPPORT]"
-          routerLinkActive="selected-button">Contact support
-  </button>
-  <button mat-raised-button [routerLink]="[paths.SELL_PRODUCT]"
-          routerLinkActive="selected-button">Sell product
-  </button>
 
-  <button mat-raised-button [routerLink]="[paths.PURCHASE_HISTORY]"
-          routerLinkActive="selected-button">Purchase history
-  </button>
-  <button mat-raised-button [routerLink]="[paths.USER_PRODUCTS]"
-          routerLinkActive="selected-button">Your products
-  </button>
+  <ng-container *ngIf="isLoggedIn(); else notLoggedIn">
+    <button mat-raised-button [routerLink]="[paths.PURCHASE_HISTORY]"
+            routerLinkActive="selected-button">Purchase history
+    </button>
+    <button mat-raised-button [routerLink]="[paths.USER_PRODUCTS]"
+            routerLinkActive="selected-button">Your products
+    </button>
+    <button mat-raised-button [routerLink]="[paths.SELL_PRODUCT]"
+            routerLinkActive="selected-button">Sell product
+    </button>
+    <button mat-raised-button [routerLink]="[paths.CONTACT_SUPPORT]"
+            routerLinkActive="selected-button">Contact support
+    </button>
 
-  <ng-template [ngIf]="isLoggedIn()" [ngIfElse]="loading">
-    <div>Logged in</div>
     <app-avatar-button style="margin: 0" [id]="id"
                        [routerLink]="[paths.PROFILE]"></app-avatar-button>
     <button mat-raised-button (click)="logoutClick()">Logout</button>
-    <!--    TODO: logout button-->
-  </ng-template>
+  </ng-container>
 
-  <ng-template #loading>
-    <!--    TODO: <Login and Singup buttons on the right-->
+  <ng-template #notLoggedIn>
     <button mat-raised-button [routerLink]="[paths.LOGIN]"
             routerLinkActive="selected-button">Login
     </button>
-    <div>Not logged in</div>
+    <button mat-raised-button [routerLink]="[paths.REGISTER]"
+            routerLinkActive="selected-button">Register
+    </button>
   </ng-template>
 </nav>

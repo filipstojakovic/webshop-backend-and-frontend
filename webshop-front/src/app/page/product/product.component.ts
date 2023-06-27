@@ -46,7 +46,6 @@ export class ProductComponent implements OnInit {
               private fb: FormBuilder,
   ) {
     this.searchUrl = route.snapshot.data['url'];
-    console.log("product.component.ts > searchUrl: "+ JSON.stringify(this.searchUrl, null, 2));
     this.categoryService = new GenericCrudService<Category, Category>(backendUrl.CATEGORIES, http);
 
     const userId: number = tokenService.getIdFromToken();
@@ -79,7 +78,6 @@ export class ProductComponent implements OnInit {
   }
 
   getProducts(body?: ProductSearchRequest) {
-    //TODO: use form to send attributes
     this.productService.searchProducts(this.currentPageNumber, this.pageSize,this.searchUrl, body).subscribe({
       next: (res: any) => {
         this.totalNumber = res.totalElements;
@@ -114,7 +112,7 @@ export class ProductComponent implements OnInit {
   createAttributeForm(attributes: Attribute[]) {
     this.attributeForm = this.fb.group({});
     attributes.map(attribute => {
-      this.attributeForm?.addControl(attribute.name, new FormControl(""))// new FormControl<Attribute | null>(null))
+      this.attributeForm?.addControl(attribute.name, new FormControl(""))
     });
     this.searchForm.setControl("attributeNameValueSearches", this.attributeForm);
   }
@@ -129,7 +127,6 @@ export class ProductComponent implements OnInit {
     this.http.get<Attribute[]>(backendUrl.CATEGORIES + `/${categoryId}/attributes`).subscribe({
           next: (attributes) => {
             this.attributes = attributes;
-            console.log("product.component.ts > next(): " + JSON.stringify(attributes, null, 2));
             this.createAttributeForm(attributes);
           },
         },

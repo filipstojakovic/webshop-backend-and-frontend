@@ -33,4 +33,5 @@ logging:
   level:
     root: info  #TRACE
   file:
-    path: logs
+    path: /webshop/logs/
+    name: log

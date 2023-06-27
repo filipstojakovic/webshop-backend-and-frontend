@@ -96,7 +96,7 @@ public class ProductService {
 
   public ProductResponse insert(ProductRequest productRequest, Long userId) {
     User sellerUser = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(User.class, userId));
-    Product product = productMapper.fromRequest(productRequest); // TODO: extract save images from this method
+    Product product = productMapper.fromRequest(productRequest);
     product.setSeller(sellerUser);
 
     try {

@@ -54,8 +54,6 @@ public class UserController {
     return new ResponseEntity<>(user, HttpStatus.CREATED);
   }
 
-  // TODO: user can only update his own profile (cant update username)
-
   @PutMapping("{id}")
   public ResponseEntity<UserResponse> update(@PathVariable Long id,
                                              @Valid @RequestBody UserUpdateRequest userRequest,

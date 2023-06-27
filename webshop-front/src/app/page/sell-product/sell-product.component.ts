@@ -40,14 +40,13 @@ export class SellProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var defaultFieldValue = "a"; // TODO: remove when not needed
     this.form = this.fb.group({
       category: [new FormControl<Category | null>(null), Validators.required],
       attributes: [],
-      name: [defaultFieldValue, Validators.required],
-      description: [defaultFieldValue],
+      name: ["", Validators.required],
+      description: [""],
       price: [null, Validators.required],
-      location: [defaultFieldValue, Validators.required],
+      location: ["", Validators.required],
       isNew: true,
       images: [],
     });
@@ -84,7 +83,6 @@ export class SellProductComponent implements OnInit {
     const imagePromises = this.files.map(f => myUtils.fileToBase64(f));
     await Promise.all(imagePromises).then((values) => request.images = values);
 
-    console.log("sell-product.component.ts > onSubmit() request: " + JSON.stringify(request, null, 2));
     this.http.post(backendUrl.PRODUCTS, request).subscribe({
           next: (res) => {
             this.form.reset();
@@ -92,7 +90,6 @@ export class SellProductComponent implements OnInit {
             this.router.navigateByUrl(paths.PRODUCTS);
           },
           error: (err) => {
-            console.log("registration.component.ts > error(): " + JSON.stringify(err, null, 2));
             this.toastService.error("There was an error with form submit");
           },
         },

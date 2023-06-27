@@ -18,5 +18,9 @@ public final class EndpointConstants {
   public static final String CONTACT_SUPPORT = "/contact-support";
   public static final String CATEGORIES = "/categories";
   public static final String PAYMENT_METHOD = "/payment-methods";
+  public static final String PURCHASE_HISTORY = PRODUCTS + "/purchase-history/search";
+  public static final String USERS_PRODUCTS = PRODUCTS + "/user/search";
+
+
 
 }

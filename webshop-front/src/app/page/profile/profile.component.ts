@@ -44,7 +44,6 @@ export class ProfileComponent implements OnInit {
               city: [this.currentUser.city, Validators.required],
             });
             this.tmpFormValue = this.form.value;
-            console.log("profile.component.ts > next(): " + JSON.stringify(this.currentUser, null, 2));
           },
           error: (err) => {
             this.toastService.error("Unable to find user");

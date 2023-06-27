@@ -2,14 +2,6 @@
   <form class="center-container container-max-width" [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Product information</h2>
 
-<!--    TODO: use this commented -->
-<!--    <app-category-dropdown-->
-<!--        class="category-search"-->
-<!--        [selectedCategoryIdControl]="$any(searchForm.get('categoryIdSearch'))"-->
-<!--        (categoryChangeEvent)="categoryChangeEvent($event)"-->
-<!--    >-->
-<!--    </app-category-dropdown>-->
-
     <mat-form-field style="width: 100%" appearance="fill">
       <mat-label>Category</mat-label>
       <input type="text"
@@ -41,7 +33,7 @@
       </form>
     </div>
 
-    <div style="width: 100%">
+    <div style="width: 100%; margin-bottom: 10px">
       <mat-checkbox color="primary" formControlName="isNew">
         {{form.controls['isNew'].value ? "Product is in new condition" : "Product is not new"}}
       </mat-checkbox>

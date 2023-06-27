@@ -20,7 +20,6 @@ export class PurchaseHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.activatedroute.data.subscribe(data => {
-      console.log("purchase-history.component.ts > (): "+ JSON.stringify(data, null, 2));
     })
     this.getPurchases()
   }
@@ -42,7 +41,6 @@ export class PurchaseHistoryComponent implements OnInit {
 
   productCardClick(product: Product) {
     const productId = product ? product.id : null;
-    console.log("product.component.ts > productCardClick(): " + JSON.stringify(productId, null, 2));
     this.router.navigateByUrl(paths.PRODUCTS + "/" + productId);
   }
 }

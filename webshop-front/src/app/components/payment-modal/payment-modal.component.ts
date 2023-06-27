@@ -40,7 +40,6 @@ export class PaymentModalComponent implements OnInit {
   }
 
   purchaseSubmit({ value, valid }: { value: PurchaseRequest, valid: boolean }) {
-    console.log("payment-modal.component.ts > saveTask(): " + JSON.stringify(value, null, 2));
     if (!this.dialogForm.valid) {
       this._toastService.error("Form not valid");
       return;

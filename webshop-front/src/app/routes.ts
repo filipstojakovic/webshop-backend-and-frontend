@@ -8,7 +8,6 @@ import {ContactSupportComponent} from './page/contact-support/contact-support.co
 import {SellProductComponent} from './page/sell-product/sell-product.component';
 import {ProductDetailsComponent} from './page/product/product-details/product-details.component';
 import {ProductComponent} from './page/product/product.component';
-import {PurchaseHistoryComponent} from './page/purchase-history/purchase-history.component';
 import {AuthGuard} from './service/auth-guard';
 import {ProfileComponent} from './page/profile/profile.component';
 import {ChangePasswordComponent} from './page/change-password/change-password.component';
@@ -34,20 +33,20 @@ export const routes: Routes = [
     path: paths.PIN,
     pathMatch: 'full',
     component: ActivateAccountComponent,
-    // canActivate: [AuthGuard],
-    data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   {
     path: paths.PRODUCTS + "/:id",
     pathMatch: 'full',
     component: ProductDetailsComponent,
+    canActivate: [AuthGuard],
+    data: { isAllow: true },
   },
   {
     path: paths.PRODUCTS,
     pathMatch: 'full',
     component: ProductComponent,
     canActivate: [AuthGuard],
-    data: { url: backendUrl.PRODUCTS_SEARCH },
+    data: { isAllow: true, url: backendUrl.PRODUCTS_SEARCH },
   },
   {
     path: paths.PURCHASE_HISTORY,
@@ -67,28 +66,28 @@ export const routes: Routes = [
     path: paths.SELL_PRODUCT,
     pathMatch: 'full',
     component: SellProductComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   {
-    path: paths.PROFILE, //TODO: maybe disable click if not logged in
+    path: paths.PROFILE,
     pathMatch: 'full',
     component: ProfileComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   {
-    path: paths.CHANGE_PASSWORD, //TODO: maybe disable click if not logged in
+    path: paths.CHANGE_PASSWORD,
     pathMatch: 'full',
     component: ChangePasswordComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   {
     path: paths.CONTACT_SUPPORT,
     pathMatch: 'full',
     component: ContactSupportComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: { role: [RoleEnum.admin, RoleEnum.user] },
   },
   { path: '**', redirectTo: paths.LOGIN },

@@ -31,18 +31,16 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     tokenService.removeTokenFromStorage();
-    const defaultFieldValue = "a"
     this.form = this.fb.group({
-      //TODO: use this: username: [{ value: this.userRequest.username, disabled: this.isEditMode }, Validators.required],
 
-      username: [defaultFieldValue, Validators.required],
-      password: [defaultFieldValue, Validators.required],
-      confirm_password: [defaultFieldValue, Validators.required],
+      username: ["", Validators.required],
+      password: ["", Validators.required],
+      confirm_password: ["", Validators.required],
 
-      firstName: [defaultFieldValue, Validators.required],
-      lastName: [defaultFieldValue, Validators.required],
-      email: ['filip.stojakovic1@gmail.com', Validators.email],
-      city: [defaultFieldValue, Validators.required],
+      firstName: ["", Validators.required],
+      lastName: ["", Validators.required],
+      email: ["", Validators.email],
+      city: ["", Validators.required],
       avatar: null,
     }, {
       validators: ConfirmedValidator('password', 'confirm_password'),
@@ -55,7 +53,7 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    if (this.form.get("password") === this.form.get("repassword")) {
+    if (this.form.get("password") === this.form.get("confirm_password")) {
       this.toastService.error("Passwords do not match");
       return;
     }
@@ -65,13 +63,11 @@ export class RegistrationComponent implements OnInit {
 
     this.http.post(backendUrl.REGISTER, formData).subscribe({
           next: (res) => {
-            console.log("registration.component.ts > next(): " + JSON.stringify(res, null, 2));
             this.toastService.success("Account created successfully!");
             this.navigateLogin(true);
 
           },
           error: (err) => {
-            console.log("registration.component.ts > error(): " + JSON.stringify(err, null, 2));
             this.toastService.error("There was an error with form submit");
           },
         },
@@ -81,7 +77,6 @@ export class RegistrationComponent implements OnInit {
   onSelect(event: any) {
     this.imageFile = event.addedFiles[0];
     const reader = new FileReader();
-    //TODO: use fileToBase64 from utils
     reader.readAsDataURL(this.imageFile!)
     reader.onload = (event: any) => {
       const imageText = event.target.result;

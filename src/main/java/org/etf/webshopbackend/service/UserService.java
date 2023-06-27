@@ -30,7 +30,6 @@ public class UserService {
   private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
 
-  // TODO: filter deleted? read project
   public List<UserResponse> findAll() {
     List<User> users = userRepository.findAll();
     return userMapper.toResponses(users, UserResponse.class);

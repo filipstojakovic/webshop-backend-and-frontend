@@ -20,7 +20,6 @@ export class PaymentMethodDropdownComponent implements OnInit {
   ngOnInit(): void {
     this.paymentService.getPaymentMethods().subscribe({
           next: (res) => {
-            console.log("payment-modal.component.ts > next(): " + JSON.stringify(res, null, 2));
             this.paymentMethods = res;
           },
         },
