@@ -22,7 +22,7 @@ import java.security.GeneralSecurityException;
 import java.util.Properties;
 
 import static jakarta.mail.Message.RecipientType.TO;
-import static org.etf.webshopbackend.config.GmailCredentals.getCredentials;
+import static org.etf.webshopbackend.config.GmailCredential.getCredentials;
 
 @Slf4j
 @Service

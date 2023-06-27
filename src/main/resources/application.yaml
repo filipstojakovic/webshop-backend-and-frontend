@@ -34,4 +34,3 @@ logging:
     root: info  #TRACE
   file:
     path: /webshop/logs/
-    name: log

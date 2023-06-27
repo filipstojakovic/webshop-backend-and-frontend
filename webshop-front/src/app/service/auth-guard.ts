@@ -7,13 +7,17 @@ import {RoleEnum} from '../model/enums/role';
 import {HttpClient} from '@angular/common/http';
 import {backendUrl} from '../constants/backendUrl';
 import {tokenConstant} from "../constants/constants";
+import {LoginEmitterService} from './login-emitter.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {
+  constructor(private authService: AuthService,
+              private router: Router,
+              private loginEmitter: LoginEmitterService,
+              private http: HttpClient) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
@@ -24,14 +28,14 @@ export class AuthGuard implements CanActivate {
 
       const isActive: boolean = tokenService.getFieldFromToken(tokenConstant.IS_ACTIVE);
       //if not activated redirect to activation page
-      if (!isActive && state.url !== `/${paths.PIN}`){
+      if (!isActive && state.url !== `/${paths.PIN}`) {
         this.router.navigateByUrl(paths.PIN)
         return false;
       }
     }
 
-    const isAllow: boolean|undefined = route.data['isAllow'];
-    if(isAllow){
+    const isAllow: boolean | undefined = route.data['isAllow'];
+    if (isAllow) {
       return true;
     }
 
@@ -50,17 +54,18 @@ export class AuthGuard implements CanActivate {
   checkIsTokenValid() {
     const token = tokenService.getTokenFromStorage();
     if (token)
-      this.http.get(backendUrl.WHOAMI, { observe: 'response' })
-          .subscribe({
-                next: (res) => {
+      this.loginEmitter.loggedInEvent.emit();
+    this.http.get(backendUrl.WHOAMI, { observe: 'response' })
+        .subscribe({
+              next: (res) => {
 
-                },
-                error: (err) => {
-                  console.log("auth-guard.ts > error(): " + JSON.stringify(err, null, 2));
-                  this.authService.logout();
-                },
               },
-          )
+              error: (err) => {
+                console.log("auth-guard.ts > error(): " + JSON.stringify(err, null, 2));
+                this.authService.logout();
+              },
+            },
+        )
   }
 
 }

@@ -19,7 +19,7 @@ import java.util.Set;
 
 import static com.google.api.services.gmail.GmailScopes.GMAIL_SEND;
 
-public class GmailCredentals {
+public class GmailCredential {
 
   public static Credential getCredentials(final NetHttpTransport httpTransport, GsonFactory jsonFactory) throws IOException {
     GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory,
