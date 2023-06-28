@@ -107,11 +107,11 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET, EndpointConstants.USERS + EndpointConstants.ALL_PATHS)
             .permitAll()
             .requestMatchers(HttpMethod.POST, EndpointConstants.USERS)
-            .hasAnyAuthority(RoleEnum.admin.toString())
+            .hasAnyAuthority(RoleEnum.admin.toString(), RoleEnum.user.toString())
             .requestMatchers(HttpMethod.PUT, EndpointConstants.USERS + EndpointConstants.ALL_PATHS)
             .hasAnyAuthority(RoleEnum.admin.toString(), RoleEnum.user.toString())
             .requestMatchers(HttpMethod.DELETE, EndpointConstants.USERS)
-            .hasAnyAuthority(RoleEnum.admin.toString())
+            .hasAnyAuthority(RoleEnum.admin.toString(), RoleEnum.user.toString())
     );
   }
 
@@ -144,10 +144,14 @@ public class SecurityConfig {
         requests
             .requestMatchers(HttpMethod.GET, EndpointConstants.PRODUCTS + EndpointConstants.ALL_PATHS)
             .permitAll()
-            .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS + EndpointConstants.SINGLE_PATH)
-            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
             .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS_SEARCH)
             .permitAll()
+            .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS)
+            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
+            .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS + EndpointConstants.SINGLE_PATH)
+            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
+            .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS + EndpointConstants.SINGLE_PATH + "/comments")
+            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
             .requestMatchers(HttpMethod.POST, EndpointConstants.PURCHASE_HISTORY)
             .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
             .requestMatchers(HttpMethod.POST, EndpointConstants.USERS_PRODUCTS)
