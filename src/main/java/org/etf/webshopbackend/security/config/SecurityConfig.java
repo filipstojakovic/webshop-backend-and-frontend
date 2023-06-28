@@ -152,6 +152,8 @@ public class SecurityConfig {
             .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
             .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS + EndpointConstants.SINGLE_PATH + "/comments")
             .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
+            .requestMatchers(HttpMethod.POST, EndpointConstants.PRODUCTS + EndpointConstants.SINGLE_PATH + "/purchases")
+            .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
             .requestMatchers(HttpMethod.POST, EndpointConstants.PURCHASE_HISTORY)
             .hasAnyAuthority(RoleEnum.user.name(), RoleEnum.admin.name())
             .requestMatchers(HttpMethod.POST, EndpointConstants.USERS_PRODUCTS)
